@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,15 @@
 		E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B48293AF173003E23B5 /* ContentView.swift */; };
 		E8F91B4B293AF177003E23B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F91B4A293AF177003E23B5 /* Assets.xcassets */; };
 		E8F91B4E293AF177003E23B5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F91B4D293AF177003E23B5 /* Preview Assets.xcassets */; };
+		E8F91B55293AF20D003E23B5 /* ItemDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B54293AF20D003E23B5 /* ItemDetailsView.swift */; };
+		E8F91B57293AF234003E23B5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B56293AF234003E23B5 /* LoginView.swift */; };
+		E8F91B59293AF264003E23B5 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B58293AF264003E23B5 /* FriendsView.swift */; };
+		E8F91B5D293AFBFB003E23B5 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E8F91B5C293AFBFB003E23B5 /* AWSAPIPlugin */; };
+		E8F91B5F293AFBFB003E23B5 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E8F91B5E293AFBFB003E23B5 /* AWSCognitoAuthPlugin */; };
+		E8F91B61293AFBFB003E23B5 /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E8F91B60293AFBFB003E23B5 /* AWSDataStorePlugin */; };
+		E8F91B63293AFBFB003E23B5 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = E8F91B62293AFBFB003E23B5 /* Amplify */; };
+		E8F91B67293B124C003E23B5 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E8F91B65293B124A003E23B5 /* awsconfiguration.json */; };
+		E8F91B68293B124C003E23B5 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E8F91B66293B124B003E23B5 /* amplifyconfiguration.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +28,13 @@
 		E8F91B48293AF173003E23B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E8F91B4A293AF177003E23B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8F91B4D293AF177003E23B5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E8F91B54293AF20D003E23B5 /* ItemDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsView.swift; sourceTree = "<group>"; };
+		E8F91B56293AF234003E23B5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		E8F91B58293AF264003E23B5 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
+		E8F91B5A293AF9E8003E23B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E8F91B64293B1070003E23B5 /* Gifted.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gifted.entitlements; sourceTree = "<group>"; };
+		E8F91B65293B124A003E23B5 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
+		E8F91B66293B124B003E23B5 /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +42,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8F91B61293AFBFB003E23B5 /* AWSDataStorePlugin in Frameworks */,
+				E8F91B63293AFBFB003E23B5 /* Amplify in Frameworks */,
+				E8F91B5D293AFBFB003E23B5 /* AWSAPIPlugin in Frameworks */,
+				E8F91B5F293AFBFB003E23B5 /* AWSCognitoAuthPlugin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,9 +71,16 @@
 		E8F91B45293AF173003E23B5 /* Gifted */ = {
 			isa = PBXGroup;
 			children = (
+				E8F91B64293B1070003E23B5 /* Gifted.entitlements */,
+				E8F91B5A293AF9E8003E23B5 /* Info.plist */,
 				E8F91B46293AF173003E23B5 /* GiftedApp.swift */,
 				E8F91B48293AF173003E23B5 /* ContentView.swift */,
+				E8F91B54293AF20D003E23B5 /* ItemDetailsView.swift */,
+				E8F91B56293AF234003E23B5 /* LoginView.swift */,
+				E8F91B58293AF264003E23B5 /* FriendsView.swift */,
 				E8F91B4A293AF177003E23B5 /* Assets.xcassets */,
+				E8F91B66293B124B003E23B5 /* amplifyconfiguration.json */,
+				E8F91B65293B124A003E23B5 /* awsconfiguration.json */,
 				E8F91B4C293AF177003E23B5 /* Preview Content */,
 			);
 			path = Gifted;
@@ -83,6 +110,12 @@
 			dependencies = (
 			);
 			name = Gifted;
+			packageProductDependencies = (
+				E8F91B5C293AFBFB003E23B5 /* AWSAPIPlugin */,
+				E8F91B5E293AFBFB003E23B5 /* AWSCognitoAuthPlugin */,
+				E8F91B60293AFBFB003E23B5 /* AWSDataStorePlugin */,
+				E8F91B62293AFBFB003E23B5 /* Amplify */,
+			);
 			productName = Gifted;
 			productReference = E8F91B43293AF173003E23B5 /* Gifted.app */;
 			productType = "com.apple.product-type.application";
@@ -103,7 +136,7 @@
 				};
 			};
 			buildConfigurationList = E8F91B3E293AF173003E23B5 /* Build configuration list for PBXProject "Gifted" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -111,6 +144,9 @@
 				Base,
 			);
 			mainGroup = E8F91B3A293AF173003E23B5;
+			packageReferences = (
+				E8F91B5B293AFBFB003E23B5 /* XCRemoteSwiftPackageReference "amplify-swift" */,
+			);
 			productRefGroup = E8F91B44293AF173003E23B5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,6 +163,8 @@
 			files = (
 				E8F91B4E293AF177003E23B5 /* Preview Assets.xcassets in Resources */,
 				E8F91B4B293AF177003E23B5 /* Assets.xcassets in Resources */,
+				E8F91B67293B124C003E23B5 /* awsconfiguration.json in Resources */,
+				E8F91B68293B124C003E23B5 /* amplifyconfiguration.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +175,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8F91B59293AF264003E23B5 /* FriendsView.swift in Sources */,
+				E8F91B55293AF20D003E23B5 /* ItemDetailsView.swift in Sources */,
 				E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */,
+				E8F91B57293AF234003E23B5 /* LoginView.swift in Sources */,
 				E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,23 +305,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Gifted/Gifted.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gifted/Preview Content\"";
 				DEVELOPMENT_TEAM = 3L8Q3U3WY3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Gifted/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Hatchling.Gifted;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Hatchling.Gifted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -293,23 +335,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Gifted/Gifted.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gifted/Preview Content\"";
 				DEVELOPMENT_TEAM = 3L8Q3U3WY3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Gifted/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Hatchling.Gifted;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Hatchling.Gifted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -339,6 +382,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E8F91B5B293AFBFB003E23B5 /* XCRemoteSwiftPackageReference "amplify-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/amplify-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E8F91B5C293AFBFB003E23B5 /* AWSAPIPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8F91B5B293AFBFB003E23B5 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSAPIPlugin;
+		};
+		E8F91B5E293AFBFB003E23B5 /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8F91B5B293AFBFB003E23B5 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		E8F91B60293AFBFB003E23B5 /* AWSDataStorePlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8F91B5B293AFBFB003E23B5 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSDataStorePlugin;
+		};
+		E8F91B62293AFBFB003E23B5 /* Amplify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8F91B5B293AFBFB003E23B5 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = Amplify;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E8F91B3B293AF173003E23B5 /* Project object */;
 }
