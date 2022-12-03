@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E8533F80293B3AA2004038A6 /* LoginFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8533F7F293B3AA2004038A6 /* LoginFunction.swift */; };
 		E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B46293AF173003E23B5 /* GiftedApp.swift */; };
 		E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B48293AF173003E23B5 /* ContentView.swift */; };
 		E8F91B4B293AF177003E23B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F91B4A293AF177003E23B5 /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E8533F7F293B3AA2004038A6 /* LoginFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFunction.swift; sourceTree = "<group>"; };
 		E8F91B43293AF173003E23B5 /* Gifted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gifted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8F91B46293AF173003E23B5 /* GiftedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftedApp.swift; sourceTree = "<group>"; };
 		E8F91B48293AF173003E23B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				E8F91B64293B1070003E23B5 /* Gifted.entitlements */,
 				E8F91B5A293AF9E8003E23B5 /* Info.plist */,
 				E8F91B46293AF173003E23B5 /* GiftedApp.swift */,
+				E8533F7F293B3AA2004038A6 /* LoginFunction.swift */,
 				E8F91B48293AF173003E23B5 /* ContentView.swift */,
 				E8F91B54293AF20D003E23B5 /* ItemDetailsView.swift */,
 				E8F91B56293AF234003E23B5 /* LoginView.swift */,
@@ -178,6 +181,7 @@
 				E8F91B59293AF264003E23B5 /* FriendsView.swift in Sources */,
 				E8F91B55293AF20D003E23B5 /* ItemDetailsView.swift in Sources */,
 				E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */,
+				E8533F80293B3AA2004038A6 /* LoginFunction.swift in Sources */,
 				E8F91B57293AF234003E23B5 /* LoginView.swift in Sources */,
 				E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */,
 			);

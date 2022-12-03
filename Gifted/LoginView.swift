@@ -84,20 +84,19 @@ struct LoginView: View {
                 .font(.body.weight(.medium))
                 .padding(.vertical, 16)
                 .frame(maxWidth: .infinity)
-                .clipped()
-                .foregroundColor(Color(.displayP3, red: 244/255, green: 188/255, blue: 73/255))
+                .foregroundColor(Color(.systemBackground))
                 .background {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .stroke(.clear.opacity(0.25), lineWidth: 0)
-                    .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(.yellow.opacity(0.1)))
+                    .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(.displayP3, red: 219/255, green: 68/255, blue: 55/255)))
                 }
                 // Function for Apple signin
                 Button{
-                    print("Apple Button Pressed") // Dud function, replace later
+                    print("Facebook Button Pressed") // Dud function, replace later
                 } label: {
-                    Image(systemName: "applelogo")
+                    Image(systemName: "f.cursive")
                         .imageScale(.medium)
-                    Text("Continue with Apple")
+                    Text("Continue with Facebook")
                 }
                 .font(.body.weight(.medium))
                 .padding(.vertical, 16)
@@ -106,9 +105,9 @@ struct LoginView: View {
                 .foregroundColor(Color(.systemBackground))
                 .background {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(.primary)
+                    .fill(Color(.displayP3, red: 23/255, green: 120/255, blue: 242/255))
                 }
-                Text("Need Help?")
+                Text("Sign Up")
                     .padding(.top)
                     .foregroundColor(Color(.tertiaryLabel))
                     .font(.subheadline)
