@@ -8,48 +8,33 @@
 import SwiftUI
 
 struct LoginView: View {
+    
+    //@EnvironmentObject var sessionManager: SessionManager
+        
+    @State var username = ""
+    @State var password = ""
+    
+    
     var body: some View {
         VStack {
             // can be app icon - Edwin
-            Image(uiImage: UIImage(named: "WishlistLoading.jpg") ?? .init())
-                .renderingMode(.original)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(maxWidth: 356, maxHeight: 480, alignment: .top)
-                .overlay(alignment: .topLeading) {
-                    VStack(alignment: .leading, spacing: 11) {
-                    VStack(alignment: .leading, spacing: 1) {
+            VStack {
+                        Spacer()
                         
+                        TextField("Username", text: $username).pretty()
+                        SecureField("Password", text: $password).pretty()
+                        Button("Login", action: {
+                            sessionManager.login(
+                                username: username,
+                                password: password
+                            )
+                            
+                        }).pretty()
+                        
+                        Spacer()
+                        Button("Don't have an account? Sign up.", action: sessionManager.showSignUp)
                     }
-                }
-                .padding(.all)
-                .padding(.top, 42)
-                }
-                .overlay(alignment: .bottom) {
-                    HStack {
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity)
-                .clipped()
-                .padding()
-                .background {
-                    Group {
-                    
-                }
-                }
-                .padding()
-                }
-                .mask {
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                }
-                .padding()
-                .padding(.top, 40)
-                .shadow(color: Color(.sRGBLinear, red: 0/255, green: 0/255, blue: 0/255).opacity(0.15), radius: 18, x: 0, y: 14)
+                    .padding()
             
             
             // vertical stack created for easier button placement
@@ -91,8 +76,8 @@ struct LoginView: View {
                     .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(.displayP3, red: 219/255, green: 68/255, blue: 55/255)))
                 }
                 // Function for Apple signin
-                Button{
-                    print("Facebook Button Pressed") // Dud function, replace later
+                Button {
+                    print("tested") // Dud function, replace later
                 } label: {
                     Image(systemName: "f.cursive")
                         .imageScale(.medium)
@@ -108,9 +93,10 @@ struct LoginView: View {
                     .fill(Color(.displayP3, red: 23/255, green: 120/255, blue: 242/255))
                 }
                 Text("Sign Up")
+                    .fontWeight(.bold)
                     .padding(.top)
-                    .foregroundColor(Color(.tertiaryLabel))
-                    .font(.subheadline)
+                    .foregroundColor(Color(.secondaryLabel))
+                    .font(.body)
             }
             .padding(.horizontal)
             Spacer()

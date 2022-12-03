@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AFCDF9411FE10E7C38F2E3C7 /* Pods_Gifted.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4570F9F0959BAD4A95F389AF /* Pods_Gifted.framework */; };
 		E8533F80293B3AA2004038A6 /* LoginFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8533F7F293B3AA2004038A6 /* LoginFunction.swift */; };
+		E87BE3E4293B5C2A007DC233 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87BE3E3293B5C2A007DC233 /* SessionManager.swift */; };
 		E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B46293AF173003E23B5 /* GiftedApp.swift */; };
 		E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B48293AF173003E23B5 /* ContentView.swift */; };
 		E8F91B4B293AF177003E23B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F91B4A293AF177003E23B5 /* Assets.xcassets */; };
@@ -24,7 +26,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2CD7446C5579A5D645FCC5CE /* Pods-Gifted.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gifted.release.xcconfig"; path = "Target Support Files/Pods-Gifted/Pods-Gifted.release.xcconfig"; sourceTree = "<group>"; };
+		4570F9F0959BAD4A95F389AF /* Pods_Gifted.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gifted.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		987C27B72DC522DDF8663624 /* Pods-Gifted.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gifted.debug.xcconfig"; path = "Target Support Files/Pods-Gifted/Pods-Gifted.debug.xcconfig"; sourceTree = "<group>"; };
 		E8533F7F293B3AA2004038A6 /* LoginFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFunction.swift; sourceTree = "<group>"; };
+		E87BE3E3293B5C2A007DC233 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		E8F91B43293AF173003E23B5 /* Gifted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gifted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8F91B46293AF173003E23B5 /* GiftedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftedApp.swift; sourceTree = "<group>"; };
 		E8F91B48293AF173003E23B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,17 +54,37 @@
 				E8F91B63293AFBFB003E23B5 /* Amplify in Frameworks */,
 				E8F91B5D293AFBFB003E23B5 /* AWSAPIPlugin in Frameworks */,
 				E8F91B5F293AFBFB003E23B5 /* AWSCognitoAuthPlugin in Frameworks */,
+				AFCDF9411FE10E7C38F2E3C7 /* Pods_Gifted.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		99901079DCF27B3A0A99C4D9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				987C27B72DC522DDF8663624 /* Pods-Gifted.debug.xcconfig */,
+				2CD7446C5579A5D645FCC5CE /* Pods-Gifted.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D5B9F03A0B6009B7F7320A20 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4570F9F0959BAD4A95F389AF /* Pods_Gifted.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E8F91B3A293AF173003E23B5 = {
 			isa = PBXGroup;
 			children = (
 				E8F91B45293AF173003E23B5 /* Gifted */,
 				E8F91B44293AF173003E23B5 /* Products */,
+				99901079DCF27B3A0A99C4D9 /* Pods */,
+				D5B9F03A0B6009B7F7320A20 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,6 +101,7 @@
 			children = (
 				E8F91B64293B1070003E23B5 /* Gifted.entitlements */,
 				E8F91B5A293AF9E8003E23B5 /* Info.plist */,
+				E87BE3E3293B5C2A007DC233 /* SessionManager.swift */,
 				E8F91B46293AF173003E23B5 /* GiftedApp.swift */,
 				E8533F7F293B3AA2004038A6 /* LoginFunction.swift */,
 				E8F91B48293AF173003E23B5 /* ContentView.swift */,
@@ -104,9 +131,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8F91B51293AF177003E23B5 /* Build configuration list for PBXNativeTarget "Gifted" */;
 			buildPhases = (
+				10B14B84D851D29908729655 /* [CP] Check Pods Manifest.lock */,
 				E8F91B3F293AF173003E23B5 /* Sources */,
 				E8F91B40293AF173003E23B5 /* Frameworks */,
 				E8F91B41293AF173003E23B5 /* Resources */,
+				E5D97A48E21EBED62E04A7D0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -173,6 +202,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		10B14B84D851D29908729655 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Gifted-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E5D97A48E21EBED62E04A7D0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Gifted/Pods-Gifted-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Gifted/Pods-Gifted-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Gifted/Pods-Gifted-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E8F91B3F293AF173003E23B5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -184,6 +255,7 @@
 				E8533F80293B3AA2004038A6 /* LoginFunction.swift in Sources */,
 				E8F91B57293AF234003E23B5 /* LoginView.swift in Sources */,
 				E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */,
+				E87BE3E4293B5C2A007DC233 /* SessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +378,7 @@
 		};
 		E8F91B52293AF177003E23B5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 987C27B72DC522DDF8663624 /* Pods-Gifted.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -336,6 +409,7 @@
 		};
 		E8F91B53293AF177003E23B5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2CD7446C5579A5D645FCC5CE /* Pods-Gifted.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
