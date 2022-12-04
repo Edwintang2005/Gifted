@@ -20,7 +20,6 @@ struct LoginView: View {
             // can be app icon - Edwin
             VStack {
                         Spacer()
-                        
                         TextField("Username", text: $username).pretty()
                         SecureField("Password", text: $password).pretty()
                         Button("Login", action: {

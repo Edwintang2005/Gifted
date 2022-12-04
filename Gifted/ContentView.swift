@@ -6,8 +6,14 @@
 //
 
 import SwiftUI
+import Amplify
 
 struct ContentView: View {
+    
+    @EnvironmentObject var sessionManager: SessionManager
+        
+    let user: AuthUser
+    
     var body: some View {
         ScrollView{
             VStack {
@@ -15,6 +21,8 @@ struct ContentView: View {
                     .imageScale(.large)
                     .foregroundColor(.accentColor)
                 Text("Hello, world!")
+                Spacer()
+                Button("Sign Out", action: sessionManager.signOut)
             }
             .padding()
         }
@@ -22,7 +30,12 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    private struct DummyUser: AuthUser {
+        let userId: String = "1"
+        let username: String = "dummy"
+    }
+    
     static var previews: some View {
-        ContentView()
+        ContentView(user: DummyUser())
     }
 }
