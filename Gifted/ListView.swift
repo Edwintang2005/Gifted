@@ -1,21 +1,19 @@
 //
-//  FriendsView.swift
+//  ListView.swift
 //  Gifted
 //
-//  Created by Edwin Tang on 3/12/2022.
+//  Created by Edwin Tang on 4/12/2022.
 //
 
 import SwiftUI
 
-struct FriendsView: View {
-    
+struct ListView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     var body: some View {
         ZStack {
             ScrollView{
                 VStack {
-                    Spacer()
                     HStack(spacing: 10) {
                         Image(uiImage: UIImage(named: "WishlistLoading.jpg") ?? .init())
                             .renderingMode(.original)
@@ -87,19 +85,17 @@ struct FriendsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemBackground))
         .mask { RoundedRectangle(cornerRadius: 53, style: .continuous) }
-        .overlay( Floating_Button_Friends(), alignment: .bottomTrailing)
+        .overlay( Floating_Button_List(), alignment: .bottomTrailing)
         .padding(.vertical, 40)
-        .navigationBarTitle("Friends")
+        .navigationBarTitle("My List")
     }
 }
 
 
 
 
-
-  
-//struct FriendsView_Previews: PreviewProvider {
+//struct ListView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        FriendsView()
+//        ListView()
 //    }
 //}

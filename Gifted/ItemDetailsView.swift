@@ -78,8 +78,10 @@ struct ItemDetailsView: View {
     }
 }
 
-struct ItemDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ItemDetailsView()
-    }
-}
+
+
+//struct ItemDetailsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ItemDetailsView()
+//    }
+//}
