@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
-    //@EnvironmentObject var sessionManager: SessionManager
+    @EnvironmentObject var sessionManager: SessionManager
         
     @State var username = ""
     @State var password = ""
@@ -27,6 +27,7 @@ struct LoginView: View {
                                 username: username,
                                 password: password
                             )
+                            print("logged in")
                             
                         }).pretty()
                         

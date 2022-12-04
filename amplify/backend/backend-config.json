@@ -1,6 +1,6 @@
 {
   "auth": {
-    "gifted409df3ec": {
+    "Gifted": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -12,9 +12,7 @@
         ],
         "usernameAttributes": [],
         "signupAttributes": [
-          "EMAIL",
-          "NAME",
-          "PICTURE"
+          "EMAIL"
         ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
