@@ -17,7 +17,7 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
-            // can be app icon - Edwin
+            // Email signin functionality
             VStack {
                         Spacer()
                         TextField("Username", text: $username).pretty()
@@ -30,33 +30,11 @@ struct LoginView: View {
                             print("logged in")
                             
                         }).pretty()
-                        
-                        Spacer()
-                        Button("Don't have an account? Sign up.", action: sessionManager.showSignUp)
                     }
                     .padding()
             
-            
             // vertical stack created for easier button placement
             VStack(spacing: 10) {
-                // Button for email signin
-                Button{
-                    print("Email Button clicked") // Dud function, replace later
-                } label: {
-                    Image(systemName: "envelope.fill")
-                        .imageScale(.medium)
-                    Text("Continue with Email")
-                }
-                .font(.body.weight(.medium))
-                .padding(.vertical, 16)
-                .frame(maxWidth: .infinity)
-                .clipped()
-                .foregroundColor(Color(.displayP3, red: 244/255, green: 188/255, blue: 73/255))
-                .background {
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(.clear.opacity(0.25), lineWidth: 0)
-                    .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(.yellow.opacity(0.1)))
-                }
                 // Button for Gmail Signin
                 Button{ action:do {
                     print("Gmail Button clicked") // Dud function, replace later
@@ -92,11 +70,8 @@ struct LoginView: View {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color(.displayP3, red: 23/255, green: 120/255, blue: 242/255))
                 }
-                Text("Sign Up")
-                    .fontWeight(.bold)
-                    .padding(.top)
-                    .foregroundColor(Color(.secondaryLabel))
-                    .font(.body)
+                Spacer()
+                Button("Don't have an account? Sign up.", action: sessionManager.showSignUp)
             }
             .padding(.horizontal)
             Spacer()
@@ -110,8 +85,10 @@ struct LoginView: View {
 
 
 // Ignore below, simulator code
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+
+
+//struct LoginView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//    }
+//}
