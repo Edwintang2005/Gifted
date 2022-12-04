@@ -72,11 +72,12 @@ struct LoginView: View {
                 }
                 Spacer()
                 Button("Don't have an account? Sign up.", action: sessionManager.showSignUp)
+                Spacer()
             }
             .padding(.horizontal)
             Spacer()
         }
-        .frame(width: 390, height: 844)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipped()
         .background(Color(.systemBackground))
         .mask { RoundedRectangle(cornerRadius: 43, style: .continuous) }

@@ -28,7 +28,6 @@ struct ItemDetailsView: View {
                         }
                         .font(.title3)
                         .padding(.all)
-                        .shadow(color: Color(.displayP3, red: 0/255, green: 0/255, blue: 0/255).opacity(0.11), radius: 8, x: 0, y: 4)
                     }
                 .mask {
                     Rectangle()
