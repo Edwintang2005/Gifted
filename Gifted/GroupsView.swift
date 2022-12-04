@@ -1,5 +1,5 @@
 //
-//  ListView.swift
+//  GroupsView.swift
 //  Gifted
 //
 //  Created by Edwin Tang on 4/12/2022.
@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-struct ListView: View {
+struct GroupsView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     var body: some View {
         ZStack {
             ScrollView{
                 VStack {
+                    Spacer()
                     HStack(spacing: 10) {
                         Image(uiImage: UIImage(named: "WishlistLoading.jpg") ?? .init())
                             .renderingMode(.original)
@@ -25,17 +26,13 @@ struct ListView: View {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("New York City")
                                 .font(.system(size: 16, weight: .medium, design: .default))
-                            Text("$20000")
+                            Text("Dec 12")
                         }
                         .font(.subheadline)
                         Spacer()
-                        // Navigation to ItemDetailsView
-                        NavigationLink(destination: ItemDetailsView()) {
-                            Image(systemName: "ellipsis")
-                                .foregroundColor(Color(.displayP3, red: 234/255, green: 76/255, blue: 97/255))
-                                .font(.title3)
-                        }
-            
+                        Image(systemName: "ellipsis")
+                            .foregroundColor(Color(.displayP3, red: 234/255, green: 76/255, blue: 97/255))
+                            .font(.title3)
                     }
                     .padding(.bottom, 4)
                     HStack(spacing: 10) {
@@ -49,7 +46,7 @@ struct ListView: View {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Palm Springs")
                                 .font(.system(size: 16, weight: .medium, design: .default))
-                            Text("$1201")
+                            Text("Jan 7 2021")
                         }
                         .font(.subheadline)
                         Spacer()
@@ -69,7 +66,7 @@ struct ListView: View {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Lisbon")
                                 .font(.system(size: 16, weight: .medium, design: .default))
-                            Text("$1111")
+                            Text("March 13 2021")
                         }
                         .font(.subheadline)
                         Spacer()
@@ -89,17 +86,14 @@ struct ListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemBackground))
         .mask { RoundedRectangle(cornerRadius: 53, style: .continuous) }
-        .overlay( Floating_Button_List(), alignment: .bottomTrailing)
+        .overlay( Floating_Button_Groups(), alignment: .bottomTrailing)
         .padding(.vertical, 40)
-        .navigationBarTitle("My List")
+        .navigationBarTitle("Groups")
     }
 }
 
-
-
-
-//struct ListView_Previews: PreviewProvider {
+//struct GroupsView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ListView()
+//        GroupsView()
 //    }
 //}

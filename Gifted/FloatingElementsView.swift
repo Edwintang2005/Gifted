@@ -23,8 +23,26 @@ struct Floating_Button_Friends: View{
     }
 
 
-//Floating Button used in Friends
+//Floating Button used in List
 struct Floating_Button_List: View{
+
+    var body: some View{
+        Button{
+            print("Floating Button Test")
+        } label: {
+            Image(systemName: "plus.circle.fill")
+        }
+        .font(.system(size:80))
+        .shadow(color: .gray, radius: 0.2, x: 1, y: 1)
+        Spacer(minLength: 1200)
+        }
+    
+
+    }
+
+
+//Floating Button used in Groups
+struct Floating_Button_Groups: View{
 
     var body: some View{
         Button{

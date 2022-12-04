@@ -60,11 +60,13 @@ struct MainView: View{
     @EnvironmentObject var sessionManager: SessionManager
     @Binding var ShowMenu: Bool
     
+    
+    
     var body: some View{
         ScrollView{
             VStack(spacing: 50) {
                 HStack {
-                    Text("Hello, USER NAME!") // To be replaced with name from user file
+                    Text("Hello, USERNAME!") // To be replaced with name from user file
                         .font(.headline)
                         .foregroundColor(.secondary)
                     Spacer()
@@ -110,7 +112,7 @@ struct MenuView: View{
             }
             .padding(.all)
             // Menu Feature to access user's groups
-            NavigationLink(destination: ItemDetailsView()) {
+            NavigationLink(destination: GroupsView()) {
                 HStack{
                     Image(systemName: "person.3.sequence.fill")
                     Text("Groups")
@@ -121,7 +123,7 @@ struct MenuView: View{
         }
     }
 }
-            
+
 
 
 //struct ContentView_Previews: PreviewProvider {

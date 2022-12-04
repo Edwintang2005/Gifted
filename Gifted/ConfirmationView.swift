@@ -17,8 +17,20 @@ struct ConfirmationView: View {
     
     var body: some View {
         VStack {
-            Text("Username: \(username)")
+            
+            Text("Verification for \n \(username)")
+                .pretty()
+                .padding(.top)
+            Spacer()
+            Image("VerificationStock")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
             TextField("Confirmation Code", text: $confirmationCode).pretty()
+            
+            Text("Check your email for a code")
+                .font(.footnote)
+                .foregroundColor(Color.gray)
+                .multilineTextAlignment(.center)
             Button("Confirm", action: {
                 sessionManager.confirm(
                     username: username,
@@ -26,6 +38,11 @@ struct ConfirmationView: View {
                 )
                 
             }).pretty()
+            Spacer()
+            Text("Brought to you with ❤️ from Edwin Tang and Roger Yao")
+                .font(.caption)
+                .foregroundColor(Color.gray)
+                .multilineTextAlignment(.center)
         }
         .padding()
     }

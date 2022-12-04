@@ -7,10 +7,17 @@
 
 import SwiftUI
 
+extension Text{
+    func pretty() -> some View{
+        self.font(.title2)
+            .multilineTextAlignment(.center)
+    }
+}
+
 extension TextField {
     func pretty() -> some View {
         self.padding()
-            .border(Color.gray, width: 1)
+            .border(Color.gray)
             .cornerRadius(3)
     }
 }
@@ -18,16 +25,20 @@ extension TextField {
 extension SecureField {
     func pretty() -> some View {
         self.padding()
-            .border(Color.gray, width: 1)
+            .border(Color.gray)
             .cornerRadius(3)
     }
 }
 
 extension Button {
     func pretty() -> some View {
-        self.padding()
-            .background(Color.purple)
+        self.font(.title3)
+            .padding(.all)
+            .frame(maxWidth: .infinity)
             .foregroundColor(.white)
-            .cornerRadius(3)
+            .background(Color.blue)
+            .cornerRadius(50)
+            .shadow(color: Color.black.opacity(0.2), radius: 30, x: 2, y: 2)
+            .padding(.vertical)
     }
 }

@@ -19,22 +19,29 @@ struct LoginView: View {
         VStack {
             // Email signin functionality
             VStack {
-                        Spacer()
-                        TextField("Username", text: $username).pretty()
-                        SecureField("Password", text: $password).pretty()
-                        Button("Login", action: {
-                            sessionManager.login(
-                                username: username,
-                                password: password
-                            )
-                            print("logged in")
-                            
-                        }).pretty()
-                    }
-                    .padding()
-            
+                Spacer()
+                Text("Welcome to Gifted!")
+                    .font(.title2)
+                    .multilineTextAlignment(.center)
+                Spacer()
+                Text("Login Here:")
+                    .font(.title3)
+                Spacer()
+                TextField("Username", text: $username).pretty()
+                SecureField("Password", text: $password).pretty()
+                Button("Login", action: {
+                    sessionManager.login(
+                        username: username,
+                        password: password
+                    )
+                    print("logged in")
+                    
+                }).pretty()
+            }
+            .padding(.horizontal)
+            LabelledDivider(label: "OR")
             // vertical stack created for easier button placement
-            VStack(spacing: 10) {
+            VStack(spacing: 8) {
                 // Button for Gmail Signin
                 Button{ action:do {
                     print("Gmail Button clicked") // Dud function, replace later
@@ -45,7 +52,7 @@ struct LoginView: View {
                     Text("Continue with Gmail")
                 }
                 .font(.body.weight(.medium))
-                .padding(.vertical, 16)
+                .padding(.vertical)
                 .frame(maxWidth: .infinity)
                 .foregroundColor(Color(.systemBackground))
                 .background {
@@ -53,16 +60,16 @@ struct LoginView: View {
                     .stroke(.clear.opacity(0.25), lineWidth: 0)
                     .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(.displayP3, red: 219/255, green: 68/255, blue: 55/255)))
                 }
-                // Function for Apple signin
+                // Function for Facebook signin
                 Button {
-                    print("tested") // Dud function, replace later
+                    print("Facebook Button clicked") // Dud function, replace later
                 } label: {
                     Image(systemName: "f.cursive")
                         .imageScale(.medium)
                     Text("Continue with Facebook")
                 }
                 .font(.body.weight(.medium))
-                .padding(.vertical, 16)
+                .padding(.vertical)
                 .frame(maxWidth: .infinity)
                 .clipped()
                 .foregroundColor(Color(.systemBackground))
@@ -73,6 +80,10 @@ struct LoginView: View {
                 Spacer()
                 Button("Don't have an account? Sign up.", action: sessionManager.showSignUp)
                 Spacer()
+                Text("Brought to you with ❤️ from Edwin Tang and Roger Yao")
+                    .font(.caption)
+                    .foregroundColor(Color.gray)
+                    .multilineTextAlignment(.center)
             }
             .padding(.horizontal)
             Spacer()
@@ -85,6 +96,36 @@ struct LoginView: View {
 }
 
 
+
+
+
+// Code for Labelled Divider
+struct LabelledDivider: View {
+
+    let label: String
+    let horizontalPadding: CGFloat
+    let color: Color
+
+    init(label: String, horizontalPadding: CGFloat = 20, color: Color = .gray) {
+        self.label = label
+        self.horizontalPadding = horizontalPadding
+        self.color = color
+    }
+
+    var body: some View {
+        HStack {
+            line
+            Text(label).foregroundColor(color)
+            line
+        }
+    }
+
+    var line: some View {
+        VStack { Divider().background(color) }.padding(horizontalPadding)
+    }
+}
+
+
 // Ignore below, simulator code
 
 
@@ -93,3 +134,6 @@ struct LoginView: View {
 //        LoginView()
 //    }
 //}
+
+
+
