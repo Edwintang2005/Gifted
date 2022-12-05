@@ -21,6 +21,17 @@
 		E894FFAF293C1BA700095DD2 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = E894FFAE293C1BA700095DD2 /* Amplify */; };
 		E894FFB1293C75DD00095DD2 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FFB0293C75DD00095DD2 /* ListView.swift */; };
 		E894FFB3293C767C00095DD2 /* FloatingElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */; };
+		E8DDDBBF293D54580011C5A2 /* AWSDatastoreFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDBBE293D54580011C5A2 /* AWSDatastoreFunctions.swift */; };
+		E8DDDF98293D84580011C5A2 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDF8F293D84580011C5A2 /* ListItem.swift */; };
+		E8DDDF99293D84580011C5A2 /* UserGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDF90293D84580011C5A2 /* UserGroup.swift */; };
+		E8DDDF9A293D84580011C5A2 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDF91293D84580011C5A2 /* AmplifyModels.swift */; };
+		E8DDDF9B293D84580011C5A2 /* User+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDF92293D84580011C5A2 /* User+Schema.swift */; };
+		E8DDDF9C293D84580011C5A2 /* ListItem+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDF93293D84580011C5A2 /* ListItem+Schema.swift */; };
+		E8DDDF9D293D84580011C5A2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDF94293D84580011C5A2 /* User.swift */; };
+		E8DDDF9E293D84580011C5A2 /* UserGroup+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDF95293D84580011C5A2 /* UserGroup+Schema.swift */; };
+		E8DDDF9F293D84580011C5A2 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDF96293D84580011C5A2 /* Group.swift */; };
+		E8DDDFA0293D84580011C5A2 /* Group+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDF97293D84580011C5A2 /* Group+Schema.swift */; };
+		E8DDDFA2293D862F0011C5A2 /* AWSDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDFA1293D862F0011C5A2 /* AWSDataExtensions.swift */; };
 		E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B46293AF173003E23B5 /* GiftedApp.swift */; };
 		E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B48293AF173003E23B5 /* ContentView.swift */; };
 		E8F91B4B293AF177003E23B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F91B4A293AF177003E23B5 /* Assets.xcassets */; };
@@ -40,6 +51,17 @@
 		E894FF9D293C174500095DD2 /* PrettyModifierExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrettyModifierExtensions.swift; sourceTree = "<group>"; };
 		E894FFB0293C75DD00095DD2 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingElementsView.swift; sourceTree = "<group>"; };
+		E8DDDBBE293D54580011C5A2 /* AWSDatastoreFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDatastoreFunctions.swift; sourceTree = "<group>"; };
+		E8DDDF8F293D84580011C5A2 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
+		E8DDDF90293D84580011C5A2 /* UserGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserGroup.swift; sourceTree = "<group>"; };
+		E8DDDF91293D84580011C5A2 /* AmplifyModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmplifyModels.swift; sourceTree = "<group>"; };
+		E8DDDF92293D84580011C5A2 /* User+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Schema.swift"; sourceTree = "<group>"; };
+		E8DDDF93293D84580011C5A2 /* ListItem+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListItem+Schema.swift"; sourceTree = "<group>"; };
+		E8DDDF94293D84580011C5A2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E8DDDF95293D84580011C5A2 /* UserGroup+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserGroup+Schema.swift"; sourceTree = "<group>"; };
+		E8DDDF96293D84580011C5A2 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		E8DDDF97293D84580011C5A2 /* Group+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Group+Schema.swift"; sourceTree = "<group>"; };
+		E8DDDFA1293D862F0011C5A2 /* AWSDataExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataExtensions.swift; sourceTree = "<group>"; };
 		E8F91B43293AF173003E23B5 /* Gifted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gifted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8F91B46293AF173003E23B5 /* GiftedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftedApp.swift; sourceTree = "<group>"; };
 		E8F91B48293AF173003E23B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -74,9 +96,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E8DDDF8D293D84580011C5A2 /* generated */ = {
+			isa = PBXGroup;
+			children = (
+				E8DDDF8E293D84580011C5A2 /* models */,
+			);
+			name = generated;
+			path = amplify/generated;
+			sourceTree = "<group>";
+		};
+		E8DDDF8E293D84580011C5A2 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				E8DDDF8F293D84580011C5A2 /* ListItem.swift */,
+				E8DDDF90293D84580011C5A2 /* UserGroup.swift */,
+				E8DDDF91293D84580011C5A2 /* AmplifyModels.swift */,
+				E8DDDF92293D84580011C5A2 /* User+Schema.swift */,
+				E8DDDF93293D84580011C5A2 /* ListItem+Schema.swift */,
+				E8DDDF94293D84580011C5A2 /* User.swift */,
+				E8DDDF95293D84580011C5A2 /* UserGroup+Schema.swift */,
+				E8DDDF96293D84580011C5A2 /* Group.swift */,
+				E8DDDF97293D84580011C5A2 /* Group+Schema.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
 		E8F91B3A293AF173003E23B5 = {
 			isa = PBXGroup;
 			children = (
+				E8DDDF8D293D84580011C5A2 /* generated */,
 				E8F91B45293AF173003E23B5 /* Gifted */,
 				E8F91B44293AF173003E23B5 /* Products */,
 			);
@@ -101,12 +149,14 @@
 				E8F91B46293AF173003E23B5 /* GiftedApp.swift */,
 				E894FF99293C165200095DD2 /* SignUpView.swift */,
 				E8F91B48293AF173003E23B5 /* ContentView.swift */,
+				E8DDDBBE293D54580011C5A2 /* AWSDatastoreFunctions.swift */,
 				E8F91B54293AF20D003E23B5 /* ItemDetailsView.swift */,
 				E8F91B56293AF234003E23B5 /* LoginView.swift */,
 				E8F91B58293AF264003E23B5 /* FriendsView.swift */,
 				E8FC8933293CB62400645630 /* GroupsView.swift */,
 				E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */,
 				E894FFB0293C75DD00095DD2 /* ListView.swift */,
+				E8DDDFA1293D862F0011C5A2 /* AWSDataExtensions.swift */,
 				E8F91B4A293AF177003E23B5 /* Assets.xcassets */,
 				E8F91B66293B124B003E23B5 /* amplifyconfiguration.json */,
 				E8F91B65293B124A003E23B5 /* awsconfiguration.json */,
@@ -208,18 +258,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8DDDF9F293D84580011C5A2 /* Group.swift in Sources */,
 				E8F91B59293AF264003E23B5 /* FriendsView.swift in Sources */,
+				E8DDDF99293D84580011C5A2 /* UserGroup.swift in Sources */,
 				E8F91B55293AF20D003E23B5 /* ItemDetailsView.swift in Sources */,
 				E894FFB1293C75DD00095DD2 /* ListView.swift in Sources */,
+				E8DDDF9A293D84580011C5A2 /* AmplifyModels.swift in Sources */,
+				E8DDDF9E293D84580011C5A2 /* UserGroup+Schema.swift in Sources */,
 				E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */,
+				E8DDDF9B293D84580011C5A2 /* User+Schema.swift in Sources */,
 				E894FF9A293C165200095DD2 /* SignUpView.swift in Sources */,
+				E8DDDFA0293D84580011C5A2 /* Group+Schema.swift in Sources */,
 				E894FFB3293C767C00095DD2 /* FloatingElementsView.swift in Sources */,
 				E8FC8934293CB62400645630 /* GroupsView.swift in Sources */,
 				E8F91B57293AF234003E23B5 /* LoginView.swift in Sources */,
+				E8DDDFA2293D862F0011C5A2 /* AWSDataExtensions.swift in Sources */,
+				E8DDDF98293D84580011C5A2 /* ListItem.swift in Sources */,
 				E894FF9C293C16FA00095DD2 /* ConfirmationView.swift in Sources */,
+				E8DDDBBF293D54580011C5A2 /* AWSDatastoreFunctions.swift in Sources */,
 				E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */,
 				E87BE3E4293B5C2A007DC233 /* SessionManager.swift in Sources */,
 				E894FF9E293C174500095DD2 /* PrettyModifierExtensions.swift in Sources */,
+				E8DDDF9C293D84580011C5A2 /* ListItem+Schema.swift in Sources */,
+				E8DDDF9D293D84580011C5A2 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 import Amplify
 import SwiftUI
 import AWSCognitoAuthPlugin
+import AWSDataStorePlugin
 
 
 @main
@@ -43,8 +44,10 @@ struct GiftedApp: App {
     }
     
     private func configureAmplify() {
+        let dataStorePlugin = AWSDataStorePlugin(modelRegistration: AmplifyModels())
         do {
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
+            try Amplify.add(plugin: dataStorePlugin)
             try Amplify.configure()
             print("Amplify configured successfully")
             
