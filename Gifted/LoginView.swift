@@ -13,6 +13,7 @@ struct LoginView: View {
         
     @State var username = ""
     @State var password = ""
+    @State var name = ""
     
     
     var body: some View {
@@ -28,6 +29,7 @@ struct LoginView: View {
                     .font(.title3)
                 Spacer()
                 TextField("Username", text: $username).pretty()
+                TextField("Name", text: $name).pretty()
                 SecureField("Password", text: $password).pretty()
                 Button("Login", action: {
                     sessionManager.login(

@@ -4,37 +4,32 @@ import Foundation
 
 public struct User: Model {
   public let id: String
-  public var Name: [String?]?
   public var Email: String?
-  public var Groups: List<UserGroup>?
+  public var Password: String
   public var ListItems: List<ListItem>?
   public var createdAt: Temporal.DateTime?
   public var updatedAt: Temporal.DateTime?
   
   public init(id: String = UUID().uuidString,
-      Name: [String?]? = nil,
       Email: String? = nil,
-      Groups: List<UserGroup>? = [],
+      Password: String,
       ListItems: List<ListItem>? = []) {
     self.init(id: id,
-      Name: Name,
       Email: Email,
-      Groups: Groups,
+      Password: Password,
       ListItems: ListItems,
       createdAt: nil,
       updatedAt: nil)
   }
   internal init(id: String = UUID().uuidString,
-      Name: [String?]? = nil,
       Email: String? = nil,
-      Groups: List<UserGroup>? = [],
+      Password: String,
       ListItems: List<ListItem>? = [],
       createdAt: Temporal.DateTime? = nil,
       updatedAt: Temporal.DateTime? = nil) {
       self.id = id
-      self.Name = Name
       self.Email = Email
-      self.Groups = Groups
+      self.Password = Password
       self.ListItems = ListItems
       self.createdAt = createdAt
       self.updatedAt = updatedAt

@@ -23,7 +23,7 @@ struct ListView: View {
                 VStack {
                     List {
                         ForEach(listitems) {
-                            Item in Text("Item: " + (Item.Name ?? "") + "!")
+                            Item in Text( Item.Name )
                         }
                         .onDelete(perform: deleteItem)
                     }
@@ -51,45 +51,6 @@ struct ListView: View {
                         
                     }
                     .padding(.bottom)
-                    HStack(spacing: 10) {
-                        Image(uiImage: UIImage(named: "WishlistLoading.jpg") ?? .init())
-                            .renderingMode(.original)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 70, height: 70)
-                            .clipped()
-                            .mask { RoundedRectangle(cornerRadius: 8, style: .continuous) }
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Palm Springs")
-                                .font(.system(size: 16, weight: .medium, design: .default))
-                            Text("$1201")
-                        }
-                        .font(.subheadline)
-                        Spacer()
-                        Image(systemName: "ellipsis")
-                            .foregroundColor(Color(.displayP3, red: 234/255, green: 76/255, blue: 97/255))
-                            .font(.title3)
-                    }
-                    .padding(.bottom)
-                    HStack {
-                        Image(uiImage: UIImage(named: "WishlistLoading.jpg") ?? .init())
-                            .renderingMode(.original)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 70, height: 70)
-                            .clipped()
-                            .mask { RoundedRectangle(cornerRadius: 8, style: .continuous) }
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Lisbon")
-                                .font(.system(size: 16, weight: .medium, design: .default))
-                            Text("$1111")
-                        }
-                        .font(.subheadline)
-                        Spacer()
-                        Image(systemName: "ellipsis")
-                            .foregroundColor(Color(.displayP3, red: 234/255, green: 76/255, blue: 97/255))
-                            .font(.title3)
-                    }
                 }
                 .padding(.horizontal)
                 VStack{

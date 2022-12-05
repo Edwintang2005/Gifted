@@ -1,21 +1,14 @@
-type ListItem @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  Name: String
-  Link: AWSURL
-  Price: Float
-  userID: ID! @index(name: "byUser")
-}
-
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
-  Name: [String]
   Email: AWSEmail
-  Groups: [Group] @manyToMany(relationName: "UserGroup")
+  Password: String!
   ListItems: [ListItem] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
-type Group @model @auth(rules: [{allow: public}]) {
+type ListItem @model @auth(rules: [{allow: public}]) {
   id: ID!
-  users: [User] @manyToMany(relationName: "UserGroup")
-}
- 
+  Link: AWSURL
+  Price: String
+  ShortDescription: String
+  userID: ID! @index(name: "byUser")
+} 

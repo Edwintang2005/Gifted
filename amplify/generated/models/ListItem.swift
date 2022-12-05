@@ -4,37 +4,37 @@ import Foundation
 
 public struct ListItem: Model {
   public let id: String
-  public var Name: String?
   public var Link: String?
-  public var Price: Double?
+  public var Price: String?
+  public var ShortDescription: String?
   public var userID: String
   public var createdAt: Temporal.DateTime?
   public var updatedAt: Temporal.DateTime?
   
   public init(id: String = UUID().uuidString,
-      Name: String? = nil,
       Link: String? = nil,
-      Price: Double? = nil,
+      Price: String? = nil,
+      ShortDescription: String? = nil,
       userID: String) {
     self.init(id: id,
-      Name: Name,
       Link: Link,
       Price: Price,
+      ShortDescription: ShortDescription,
       userID: userID,
       createdAt: nil,
       updatedAt: nil)
   }
   internal init(id: String = UUID().uuidString,
-      Name: String? = nil,
       Link: String? = nil,
-      Price: Double? = nil,
+      Price: String? = nil,
+      ShortDescription: String? = nil,
       userID: String,
       createdAt: Temporal.DateTime? = nil,
       updatedAt: Temporal.DateTime? = nil) {
       self.id = id
-      self.Name = Name
       self.Link = Link
       self.Price = Price
+      self.ShortDescription = ShortDescription
       self.userID = userID
       self.createdAt = createdAt
       self.updatedAt = updatedAt

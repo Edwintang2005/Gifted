@@ -29,11 +29,19 @@ struct AddToList: View{
 
     @Environment(\.presentationMode) var presentationMode
     @State var name = String()
+    @State var link = String()
+    @State var price = String()
     
     var body: some View{
         VStack{
+            Spacer()
             Text("Enter a New Item")
                 .pretty()
+            Spacer()
+            TextField("Name", text: $name)
+            TextField("Link?", text: $link)
+            TextField("Price", text: $price)
+                .keyboardType(.decimalPad)
             TextEditor(text: $name)
                 .padding(.all)
             Button{
@@ -42,12 +50,13 @@ struct AddToList: View{
             } label: {
                     Text("Save")
                 }.pretty()
+            Spacer()
         }
         .padding(.horizontal)
     }
     func saveListItem() {
         print(name)
-        let item = ListItem(Name: name, userID: "1")
+        let item = ListItem(id:"1",Name: name)
         
         Amplify.DataStore.save(item) { result in
             switch result {
