@@ -7,10 +7,12 @@
 
 import Foundation
 import Amplify
+import AWSPluginsCore
 
 
 
 enum AuthState {
+    case unavailable
     case signUp
     case login
     case confirmCode(username: String)
@@ -36,6 +38,9 @@ final class SessionManager: ObservableObject {
     
     func showLogin() {
         authState = .login
+    }
+    func showUnavailable() {
+        authState = .unavailable
     }
     
     func signUp(username: String, email: String, password: String) {
@@ -122,26 +127,11 @@ final class SessionManager: ObservableObject {
                 DispatchQueue.main.async {
                     self?.getCurrentAuthUser()
                 }
+                Amplify.DataStore.clear()
                 
             case .failure(let error):
                 print("Sign out error:", error)
             }
         }
-    }
-}
-
-struct credentials {
-    var Username: String
-    var Password: String
-}
-
-
-final class UserData: ObservableObject {
-    @Published var Username = ""
-    @Published var Password = ""
-    
-    func storeData(name: String, pass: String) {
-        Username = name
-        Password = pass
     }
 }

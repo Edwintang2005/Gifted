@@ -9,20 +9,23 @@ import SwiftUI
 import Amplify
 
 //Floating Button used in Friends
-struct Floating_Button_Friends: View{
-
+struct AddToFriends: View{
+    
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View{
+        Spacer()
+        Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
+            .pretty()
+            .padding(.horizontal)
+        Spacer()
         Button{
-            print("Floating Button Test")
+            presentationMode.wrappedValue.dismiss()
         } label: {
-            Image(systemName: "plus.circle.fill")
-        }
-        .font(.system(size:80))
-        .shadow(color: .gray, radius: 0.2, x: 1, y: 1)
-        Spacer(minLength: 1200)
-        }
+            Text("CLOSE")
+        }.pretty()
     }
-
+}
 
 //Floating Button used in List
 struct AddToList: View{
@@ -39,12 +42,15 @@ struct AddToList: View{
             Text("Enter a New Item")
                 .pretty()
             Spacer()
-            TextField("Name", text: $name)
-            TextField("Link?", text: $link)
-            TextField("Price", text: $price)
+            TextField("Name", text: $name).pretty()
+            TextField("Link?", text: $link).pretty()
+            TextField("Price", text: $price).pretty()
                 .keyboardType(.decimalPad)
+            Text("Enter a Short Description for the item:")
+                .font(.caption)
+                .multilineTextAlignment(.leading)
             TextEditor(text: $description)
-                .padding(.all)
+                .pretty()
             Button{
                 saveListItem()
                 
@@ -57,35 +63,40 @@ struct AddToList: View{
     }
     func saveListItem() {
         print(name)
-        let item = ListItem(id: name, userID: "1")
-        
+        let item = ListItem(id: name,
+                            Link: link,
+                            Price: price,
+                            ShortDescription: description,
+                            userID: UserDefaults.standard.string(forKey: "Username") ?? "nullUser")
         Amplify.DataStore.save(item) { result in
             switch result {
             case .success:
                 print("Saved Item")
-                
+                presentationMode.wrappedValue.dismiss()
             case .failure(let error):
                 print(error)
             }
         }
-        presentationMode.wrappedValue.dismiss()
+        
     }
 }
 
 
 //Floating Button used in Groups
-struct Floating_Button_Groups: View{
+struct AddToGroups: View{
 
-    var body: some View{
-        Button{
-            print("Floating Button Test")
-        } label: {
-            Image(systemName: "plus.circle.fill")
-        }
-        .font(.system(size:80))
-        .shadow(color: .gray, radius: 0.2, x: 1, y: 1)
-        Spacer(minLength: 1200)
-        }
+    @Environment(\.presentationMode) var presentationMode
     
-
+    var body: some View{
+        Spacer()
+        Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
+            .pretty()
+            .padding(.horizontal)
+        Spacer()
+        Button{
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Text("CLOSE")
+        }.pretty()
     }
+}

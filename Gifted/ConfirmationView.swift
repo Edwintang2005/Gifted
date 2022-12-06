@@ -39,10 +39,7 @@ struct ConfirmationView: View {
                 
             }).pretty()
             Spacer()
-            Text("Brought to you with ❤️ from Edwin Tang and Roger Yao")
-                .font(.caption)
-                .foregroundColor(Color.gray)
-                .multilineTextAlignment(.center)
+            Text("Brought to you with ❤️ from Edwin Tang and Roger Yao").small()
         }
         .padding()
     }

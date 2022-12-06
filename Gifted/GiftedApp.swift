@@ -9,6 +9,7 @@ import Amplify
 import SwiftUI
 import AWSCognitoAuthPlugin
 import AWSDataStorePlugin
+import AWSAPIPlugin
 
 
 @main
@@ -31,6 +32,9 @@ struct GiftedApp: App {
             case .signUp:
                 SignUpView()
                     .environmentObject(sessionManager)
+            case .unavailable:
+                TempUnavailable()
+                    .environmentObject(sessionManager)
                 
             case .confirmCode(let username):
                 ConfirmationView(username: username)
@@ -45,9 +49,11 @@ struct GiftedApp: App {
     
     private func configureAmplify() {
         let dataStorePlugin = AWSDataStorePlugin(modelRegistration: AmplifyModels())
+        let apiPlugin = AWSAPIPlugin(modelRegistration: AmplifyModels())
         do {
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
             try Amplify.add(plugin: dataStorePlugin)
+            try Amplify.add(plugin: apiPlugin)
             try Amplify.configure()
             print("Amplify configured successfully")
             

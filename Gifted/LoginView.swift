@@ -14,12 +14,10 @@ struct LoginView: View {
     @AppStorage("Password") var Password: String = ""
     @State var username = ""
     @State var password = ""
-    @State var name = ""
-    
     
     var body: some View {
         VStack {
-            // Email signin functionality
+            // Username signin functionality
             VStack {
                 Spacer()
                 Text("Welcome to Gifted!")
@@ -47,46 +45,25 @@ struct LoginView: View {
             VStack(spacing: 8) {
                 // Button for Gmail Signin
                 Button{ action:do {
-                    print("Gmail Button clicked") // Dud function, replace later
+                    sessionManager.showUnavailable()
                 }
                 } label: {
                     Image(systemName: "envelope.fill")
                         .imageScale(.medium)
                     Text("Continue with Gmail")
-                }
-                .font(.body.weight(.medium))
-                .padding(.vertical)
-                .frame(maxWidth: .infinity)
-                .foregroundColor(Color(.systemBackground))
-                .background {
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(.clear.opacity(0.25), lineWidth: 0)
-                    .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(.displayP3, red: 219/255, green: 68/255, blue: 55/255)))
-                }
+                }.google()
                 // Function for Facebook signin
                 Button {
-                    print("Facebook Button clicked") // Dud function, replace later
+                    sessionManager.showUnavailable()
                 } label: {
                     Image(systemName: "f.cursive")
                         .imageScale(.medium)
                     Text("Continue with Facebook")
-                }
-                .font(.body.weight(.medium))
-                .padding(.vertical)
-                .frame(maxWidth: .infinity)
-                .clipped()
-                .foregroundColor(Color(.systemBackground))
-                .background {
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(Color(.displayP3, red: 23/255, green: 120/255, blue: 242/255))
-                }
+                }.facebook()
                 Spacer()
                 Button("Don't have an account? Sign up.", action: sessionManager.showSignUp)
                 Spacer()
-                Text("Brought to you with ❤️ from Edwin Tang and Roger Yao")
-                    .font(.caption)
-                    .foregroundColor(Color.gray)
-                    .multilineTextAlignment(.center)
+                Text("Brought to you with ❤️ from Edwin Tang and Roger Yao").small()
             }
             .padding(.horizontal)
             Spacer()
@@ -98,36 +75,28 @@ struct LoginView: View {
     }
 }
 
-
-
-
-
-// Code for Labelled Divider
-struct LabelledDivider: View {
-
-    let label: String
-    let horizontalPadding: CGFloat
-    let color: Color
-
-    init(label: String, horizontalPadding: CGFloat = 20, color: Color = .gray) {
-        self.label = label
-        self.horizontalPadding = horizontalPadding
-        self.color = color
-    }
-
-    var body: some View {
-        HStack {
-            line
-            Text(label).foregroundColor(color)
-            line
+struct TempUnavailable: View {
+    
+    @EnvironmentObject var sessionManager: SessionManager
+    
+    var body: some View{
+        VStack{
+            Spacer()
+            Text("Unfortunately This feature isn't yet Available 😩 \n \n Perhaps in the next Update??")
+                .pretty()
+            Spacer()
+            Text("Or you could just donate to us devs to speed things along, button below!").small()
+            Spacer()
+            Link("Donate Here!", destination: URL(string:"https://www.youtube.com/watch?v=dQw4w9WgXcQ")!).pretty()
+            Button{
+                sessionManager.showLogin()
+            } label: {
+                Text("Back to Login")
+            }
+            Spacer()
         }
     }
-
-    var line: some View {
-        VStack { Divider().background(color) }.padding(horizontalPadding)
-    }
 }
-
 
 // Ignore below, simulator code
 

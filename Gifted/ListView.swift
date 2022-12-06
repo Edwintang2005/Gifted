@@ -22,10 +22,11 @@ struct ListView: View {
             ZStack {
                 VStack {
                     List {
-                        ForEach(listitems) {
+                        ForEach(filterItem(listed: listitems)) {
                             Item in Text( Item.id )
                         }
                         .onDelete(perform: deleteItem)
+                        
                     }
                     HStack(spacing: 10) {
                         Image(uiImage: UIImage(named: "WishlistLoading.jpg") ?? .init())
@@ -52,7 +53,6 @@ struct ListView: View {
                     }
                     .padding(.bottom)
                 }
-                .padding(.horizontal)
                 VStack{
                     Spacer()
                     HStack{
@@ -62,8 +62,7 @@ struct ListView: View {
                         } label: {
                             Image(systemName: "plus.circle.fill")
                         }
-                        .font(.system(size:80))
-                        .shadow(color: .gray, radius: 0.2, x: 1, y: 1)
+                        .floaty()
                     }
                 }
             }
@@ -139,6 +138,12 @@ struct ListView: View {
         }
     }
     
+    func filterItem(listed: [ListItem]) -> [ListItem] {
+        return listed.filter {Item in
+            Item.userID == UserDefaults.standard.string(forKey: "Username")
+        }
+
+    }
 }
 
 

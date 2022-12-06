@@ -8,6 +8,7 @@
 import SwiftUI
 import Amplify
 import AWSPluginsCore
+import AWSCognitoIdentityProvider
 
 
 // Window Post-login, includes a menu to navigate to friends tab
@@ -61,7 +62,6 @@ struct MainView: View{
     @EnvironmentObject var sessionManager: SessionManager
     @Binding var ShowMenu: Bool
     
-
     
     var body: some View{
         ScrollView{
@@ -79,11 +79,14 @@ struct MainView: View{
                 Text("Hello, world!")
             }
             .padding()
-            }
+        }
         .navigationBarTitle("Home")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear{
+            ShowMenu = false
         }
     }
+}
 
 
 
