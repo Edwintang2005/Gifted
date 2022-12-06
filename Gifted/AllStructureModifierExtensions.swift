@@ -1,19 +1,27 @@
 //
-//  PrettyModifierExtensions.swift
+//  AllStructureModifierExtensions.swift
 //  Gifted
 //
 //  Created by Edwin Tang on 4/12/2022.
 //
 
 import SwiftUI
+import Foundation
 
+// Visual Elements Extensions
 extension Text{
     func pretty() -> some View{
         self.font(.title2)
             .multilineTextAlignment(.center)
+            .padding(.all)
     }
     func small() -> some View{
         self.font(.caption)
+            .foregroundColor(Color.gray)
+            .multilineTextAlignment(.center)
+    }
+    func medium() -> some View{
+        self.font(.footnote)
             .foregroundColor(Color.gray)
             .multilineTextAlignment(.center)
     }
@@ -119,5 +127,21 @@ struct LabelledDivider: View {
 
     var line: some View {
         VStack { Divider().background(color) }.padding(horizontalPadding)
+    }
+}
+
+
+// AWS Data structure Extensions
+extension ListItem: Identifiable {}
+
+extension ListItem: Equatable{
+    public static func ==(lhs: ListItem, rhs: ListItem) -> Bool {
+        lhs.id == rhs.id && lhs.userID == rhs.userID
+    }
+}
+
+extension ListItem: Hashable{
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id + userID)
     }
 }

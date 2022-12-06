@@ -17,7 +17,6 @@ struct AddToFriends: View{
         Spacer()
         Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
             .pretty()
-            .padding(.horizontal)
         Spacer()
         Button{
             presentationMode.wrappedValue.dismiss()
@@ -92,7 +91,6 @@ struct AddToGroups: View{
         Spacer()
         Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
             .pretty()
-            .padding(.horizontal)
         Spacer()
         Button{
             presentationMode.wrappedValue.dismiss()

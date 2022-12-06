@@ -67,7 +67,7 @@ struct MainView: View{
         ScrollView{
             VStack(spacing: 50) {
                 HStack {
-                    Text("Hello, \(UserDefaults.standard.string(forKey: "Username") ?? "Anonymous User 😊")!") // To be replaced with name from user file
+                    Text("Hello, \(UserDefaults.standard.string(forKey: "Username") ?? "Anonymous User 😊")!")
                         .font(.headline)
                         .foregroundColor(.secondary)
                     Spacer()

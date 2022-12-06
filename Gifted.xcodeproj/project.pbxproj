@@ -10,7 +10,6 @@
 		E87BE3E4293B5C2A007DC233 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87BE3E3293B5C2A007DC233 /* SessionManager.swift */; };
 		E894FF9A293C165200095DD2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FF99293C165200095DD2 /* SignUpView.swift */; };
 		E894FF9C293C16FA00095DD2 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */; };
-		E894FF9E293C174500095DD2 /* PrettyModifierExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FF9D293C174500095DD2 /* PrettyModifierExtensions.swift */; };
 		E894FFA1293C1BA700095DD2 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E894FFA0293C1BA700095DD2 /* AWSAPIPlugin */; };
 		E894FFA3293C1BA700095DD2 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E894FFA2293C1BA700095DD2 /* AWSCognitoAuthPlugin */; };
 		E894FFA5293C1BA700095DD2 /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E894FFA4293C1BA700095DD2 /* AWSDataStorePlugin */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -21,12 +20,12 @@
 		E894FFAF293C1BA700095DD2 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = E894FFAE293C1BA700095DD2 /* Amplify */; };
 		E894FFB1293C75DD00095DD2 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FFB0293C75DD00095DD2 /* ListView.swift */; };
 		E894FFB3293C767C00095DD2 /* FloatingElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */; };
+		E8957C592940095C00058AC2 /* AllStructureModifierExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */; };
 		E8B3D8B0293E026A00712537 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3D8AB293E026A00712537 /* ListItem.swift */; };
 		E8B3D8B1293E026A00712537 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3D8AC293E026A00712537 /* AmplifyModels.swift */; };
 		E8B3D8B2293E026A00712537 /* User+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3D8AD293E026A00712537 /* User+Schema.swift */; };
 		E8B3D8B3293E026A00712537 /* ListItem+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3D8AE293E026A00712537 /* ListItem+Schema.swift */; };
 		E8B3D8B4293E026A00712537 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3D8AF293E026A00712537 /* User.swift */; };
-		E8DDDFA2293D862F0011C5A2 /* AWSDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DDDFA1293D862F0011C5A2 /* AWSDataExtensions.swift */; };
 		E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B46293AF173003E23B5 /* GiftedApp.swift */; };
 		E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B48293AF173003E23B5 /* ContentView.swift */; };
 		E8F91B4B293AF177003E23B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F91B4A293AF177003E23B5 /* Assets.xcassets */; };
@@ -43,15 +42,14 @@
 		E87BE3E3293B5C2A007DC233 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		E894FF99293C165200095DD2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
-		E894FF9D293C174500095DD2 /* PrettyModifierExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrettyModifierExtensions.swift; sourceTree = "<group>"; };
 		E894FFB0293C75DD00095DD2 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingElementsView.swift; sourceTree = "<group>"; };
+		E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllStructureModifierExtensions.swift; sourceTree = "<group>"; };
 		E8B3D8AB293E026A00712537 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		E8B3D8AC293E026A00712537 /* AmplifyModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmplifyModels.swift; sourceTree = "<group>"; };
 		E8B3D8AD293E026A00712537 /* User+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Schema.swift"; sourceTree = "<group>"; };
 		E8B3D8AE293E026A00712537 /* ListItem+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListItem+Schema.swift"; sourceTree = "<group>"; };
 		E8B3D8AF293E026A00712537 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		E8DDDFA1293D862F0011C5A2 /* AWSDataExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataExtensions.swift; sourceTree = "<group>"; };
 		E8F91B43293AF173003E23B5 /* Gifted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gifted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8F91B46293AF173003E23B5 /* GiftedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftedApp.swift; sourceTree = "<group>"; };
 		E8F91B48293AF173003E23B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -129,9 +127,9 @@
 			children = (
 				E8F91B64293B1070003E23B5 /* Gifted.entitlements */,
 				E8F91B5A293AF9E8003E23B5 /* Info.plist */,
+				E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */,
 				E87BE3E3293B5C2A007DC233 /* SessionManager.swift */,
 				E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */,
-				E894FF9D293C174500095DD2 /* PrettyModifierExtensions.swift */,
 				E8F91B46293AF173003E23B5 /* GiftedApp.swift */,
 				E894FF99293C165200095DD2 /* SignUpView.swift */,
 				E8F91B48293AF173003E23B5 /* ContentView.swift */,
@@ -141,7 +139,6 @@
 				E8FC8933293CB62400645630 /* GroupsView.swift */,
 				E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */,
 				E894FFB0293C75DD00095DD2 /* ListView.swift */,
-				E8DDDFA1293D862F0011C5A2 /* AWSDataExtensions.swift */,
 				E8F91B4A293AF177003E23B5 /* Assets.xcassets */,
 				E8F91B66293B124B003E23B5 /* amplifyconfiguration.json */,
 				E8F91B65293B124A003E23B5 /* awsconfiguration.json */,
@@ -247,6 +244,7 @@
 				E8F91B55293AF20D003E23B5 /* ItemDetailsView.swift in Sources */,
 				E894FFB1293C75DD00095DD2 /* ListView.swift in Sources */,
 				E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */,
+				E8957C592940095C00058AC2 /* AllStructureModifierExtensions.swift in Sources */,
 				E894FF9A293C165200095DD2 /* SignUpView.swift in Sources */,
 				E894FFB3293C767C00095DD2 /* FloatingElementsView.swift in Sources */,
 				E8FC8934293CB62400645630 /* GroupsView.swift in Sources */,
@@ -254,13 +252,11 @@
 				E8F91B57293AF234003E23B5 /* LoginView.swift in Sources */,
 				E8B3D8B0293E026A00712537 /* ListItem.swift in Sources */,
 				E8B3D8B3293E026A00712537 /* ListItem+Schema.swift in Sources */,
-				E8DDDFA2293D862F0011C5A2 /* AWSDataExtensions.swift in Sources */,
 				E8B3D8B1293E026A00712537 /* AmplifyModels.swift in Sources */,
 				E894FF9C293C16FA00095DD2 /* ConfirmationView.swift in Sources */,
 				E8B3D8B4293E026A00712537 /* User.swift in Sources */,
 				E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */,
 				E87BE3E4293B5C2A007DC233 /* SessionManager.swift in Sources */,
-				E894FF9E293C174500095DD2 /* PrettyModifierExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
