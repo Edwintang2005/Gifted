@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ItemDetailsView: View {
+    
+    let listItem : ListItem
     var body: some View {
         ScrollView{
             VStack {
@@ -35,16 +37,16 @@ struct ItemDetailsView: View {
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 3) {
-                        Text("Simple item description") // Replace with item description
+                        Text(listItem.ShortDescription ?? " ") // Replace with item description
                             .font(.headline.weight(.medium))
                             .lineLimit(2)
-                        Text("From Store A") // Replace with store
+                        Text(listItem.Link ?? " ") // Replace with store
                             .font(.subheadline.weight(.medium))
                             .lineLimit(2)
                             .foregroundColor(.secondary)
                     }
                     Spacer()
-                    Text("$Price") // Replace with Item Price
+                    Text("$" + (listItem.Price ?? " ")) // Replace with Item Price
                         .font(.body)
                         .foregroundColor(.primary)
                 }
@@ -73,7 +75,7 @@ struct ItemDetailsView: View {
                 .padding(.vertical)
 
         }
-        .navigationTitle("Item Name")
+        .navigationTitle(listItem.Name ?? " ")
     }
 }
 

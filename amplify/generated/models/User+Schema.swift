@@ -6,8 +6,7 @@ extension User {
   // MARK: - CodingKeys 
    public enum CodingKeys: String, ModelKey {
     case id
-    case Email
-    case Password
+    case Username
     case ListItems
     case createdAt
     case updatedAt
@@ -31,8 +30,7 @@ extension User {
     
     model.fields(
       .field(user.id, is: .required, ofType: .string),
-      .field(user.Email, is: .optional, ofType: .string),
-      .field(user.Password, is: .required, ofType: .string),
+      .field(user.Username, is: .optional, ofType: .string),
       .hasMany(user.ListItems, is: .optional, ofType: ListItem.self, associatedWith: ListItem.keys.userID),
       .field(user.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(user.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)

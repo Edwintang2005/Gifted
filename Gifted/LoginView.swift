@@ -11,7 +11,6 @@ struct LoginView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
     @AppStorage("Username") var Username: String = ""
-    @AppStorage("Password") var Password: String = ""
     @State var username = ""
     @State var password = ""
     
@@ -36,7 +35,6 @@ struct LoginView: View {
                     )
                     print("logged in")
                     Username = username
-                    Password = password
                 }).pretty()
             }
             .padding(.horizontal)

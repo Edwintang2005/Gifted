@@ -6,8 +6,9 @@ extension ListItem {
   // MARK: - CodingKeys 
    public enum CodingKeys: String, ModelKey {
     case id
-    case Link
+    case Name
     case Price
+    case Link
     case ShortDescription
     case userID
     case createdAt
@@ -33,8 +34,9 @@ extension ListItem {
     
     model.fields(
       .field(listItem.id, is: .required, ofType: .string),
-      .field(listItem.Link, is: .optional, ofType: .string),
+      .field(listItem.Name, is: .optional, ofType: .string),
       .field(listItem.Price, is: .optional, ofType: .string),
+      .field(listItem.Link, is: .optional, ofType: .string),
       .field(listItem.ShortDescription, is: .optional, ofType: .string),
       .field(listItem.userID, is: .required, ofType: .string),
       .field(listItem.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),

@@ -50,5 +50,12 @@
         }
       }
     }
+  },
+  "storage": {
+    "s3giftedstoragefadb757a": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
   }
 }

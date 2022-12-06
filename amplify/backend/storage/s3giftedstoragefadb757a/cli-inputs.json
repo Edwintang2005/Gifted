@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3giftedstoragefadb757a",
+  "bucketName": "gifted-storage-fadb757a",
+  "policyUUID": "c7f5d93c",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

@@ -63,9 +63,10 @@ struct AddToList: View{
     }
     func saveListItem() {
         print(name)
-        let item = ListItem(id: name,
-                            Link: link,
+        let item = ListItem(id: UUID().uuidString,
+                            Name: name,
                             Price: price,
+                            Link: link,
                             ShortDescription: description,
                             userID: UserDefaults.standard.string(forKey: "Username") ?? "nullUser")
         Amplify.DataStore.save(item) { result in

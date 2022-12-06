@@ -18,65 +18,44 @@ struct ListView: View {
     
     
     var body: some View {
-        NavigationView{
-            ZStack {
-                VStack {
-                    List {
-                        ForEach(filterItem(listed: listitems)) {
-                            Item in Text( Item.id )
-                        }
-                        .onDelete(perform: deleteItem)
-                        
-                    }
-                    HStack(spacing: 10) {
-                        Image(uiImage: UIImage(named: "WishlistLoading.jpg") ?? .init())
-                            .renderingMode(.original)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 70, height: 70)
-                            .clipped()
-                            .mask { RoundedRectangle(cornerRadius: 8, style: .continuous) }
-                        VStack(alignment: .leading) {
-                            Text("New York City")
-                                .font(.system(size: 16, weight: .medium, design: .default))
-                            Text("$20000")
-                        }
-                        .font(.subheadline)
-                        Spacer()
-                        // Navigation to ItemDetailsView
-                        NavigationLink(destination: ItemDetailsView()) {
-                            Image(systemName: "ellipsis")
-                                .foregroundColor(Color(.displayP3, red: 234/255, green: 76/255, blue: 97/255))
-                                .font(.title3)
-                        }
-                        
-                    }
-                    .padding(.bottom)
-                }
-                VStack{
-                    Spacer()
-                    HStack{
-                        Spacer()
-                        Button{
-                            showAddToList.toggle()
+        ZStack {
+            VStack {
+                List {
+                    ForEach(filterItem(listed: listitems)) {
+                        Item in NavigationLink{
+                            ItemDetailsView(listItem: Item)
                         } label: {
-                            Image(systemName: "plus.circle.fill")
+                            Text( Item.Name ?? " " )
                         }
-                        .floaty()
                     }
+                    .onDelete(perform: deleteItem)
+                    
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationBarTitle("My List")
-            .sheet(isPresented: $showAddToList) {
-                AddToList()
+            VStack{
+                Spacer()
+                HStack{
+                    Spacer()
+                    Button{
+                        showAddToList.toggle()
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                    }
+                    .floaty()
+                }
             }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .navigationBarTitle("My List")
+        .sheet(isPresented: $showAddToList) {
+            AddToList()
         }
         .onAppear{
             getListItem()
             observeListItem()
         }
     }
+    
     
     func getListItem(){
         Amplify.DataStore.query(ListItem.self) { result in

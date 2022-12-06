@@ -1,14 +1,15 @@
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
-  Email: AWSEmail
-  Password: String!
+  Username: String
   ListItems: [ListItem] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 type ListItem @model @auth(rules: [{allow: public}]) {
   id: ID!
-  Link: AWSURL
+  Name: String
   Price: String
+  Link: AWSURL
   ShortDescription: String
   userID: ID! @index(name: "byUser")
-} 
+}
+   
