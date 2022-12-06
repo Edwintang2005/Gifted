@@ -13,7 +13,9 @@ import AWSCognitoIdentityProvider
 
 // Window Post-login, includes a menu to navigate to friends tab
 struct ContentView: View {
+    
     @EnvironmentObject var sessionManager: SessionManager
+    
     @State var ShowMenu = false
     
     let user: AuthUser
@@ -60,6 +62,7 @@ struct ContentView: View {
 struct MainView: View{
     
     @EnvironmentObject var sessionManager: SessionManager
+    
     @Binding var ShowMenu: Bool
     
     
@@ -67,7 +70,7 @@ struct MainView: View{
         ScrollView{
             VStack(spacing: 50) {
                 HStack {
-                    Text("Hello, \(UserDefaults.standard.string(forKey: "Username") ?? "Anonymous User 😊")!") // To be replaced with name from user file
+                    Text("Hello, \(UserDefaults.standard.string(forKey: "Username") ?? "Anonymous User 😊")!")
                         .font(.headline)
                         .foregroundColor(.secondary)
                     Spacer()

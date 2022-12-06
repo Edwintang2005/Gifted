@@ -17,7 +17,6 @@ struct AddToFriends: View{
         Spacer()
         Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
             .pretty()
-            .padding(.horizontal)
         Spacer()
         Button{
             presentationMode.wrappedValue.dismiss()
@@ -31,6 +30,7 @@ struct AddToFriends: View{
 struct AddToList: View{
 
     @Environment(\.presentationMode) var presentationMode
+    
     @State var name = String()
     @State var link = String()
     @State var price = String()
@@ -92,7 +92,6 @@ struct AddToGroups: View{
         Spacer()
         Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
             .pretty()
-            .padding(.horizontal)
         Spacer()
         Button{
             presentationMode.wrappedValue.dismiss()

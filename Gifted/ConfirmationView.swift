@@ -20,23 +20,18 @@ struct ConfirmationView: View {
             
             Text("Verification for \n \(username)")
                 .pretty()
-                .padding(.top)
             Spacer()
             Image("VerificationStock")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             TextField("Confirmation Code", text: $confirmationCode).pretty()
             
-            Text("Check your email for a code")
-                .font(.footnote)
-                .foregroundColor(Color.gray)
-                .multilineTextAlignment(.center)
+            Text("Check your email for a code").medium()
             Button("Confirm", action: {
                 sessionManager.confirm(
                     username: username,
                     code: confirmationCode
                 )
-                
             }).pretty()
             Spacer()
             Text("Brought to you with ❤️ from Edwin Tang and Roger Yao").small()

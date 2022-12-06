@@ -10,7 +10,9 @@ import SwiftUI
 struct LoginView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
+    
     @AppStorage("Username") var Username: String = ""
+    
     @State var username = ""
     @State var password = ""
     
@@ -19,9 +21,7 @@ struct LoginView: View {
             // Username signin functionality
             VStack {
                 Spacer()
-                Text("Welcome to Gifted!")
-                    .font(.title2)
-                    .multilineTextAlignment(.center)
+                Text("Welcome to Gifted!").pretty()
                 Spacer()
                 Text("Login Here:")
                     .font(.title3)
@@ -80,8 +80,7 @@ struct TempUnavailable: View {
     var body: some View{
         VStack{
             Spacer()
-            Text("Unfortunately This feature isn't yet Available 😩 \n \n Perhaps in the next Update??")
-                .pretty()
+            Text("Unfortunately This feature isn't yet Available 😩 \n \n Perhaps in the next Update??").pretty()
             Spacer()
             Text("Or you could just donate to us devs to speed things along, button below!").small()
             Spacer()

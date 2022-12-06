@@ -11,8 +11,8 @@ import SwiftUI
 
 struct ListView: View {
     @EnvironmentObject var sessionManager: SessionManager
-    @State var listitems = [ListItem]()
     
+    @State var listitems = [ListItem]()
     @State var observationToken: AnyCancellable?
     @State var showAddToList = false
     
@@ -25,7 +25,7 @@ struct ListView: View {
                         Item in NavigationLink{
                             ItemDetailsView(listItem: Item)
                         } label: {
-                            Text( Item.Name ?? " " )
+                            Text( Item.Name ?? " " ).listtext()
                         }
                     }
                     .onDelete(perform: deleteItem)
@@ -51,8 +51,8 @@ struct ListView: View {
             AddToList()
         }
         .onAppear{
-            getListItem()
             observeListItem()
+            getListItem()
         }
     }
     
