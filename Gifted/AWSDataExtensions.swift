@@ -11,12 +11,12 @@ extension ListItem: Identifiable {}
 
 extension ListItem: Equatable{
     public static func ==(lhs: ListItem, rhs: ListItem) -> Bool {
-        lhs.id == rhs.id && lhs.Name == rhs.Name
+        lhs.id == rhs.id && lhs.userID == rhs.userID
     }
 }
 
 extension ListItem: Hashable{
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(id + Name)
+        hasher.combine(id + userID)
     }
 }

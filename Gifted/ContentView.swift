@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Amplify
+import AWSPluginsCore
 
 
 // Window Post-login, includes a menu to navigate to friends tab
@@ -60,13 +61,13 @@ struct MainView: View{
     @EnvironmentObject var sessionManager: SessionManager
     @Binding var ShowMenu: Bool
     
-    
+
     
     var body: some View{
         ScrollView{
             VStack(spacing: 50) {
                 HStack {
-                    Text("Hello, USERNAME!") // To be replaced with name from user file
+                    Text("Hello, \(UserDefaults.standard.string(forKey: "Username") ?? "Anonymous User 😊")!") // To be replaced with name from user file
                         .font(.headline)
                         .foregroundColor(.secondary)
                     Spacer()

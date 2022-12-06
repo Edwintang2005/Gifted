@@ -18,8 +18,9 @@ enum AuthState {
 }
 
 final class SessionManager: ObservableObject {
+    
     @Published var authState: AuthState = .login
-    @Published var Username = ""
+    
     
     func getCurrentAuthUser() {
         if let user = Amplify.Auth.getCurrentUser() {
@@ -106,7 +107,6 @@ final class SessionManager: ObservableObject {
                     DispatchQueue.main.async {
                         self?.getCurrentAuthUser()
                     }
-                    print(username)
                 }
                 
             case .failure(let error):
@@ -127,5 +127,21 @@ final class SessionManager: ObservableObject {
                 print("Sign out error:", error)
             }
         }
+    }
+}
+
+struct credentials {
+    var Username: String
+    var Password: String
+}
+
+
+final class UserData: ObservableObject {
+    @Published var Username = ""
+    @Published var Password = ""
+    
+    func storeData(name: String, pass: String) {
+        Username = name
+        Password = pass
     }
 }

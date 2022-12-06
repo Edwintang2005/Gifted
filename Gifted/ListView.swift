@@ -23,7 +23,7 @@ struct ListView: View {
                 VStack {
                     List {
                         ForEach(listitems) {
-                            Item in Text( Item.Name )
+                            Item in Text( Item.id )
                         }
                         .onDelete(perform: deleteItem)
                     }

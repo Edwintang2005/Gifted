@@ -31,6 +31,7 @@ struct AddToList: View{
     @State var name = String()
     @State var link = String()
     @State var price = String()
+    @State var description = String()
     
     var body: some View{
         VStack{
@@ -42,7 +43,7 @@ struct AddToList: View{
             TextField("Link?", text: $link)
             TextField("Price", text: $price)
                 .keyboardType(.decimalPad)
-            TextEditor(text: $name)
+            TextEditor(text: $description)
                 .padding(.all)
             Button{
                 saveListItem()
@@ -56,7 +57,7 @@ struct AddToList: View{
     }
     func saveListItem() {
         print(name)
-        let item = ListItem(id:"1",Name: name)
+        let item = ListItem(id: name, userID: "1")
         
         Amplify.DataStore.save(item) { result in
             switch result {
