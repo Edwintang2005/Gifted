@@ -49,13 +49,17 @@ struct GiftedApp: App {
     }
     
     private func configureAmplify() {
-        let dataStorePlugin = AWSDataStorePlugin(modelRegistration: AmplifyModels())
-        let apiPlugin = AWSAPIPlugin(modelRegistration: AmplifyModels())
         do {
+            //Storage
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
             try Amplify.add(plugin: AWSS3StoragePlugin())
-            try Amplify.add(plugin: dataStorePlugin)
-            try Amplify.add(plugin: apiPlugin)
+            
+            //Datastore
+            let models = AmplifyModels()
+            try Amplify.add(plugin: AWSDataStorePlugin(modelRegistration: models))
+            try Amplify.add(plugin: AWSAPIPlugin(modelRegistration: models))
+            
+            // Configure Plugins
             try Amplify.configure()
             print("Amplify configured successfully")
             

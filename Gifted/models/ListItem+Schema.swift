@@ -8,9 +8,8 @@ extension ListItem {
     case id
     case Name
     case Price
-    case ShortDescription
-    case ImageKey
     case Link
+    case ShortDescription
     case userID
     case createdAt
     case updatedAt
@@ -37,9 +36,8 @@ extension ListItem {
       .field(listItem.id, is: .required, ofType: .string),
       .field(listItem.Name, is: .optional, ofType: .string),
       .field(listItem.Price, is: .optional, ofType: .string),
-      .field(listItem.ShortDescription, is: .optional, ofType: .string),
-      .field(listItem.ImageKey, is: .optional, ofType: .string),
       .field(listItem.Link, is: .optional, ofType: .string),
+      .field(listItem.ShortDescription, is: .optional, ofType: .string),
       .field(listItem.userID, is: .required, ofType: .string),
       .field(listItem.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(listItem.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)

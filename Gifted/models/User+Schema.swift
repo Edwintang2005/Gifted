@@ -30,7 +30,7 @@ extension User {
     
     model.fields(
       .field(user.id, is: .required, ofType: .string),
-      .field(user.Username, is: .required, ofType: .string),
+      .field(user.Username, is: .optional, ofType: .string),
       .hasMany(user.ListItems, is: .optional, ofType: ListItem.self, associatedWith: ListItem.keys.userID),
       .field(user.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(user.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)

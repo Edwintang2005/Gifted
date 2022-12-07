@@ -18,13 +18,12 @@ struct ListView: View {
     
     var body: some View {
         ZStack {
-            
             List {
                 ForEach(filterItem(listed: listitems)) {
                     Item in NavigationLink{
                         ItemDetailsView(listItem: Item)
                     } label: {
-                        Text( Item.Name ?? " " ).listtext()
+                        Text(Item.Name ?? " ").listtext()
                     }
                 }
                 .onDelete(perform: deleteItem)
@@ -47,13 +46,14 @@ struct ListView: View {
 //            AddToList()
 //        }
         .onAppear{
-            observeListItem()
             getListItem()
+            observeListItem()
         }
     }
     
     
     func getListItem(){
+        
         Amplify.DataStore.query(ListItem.self) { result in
             switch result {
             case.success(let listitems):
@@ -66,6 +66,7 @@ struct ListView: View {
     }
     
     func observeListItem() {
+        
         observationToken = Amplify.DataStore.publisher(for: ListItem.self).sink(
             receiveCompletion: { completion in
                 if case .failure(let error) = completion {

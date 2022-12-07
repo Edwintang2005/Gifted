@@ -83,8 +83,8 @@ struct AddToList: View{
         let item = ListItem(id: UUID().uuidString,
                             Name: name,
                             Price: price,
-                            Link: link,
                             ShortDescription: description,
+                            Link: link,
                             userID: UserDefaults.standard.string(forKey: "Username") ?? "nullUser")
         Amplify.DataStore.save(item) { result in
             switch result {
