@@ -4,10 +4,6 @@
 <dict>
 	<key>CFBundleIdentifier</key>
 	<string></string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Need access to photos to share</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Need to take pictures to share</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

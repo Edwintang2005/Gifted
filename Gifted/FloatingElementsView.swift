@@ -37,6 +37,7 @@ struct AddToList: View{
     @State var price = String()
     @State var description = String()
     
+    
     //Variables for getting image input
     @State var showingImagePicker = false
     @State var inputImage: UIImage?
@@ -67,6 +68,7 @@ struct AddToList: View{
             }
             Button{
                 saveListItem()
+                StoreImage(inputImage!)
             } label: {
                     Text("Save")
                 }.pretty()
@@ -79,11 +81,14 @@ struct AddToList: View{
         }
     }
     func saveListItem() {
+        
+        
         print(name)
         let item = ListItem(id: UUID().uuidString,
                             Name: name,
                             Price: price,
                             ShortDescription: description,
+                            ImageKey: UserDefaults.standard.string(forKey: "ImageKey"),
                             Link: link,
                             userID: UserDefaults.standard.string(forKey: "Username") ?? "nullUser")
         Amplify.DataStore.save(item) { result in
@@ -96,6 +101,22 @@ struct AddToList: View{
             }
         }
         
+    }
+    
+    func StoreImage(_ image: UIImage) {
+        guard let ImageData = image.jpegData(compressionQuality:0.5) else {return}
+        let key = UUID().uuidString + ".jpg"
+        @AppStorage("ImageKey") var ImageKey: String = ""
+        
+        _ = Amplify.Storage.uploadData(key: key, data: ImageData) { result in
+            switch result {
+            case .success:
+                print("Uploaded to DB!")
+                ImageKey = key
+            case .failure(let error):
+                print("Could not Upload - \(error)")
+            }
+        }
     }
     
     func loadImage() {
