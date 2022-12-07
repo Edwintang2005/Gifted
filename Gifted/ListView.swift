@@ -9,47 +9,43 @@ import Amplify
 import Combine
 import SwiftUI
 
+
 struct ListView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     @State var listitems = [ListItem]()
     @State var observationToken: AnyCancellable?
-    @State var showAddToList = false
-    
     
     var body: some View {
         ZStack {
-            VStack {
-                List {
-                    ForEach(filterItem(listed: listitems)) {
-                        Item in NavigationLink{
-                            ItemDetailsView(listItem: Item)
-                        } label: {
-                            Text( Item.Name ?? " " ).listtext()
-                        }
+            
+            List {
+                ForEach(filterItem(listed: listitems)) {
+                    Item in NavigationLink{
+                        ItemDetailsView(listItem: Item)
+                    } label: {
+                        Text( Item.Name ?? " " ).listtext()
                     }
-                    .onDelete(perform: deleteItem)
-                    
                 }
+                .onDelete(perform: deleteItem)
             }
             VStack{
                 Spacer()
                 HStack{
                     Spacer()
-                    Button{
-                        showAddToList.toggle()
+                    NavigationLink{
+                        AddToList()
                     } label: {
-                        Image(systemName: "plus.circle.fill")
+                            Image(systemName: "plus.circle.fill").floaty()
                     }
-                    .floaty()
                 }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarTitle("My List")
-        .sheet(isPresented: $showAddToList) {
-            AddToList()
-        }
+//        .sheet(isPresented: $showAddToList) {
+//            AddToList()
+//        }
         .onAppear{
             observeListItem()
             getListItem()

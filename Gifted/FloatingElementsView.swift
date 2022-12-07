@@ -31,35 +31,53 @@ struct AddToList: View{
 
     @Environment(\.presentationMode) var presentationMode
     
+    //Variables for the form
     @State var name = String()
     @State var link = String()
     @State var price = String()
     @State var description = String()
     
+    //Variables for getting image input
+    @State var showingImagePicker = false
+    @State var inputImage: UIImage?
+    @State var image: Image?
+    
     var body: some View{
-        VStack{
-            Spacer()
-            Text("Enter a New Item")
-                .pretty()
+        VStack(alignment: .leading) {
             Spacer()
             TextField("Name", text: $name).pretty()
             TextField("Link?", text: $link).pretty()
             TextField("Price", text: $price).pretty()
                 .keyboardType(.decimalPad)
-            Text("Enter a Short Description for the item:")
-                .font(.caption)
-                .multilineTextAlignment(.leading)
+            Text("Enter a Short Description for the item:").small()
             TextEditor(text: $description)
                 .pretty()
+                .lineLimit(3)
+            Text("Select an image for this Item:").small()
+            ZStack{
+                Rectangle()
+                    .fill(.secondary)
+                Text("Tap to Select an image")
+                image?
+                    .resizable()
+                    .scaledToFit()
+            }
+            .onTapGesture{
+                showingImagePicker = true
+            }
             Button{
                 saveListItem()
-                
             } label: {
                     Text("Save")
                 }.pretty()
             Spacer()
         }
         .padding(.horizontal)
+        .navigationTitle("Create a New Item!")
+        .onChange(of: inputImage) { _ in loadImage() }
+        .sheet(isPresented: $showingImagePicker) {
+            ImagePicker(image: $inputImage)
+        }
     }
     func saveListItem() {
         print(name)
@@ -79,6 +97,11 @@ struct AddToList: View{
             }
         }
         
+    }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        image = Image(uiImage: inputImage)
     }
 }
 

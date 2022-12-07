@@ -28,6 +28,11 @@ struct ContentView: View {
                                 self.ShowMenu = false
                             }
                         }
+                        if $0.translation.width > 100 {
+                            withAnimation{
+                                self.ShowMenu = true
+                            }
+                        }
                     }
         return NavigationView {
                     GeometryReader { geometry in

@@ -112,29 +112,16 @@ final class SessionManager: ObservableObject {
                     DispatchQueue.main.async {
                         self?.getCurrentAuthUser()
                     }
-                    Amplify.DataStore.query(User.self, byId: username) { result in
-                        switch result{
-                        case.success(let UserList):
-                            if (UserList != nil) {
-                                print("User Exists!")
-                            }
-                            else{
-                                let ActiveUser = User(id: username, Username: username)
-                                Amplify.DataStore.save(ActiveUser) {result in
-                                    switch result {
-                                    case .success:
-                                        print("User Created!")
-                                    case .failure(let error):
-                                        print(error)
-                                    }
-                                }
-                            }
+                    let ActiveUser = User(id: username, Username: username)
+                    Amplify.DataStore.save(ActiveUser) {result in
+                        switch result {
+                        case .success:
+                            print("Successful!")
                         case .failure(let error):
                             print(error)
                         }
                     }
                 }
-                
             case .failure(let error):
                 print("Login error:", error)
             }
