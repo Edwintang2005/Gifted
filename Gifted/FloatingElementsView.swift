@@ -49,15 +49,15 @@ struct AddToList: View{
             TextField("Link?", text: $link).pretty()
             TextField("Price", text: $price).pretty()
                 .keyboardType(.decimalPad)
-            Text("Enter a Short Description for the item:").small()
-            TextEditor(text: $description)
-                .pretty()
-                .lineLimit(3)
+//            Text("Enter a Short Description for the item:").small()
+            TextField("Short Description", text: $description).pretty()
+//            TextEditor(text: $description)
+//                .pretty()
             Text("Select an image for this Item:").small()
             ZStack{
                 Rectangle()
                     .fill(.secondary)
-                Text("Tap to Select an image")
+                Text("Tap to Select an image").listtext()
                 image?
                     .resizable()
                     .scaledToFit()
@@ -70,7 +70,6 @@ struct AddToList: View{
             } label: {
                     Text("Save")
                 }.pretty()
-            Spacer()
         }
         .padding(.horizontal)
         .navigationTitle("Create a New Item!")
