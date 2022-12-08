@@ -21,6 +21,8 @@ struct ContentView: View {
     let user: AuthUser
     
     var body: some View {
+        
+        // Animations for showing and hiding the menu
         let drag = DragGesture()
                     .onEnded {
                         if $0.translation.width < -100 {
@@ -34,6 +36,8 @@ struct ContentView: View {
                             }
                         }
                     }
+        
+        // The function that causes the display of both the Home page and the Menu
         return NavigationView {
                     GeometryReader { geometry in
                         ZStack(alignment: .leading) {
@@ -63,11 +67,12 @@ struct ContentView: View {
     }
 }
 
-// Object for the Main view
+// Object for the Main view or what is essentially our home screen
 struct MainView: View{
     
     @EnvironmentObject var sessionManager: SessionManager
     
+    //Variable for whether or not to show the menu
     @Binding var ShowMenu: Bool
     
     
@@ -75,12 +80,12 @@ struct MainView: View{
         ScrollView{
             VStack(spacing: 50) {
                 HStack {
-                    Text("Hello, \(UserDefaults.standard.string(forKey: "Username") ?? "Anonymous User 😊")!")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
+                    // Text that displays the User's name
+                    Text("Hello, \(UserDefaults.standard.string(forKey: "Username") ?? "Anonymous User 😊")!").homepagename()
                     Spacer()
                     Button("Sign Out", action: sessionManager.signOut)
                 }
+                // replace below with Roger's design of Homescreen
                 Image(systemName: "globe")
                     .imageScale(.large)
                     .foregroundColor(.accentColor)
@@ -90,7 +95,7 @@ struct MainView: View{
         }
         .navigationBarTitle("Home")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear{
+        .onAppear{ // Basically hides the menu everytime the homescreen is displayed
             ShowMenu = false
         }
     }
@@ -98,7 +103,7 @@ struct MainView: View{
 
 
 
-// Object for the popup menu view
+// Object for the popup menu
 struct MenuView: View{
     
     @EnvironmentObject var sessionManager: SessionManager

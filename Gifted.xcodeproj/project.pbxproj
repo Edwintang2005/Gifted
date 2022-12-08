@@ -26,8 +26,6 @@
 		E8957C7E29405B3E00058AC2 /* User+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8957C7729405B3E00058AC2 /* User+Schema.swift */; };
 		E8957C7F29405B3E00058AC2 /* ListItem+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8957C7829405B3E00058AC2 /* ListItem+Schema.swift */; };
 		E8957C8029405B3E00058AC2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8957C7929405B3E00058AC2 /* User.swift */; };
-		E8957C8129405B3E00058AC2 /* Images+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8957C7A29405B3E00058AC2 /* Images+Schema.swift */; };
-		E8957C8229405B3E00058AC2 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8957C7B29405B3E00058AC2 /* Images.swift */; };
 		E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B46293AF173003E23B5 /* GiftedApp.swift */; };
 		E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B48293AF173003E23B5 /* ContentView.swift */; };
 		E8F91B4B293AF177003E23B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F91B4A293AF177003E23B5 /* Assets.xcassets */; };
@@ -52,8 +50,6 @@
 		E8957C7729405B3E00058AC2 /* User+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Schema.swift"; sourceTree = "<group>"; };
 		E8957C7829405B3E00058AC2 /* ListItem+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListItem+Schema.swift"; sourceTree = "<group>"; };
 		E8957C7929405B3E00058AC2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		E8957C7A29405B3E00058AC2 /* Images+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Images+Schema.swift"; sourceTree = "<group>"; };
-		E8957C7B29405B3E00058AC2 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		E8F91B43293AF173003E23B5 /* Gifted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gifted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8F91B46293AF173003E23B5 /* GiftedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftedApp.swift; sourceTree = "<group>"; };
 		E8F91B48293AF173003E23B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,8 +92,6 @@
 				E8957C7729405B3E00058AC2 /* User+Schema.swift */,
 				E8957C7829405B3E00058AC2 /* ListItem+Schema.swift */,
 				E8957C7929405B3E00058AC2 /* User.swift */,
-				E8957C7A29405B3E00058AC2 /* Images+Schema.swift */,
-				E8957C7B29405B3E00058AC2 /* Images.swift */,
 			);
 			name = models;
 			path = ../amplify/generated/models;
@@ -248,8 +242,6 @@
 				E8957C8029405B3E00058AC2 /* User.swift in Sources */,
 				E8957C7F29405B3E00058AC2 /* ListItem+Schema.swift in Sources */,
 				E894FFB3293C767C00095DD2 /* FloatingElementsView.swift in Sources */,
-				E8957C8129405B3E00058AC2 /* Images+Schema.swift in Sources */,
-				E8957C8229405B3E00058AC2 /* Images.swift in Sources */,
 				E8FC8934293CB62400645630 /* GroupsView.swift in Sources */,
 				E8F91B57293AF234003E23B5 /* LoginView.swift in Sources */,
 				E8957C7E29405B3E00058AC2 /* User+Schema.swift in Sources */,

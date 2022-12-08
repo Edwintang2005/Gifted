@@ -10,7 +10,7 @@ import Amplify
 import AWSPluginsCore
 
 
-
+// Global variable that controls the state that the user is in regarding signin. This saves even after app close
 enum AuthState {
     case unavailable
     case signUp
@@ -19,6 +19,7 @@ enum AuthState {
     case session(user: AuthUser)
 }
 
+// User Signin state manager
 final class SessionManager: ObservableObject {
     
     @Published var authState: AuthState = .login
@@ -32,17 +33,22 @@ final class SessionManager: ObservableObject {
         }
     }
     
+    // Controller function to show signup page
     func showSignUp() {
         authState = .signUp
     }
     
+    // Controller function to show login page
     func showLogin() {
         authState = .login
     }
+    
+    // Controller function to show temporary unavailable page
     func showUnavailable() {
         authState = .unavailable
     }
     
+    // Controller function to show signup page
     func signUp(username: String, email: String, password: String) {
         let attributes = [AuthUserAttribute(.email, value: email)]
         let options = AuthSignUpRequest.Options(userAttributes: attributes)
@@ -77,7 +83,7 @@ final class SessionManager: ObservableObject {
         }
     }
     
-    
+    // Function to make the confirmation code authentication work
     func confirm(username: String, code: String) {
         _ = Amplify.Auth.confirmSignUp(
             for: username,
@@ -99,6 +105,7 @@ final class SessionManager: ObservableObject {
         }
     }
     
+    // Function to allow users to login
     func login(username: String, password: String) {
         _ = Amplify.Auth.signIn(
             username: username,
@@ -112,15 +119,16 @@ final class SessionManager: ObservableObject {
                     DispatchQueue.main.async {
                         self?.getCurrentAuthUser()
                     }
-                    let ActiveUser = User(id: username, Username: username)
-                    Amplify.DataStore.save(ActiveUser) {result in
-                        switch result {
-                        case .success:
-                            print("Successful!")
-                        case .failure(let error):
-                            print(error)
-                        }
-                    }
+                    // Function that was supposed to create user DB file alongside login however doesn't work
+//                    let ActiveUser = User(id: username, Username: username)
+//                    Amplify.DataStore.save(ActiveUser) {result in
+//                        switch result {
+//                        case .success:
+//                            print("Successful!")
+//                        case .failure(let error):
+//                            print(error)
+//                        }
+//                    }
                 }
             case .failure(let error):
                 print("Login error:", error)
@@ -128,6 +136,7 @@ final class SessionManager: ObservableObject {
         }
     }
     
+    // Function that allows users to signout and clears any cache data on user device
     func signOut() {
         _ = Amplify.Auth.signOut { [weak self] result in
             switch result {

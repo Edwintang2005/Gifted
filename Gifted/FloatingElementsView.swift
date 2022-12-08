@@ -8,25 +8,9 @@
 import SwiftUI
 import Amplify
 
-//Floating Button used in Friends
-struct AddToFriends: View{
-    
-    @Environment(\.presentationMode) var presentationMode
-    
-    var body: some View{
-        Spacer()
-        Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
-            .pretty()
-        Spacer()
-        Button{
-            presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text("CLOSE")
-        }.pretty()
-    }
-}
 
-//Floating Button used in List
+
+//Page view used in lists to allow users to add to their list
 struct AddToList: View{
 
     @Environment(\.presentationMode) var presentationMode
@@ -49,11 +33,8 @@ struct AddToList: View{
             TextField("Name", text: $name).pretty()
             TextField("Link?", text: $link).pretty()
             TextField("Price", text: $price).pretty()
-                .keyboardType(.decimalPad)
-//            Text("Enter a Short Description for the item:").small()
+                .keyboardType(.decimalPad) // enforces number input for prices
             TextField("Short Description", text: $description).pretty()
-//            TextEditor(text: $description)
-//                .pretty()
             Text("Select an image for this Item:").small()
             ZStack{
                 Rectangle()
@@ -67,8 +48,8 @@ struct AddToList: View{
                 showingImagePicker = true
             }
             Button{
+                StoreImage(inputImage)
                 saveListItem()
-                StoreImage(inputImage!)
             } label: {
                     Text("Save")
                 }.pretty()
@@ -80,9 +61,9 @@ struct AddToList: View{
             ImagePicker(image: $inputImage)
         }
     }
+    
+    // Function that updates list items to the cloud
     func saveListItem() {
-        
-        
         print(name)
         let item = ListItem(id: UUID().uuidString,
                             Name: name,
@@ -103,22 +84,25 @@ struct AddToList: View{
         
     }
     
-    func StoreImage(_ image: UIImage) {
-        guard let ImageData = image.jpegData(compressionQuality:0.5) else {return}
+    // Function that saves image input if exists in the database Storage
+    func StoreImage(_ image: UIImage?) {
+        guard let ImageData = image?.jpegData(compressionQuality:0.5) else {return}
         let key = UUID().uuidString + ".jpg"
+        print(key)
         @AppStorage("ImageKey") var ImageKey: String = ""
-        
+        ImageKey = key
         _ = Amplify.Storage.uploadData(key: key, data: ImageData) { result in
             switch result {
             case .success:
                 print("Uploaded to DB!")
-                ImageKey = key
             case .failure(let error):
                 print("Could not Upload - \(error)")
             }
         }
     }
     
+    
+    // Function that displays the image that user has picked
     func loadImage() {
         guard let inputImage = inputImage else { return }
         image = Image(uiImage: inputImage)
@@ -126,7 +110,26 @@ struct AddToList: View{
 }
 
 
-//Floating Button used in Groups
+//Page trigged by add button in Friends
+struct AddToFriends: View{
+    
+    @Environment(\.presentationMode) var presentationMode
+    
+    var body: some View{
+        Spacer()
+        Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
+            .pretty()
+        Spacer()
+        Button{
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Text("CLOSE")
+        }.pretty()
+    }
+}
+
+
+//Page trigged by add button in Groups
 struct AddToGroups: View{
 
     @Environment(\.presentationMode) var presentationMode

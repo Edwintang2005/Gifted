@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Page for friends lists, not yet built although buttons and structures are all done, just need backend functionality
 struct FriendsView: View {
     
     @EnvironmentObject var sessionManager: SessionManager

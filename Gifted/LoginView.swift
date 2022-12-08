@@ -11,8 +11,10 @@ struct LoginView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
     
+    // Variable for storing the User's username for use throughout the app
     @AppStorage("Username") var Username: String = ""
     
+    // Variables for the input fields to satisfy login functionality
     @State var username = ""
     @State var password = ""
     
@@ -38,21 +40,22 @@ struct LoginView: View {
                 }).pretty()
             }
             .padding(.horizontal)
+            // The Big line with an or in the middle, for appearances
             LabelledDivider(label: "OR")
             // vertical stack created for easier button placement
             VStack(spacing: 8) {
                 // Button for Gmail Signin
                 Button{ action:do {
-                    sessionManager.showUnavailable()
+                    sessionManager.showUnavailable() // Dud function, replace with actual functionality later
                 }
                 } label: {
                     Image(systemName: "envelope.fill")
                         .imageScale(.medium)
                     Text("Continue with Gmail")
                 }.google()
-                // Function for Facebook signin
+                // Button for Facebook signin
                 Button {
-                    sessionManager.showUnavailable()
+                    sessionManager.showUnavailable() // Dud function, replace with actual functionality later
                 } label: {
                     Image(systemName: "f.cursive")
                         .imageScale(.medium)
@@ -73,6 +76,7 @@ struct LoginView: View {
     }
 }
 
+// Display view (temporary) for unavailable views
 struct TempUnavailable: View {
     
     @EnvironmentObject var sessionManager: SessionManager

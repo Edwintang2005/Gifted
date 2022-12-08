@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Page for Groups, not built yet, however physical structures are all already built
 struct GroupsView: View {
     
     @EnvironmentObject var sessionManager: SessionManager

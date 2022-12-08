@@ -32,7 +32,10 @@ extension Text{
             .foregroundColor(Color.gray)
             .multilineTextAlignment(.center)
     }
-    
+    func homepagename() -> some View{
+        self.font(.headline)
+            .foregroundColor(.secondary)
+    }
 }
 
 extension TextField {

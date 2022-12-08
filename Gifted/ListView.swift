@@ -9,7 +9,7 @@ import Amplify
 import Combine
 import SwiftUI
 
-
+// Main window to display every list item
 struct ListView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
@@ -18,8 +18,9 @@ struct ListView: View {
     
     var body: some View {
         ZStack {
+            // Code that takes retrieved list and displays each item seperately - need to change to include preliminary item information too
             List {
-                ForEach(filterItem(listed: listitems)) {
+                ForEach(listitems) {
                     Item in NavigationLink{
                         ItemDetailsView(listItem: Item)
                     } label: {
@@ -28,6 +29,8 @@ struct ListView: View {
                 }
                 .onDelete(perform: deleteItem)
             }
+            
+            // Structure that holds + button and pushes it to bottom right corner
             VStack{
                 Spacer()
                 HStack{
@@ -47,14 +50,16 @@ struct ListView: View {
 //        }
         .onAppear{
             getListItem()
-            observeListItem()
+            //observeListItem()
         }
     }
     
-    
-    func getListItem(){
-        
-        Amplify.DataStore.query(ListItem.self) { result in
+    // Function that queries database and retrieves any list items created by the user
+    func getListItem() {
+        let username = UserDefaults.standard.string(forKey: "Username")
+        let too = ListItem.keys
+        guard let name = username else {return}
+        Amplify.DataStore.query(ListItem.self, where: too.userID == name) { result in
             switch result {
             case.success(let listitems):
                 print(listitems)
@@ -65,8 +70,10 @@ struct ListView: View {
         }
     }
     
+    
+    // Need to research the necessity of this function, perhaps comes in later???
     func observeListItem() {
-        
+        let too = ListItem.keys
         observationToken = Amplify.DataStore.publisher(for: ListItem.self).sink(
             receiveCompletion: { completion in
                 if case .failure(let error) = completion {
@@ -96,6 +103,8 @@ struct ListView: View {
         
     }
     
+    
+    // Function that deletes an item when the user clicks on the delete button
     func deleteItem(indexSet: IndexSet) {
         print("Deleted item at \(indexSet)")
         
@@ -112,14 +121,29 @@ struct ListView: View {
                 print("could not delete Item - \(error)")
             }
         }
+        deleteImage(Imagekey: item.ImageKey)
     }
     
-    func filterItem(listed: [ListItem]) -> [ListItem] {
-        return listed.filter {Item in
-            Item.userID == UserDefaults.standard.string(forKey: "Username")
+    // Function that deletes the image from the database alongside the deletion of the item
+    func deleteImage( Imagekey: String?) {
+        guard let Key = Imagekey else {return}
+        Amplify.Storage.remove(key: Key) {result in
+            switch result {
+            case .success:
+                print("Deleted Image")
+            case .failure(let error):
+                print("could not delete Image - \(error)")
+            }
         }
-
     }
+    
+    // Function that basically stops displaying list items that don't belong to the user, however could be useful in future
+
+//    func filterItem(listed: [ListItem]) -> [ListItem] {
+//        return listed.filter {Item in
+//            Item.userID == UserDefaults.standard.string(forKey: "Username")
+//        }
+//    }
 }
 
 

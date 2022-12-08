@@ -18,14 +18,12 @@ struct ConfirmationView: View {
     var body: some View {
         VStack {
             
-            Text("Verification for \n \(username)")
-                .pretty()
+            Text("Verification for \n \(username)").pretty()
             Spacer()
             Image("VerificationStock")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             TextField("Confirmation Code", text: $confirmationCode).pretty()
-            
             Text("Check your email for a code").medium()
             Button("Confirm", action: {
                 sessionManager.confirm(
