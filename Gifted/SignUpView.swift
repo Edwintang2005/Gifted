@@ -11,6 +11,9 @@ struct SignUpView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
     
+    // Alert for signup error
+    
+    
     // Variables taken for each input field available
     @State var username = ""
     @State var email = ""

@@ -15,6 +15,9 @@ struct AddToList: View{
 
     @Environment(\.presentationMode) var presentationMode
     
+    //Variable for displaying alert
+    @State var errors = String()
+    
     //Variables for the form
     @State var name = String()
     @State var link = String()
@@ -36,13 +39,16 @@ struct AddToList: View{
                 .keyboardType(.decimalPad) // enforces number input for prices
             TextField("Short Description", text: $description).pretty()
             Text("Select an image for this Item:").small()
-            ZStack{
-                Rectangle()
-                    .fill(.secondary)
-                Text("Tap to Select an image").listtext()
-                image?
-                    .resizable()
-                    .scaledToFit()
+            ZStack(alignment: .center){
+                if (image == nil) {
+                    Rectangle()
+                        .fill(.secondary)
+                    Text("Tap to Select an image").listtext()
+                } else {
+                    image?
+                        .resizable()
+                        .scaledToFit()
+                }
             }
             .onTapGesture{
                 showingImagePicker = true
@@ -53,6 +59,7 @@ struct AddToList: View{
             } label: {
                     Text("Save")
                 }.pretty()
+            Spacer()
         }
         .padding(.horizontal)
         .navigationTitle("Create a New Item!")
@@ -60,6 +67,7 @@ struct AddToList: View{
         .sheet(isPresented: $showingImagePicker) {
             ImagePicker(image: $inputImage)
         }
+        
     }
     
     // Function that updates list items to the cloud
@@ -79,6 +87,7 @@ struct AddToList: View{
                 presentationMode.wrappedValue.dismiss()
             case .failure(let error):
                 print(error)
+                
             }
         }
         

@@ -17,6 +17,7 @@ struct ItemDetailsView: View {
     
     var body: some View {
         VStack {
+            Spacer()
             VStack(spacing: 40) {
                 // Image of item, contains logic to display a replacement image if no image is attatched
                 if let Render = ImageRender {
@@ -30,12 +31,11 @@ struct ItemDetailsView: View {
                     Image("ImageNotFound")
                         .renderingMode(.original)
                         .resizable()
-                        .padding(.vertical)
                         .aspectRatio(contentMode: .fit)
                         .mask { RoundedRectangle(cornerRadius: 4, style: .continuous) }
                 }
             }
-            .padding(.horizontal)
+            .padding(.all)
             // Overlay of image to represent people who have reserved the item, No actual logic or data structure attatched to this yet
             .overlay(alignment: .topTrailing) {
                 HStack {
@@ -43,7 +43,8 @@ struct ItemDetailsView: View {
                         .imageScale(.large)
                 }
                 .font(.title3)
-            }.mask {Rectangle()}
+                .padding(.horizontal)
+            }
             
             // The Small amount of information displayed below the image
             HStack {
