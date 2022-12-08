@@ -19,7 +19,6 @@ extension Text{
     func listtext() -> some View{
         self.font(.subheadline)
             .multilineTextAlignment(.leading)
-            .padding(.horizontal)
     }
     
     func small() -> some View{

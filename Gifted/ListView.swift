@@ -15,6 +15,7 @@ struct ListView: View {
     
     @State var listitems = [ListItem]()
     @State var observationToken: AnyCancellable?
+    @State var ImageRender: UIImage?
     
     var body: some View {
         ZStack {
@@ -24,7 +25,31 @@ struct ListView: View {
                     Item in NavigationLink{
                         ItemDetailsView(listItem: Item)
                     } label: {
-                        Text(Item.Name ?? " ").listtext()
+                        HStack{
+                            // Small Icon Image Rendering
+                            if let Render = ImageRender {
+                                Image(uiImage: Render)
+                                    .renderingMode(.original)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 60, height: 50)
+                                    .mask { RoundedRectangle(cornerRadius: 4, style: .continuous) }
+                            } else {
+                                Image("ImageNotFound")
+                                    .renderingMode(.original)
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                    .aspectRatio(contentMode: .fill)
+                                    .mask { RoundedRectangle(cornerRadius: 4, style: .continuous) }
+                            }
+                            VStack(alignment: .leading) {
+                                Text(Item.Name ?? " ").listtext()
+                                Text("$ \(Item.Price ?? " ")").small()
+                            }
+                            .padding(.horizontal)
+                            Spacer()
+                        }.onAppear{getImage(Imagekey: Item.ImageKey)}
+                        
                     }
                 }
                 .onDelete(perform: deleteItem)
@@ -136,6 +161,25 @@ struct ListView: View {
             }
         }
     }
+    
+    // Function that loads the images for the icons (Same as in ItemDetailsView)
+    func getImage(Imagekey: String?) {
+        guard let Key = Imagekey else {return}
+        Amplify.Storage.downloadData(key: Key) { result in
+            switch result {
+            case .success(let ImageData):
+                print("Fetched ImageData")
+                let image = UIImage(data: ImageData)
+                DispatchQueue.main.async{
+                    ImageRender = image
+                }
+                return
+            case .failure(let error):
+                print("Could not get Image URL - \(error)")
+            }
+        }
+    }
+
     
     // Function that basically stops displaying list items that don't belong to the user, however could be useful in future
 
