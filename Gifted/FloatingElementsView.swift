@@ -14,9 +14,7 @@ import Amplify
 struct AddToList: View{
 
     @Environment(\.presentationMode) var presentationMode
-    
-    //Variable for displaying alert
-    @State var errors = String()
+        
     
     //Variables for the form
     @State var name = String()
@@ -31,6 +29,7 @@ struct AddToList: View{
     @State var image: Image?
     
     var body: some View{
+        
         VStack(alignment: .leading) {
             Spacer()
             TextField("Name", text: $name).pretty()
@@ -70,6 +69,7 @@ struct AddToList: View{
         }
         
     }
+    
     
     // Function that updates list items to the cloud
     func saveListItem() {
@@ -125,16 +125,33 @@ struct AddToFriends: View{
     
     @Environment(\.presentationMode) var presentationMode
     
+    @State var username = String()
+    
+    
     var body: some View{
         Spacer()
-        Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
-            .pretty()
-        Spacer()
+        TextField("Friend's Username", text: $username).pretty()
         Button{
-            presentationMode.wrappedValue.dismiss()
+            saveFriend()
         } label: {
-            Text("CLOSE")
+            Text("Save!")
         }.pretty()
+    }
+    
+    func saveFriend() {
+        print(username)
+        let Friend = Friend(id: UUID().uuidString,
+                            Username: username,
+                            OwnerUser: UserDefaults.standard.string(forKey: "Username") ?? "nullUser")
+        Amplify.DataStore.save(Friend) { result in
+            switch result {
+            case .success:
+                print("Saved Friend!")
+                presentationMode.wrappedValue.dismiss()
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 

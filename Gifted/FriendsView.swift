@@ -5,6 +5,9 @@
 //  Created by Edwin Tang on 3/12/2022.
 //
 
+
+import Amplify
+import Combine
 import SwiftUI
 
 // Page for friends lists, not yet built although buttons and structures are all done, just need backend functionality
@@ -13,7 +16,7 @@ struct FriendsView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     @State var showAddToFriends = false
-    @State var Friends = [FriendObject]()
+    @State var Friends = [Friend]()
     @State var FriendsLength = Int()
     
     var body: some View {
@@ -29,12 +32,14 @@ struct FriendsView: View {
                     List {
                         ForEach(Friends) {
                             Friend in NavigationLink{
-                                ListView()
+                                ListView(QueryUsername: Friend.Username ?? "NullUser")
                             } label: {
-                                Text(Friend.name)
+                                Text(Friend.Username ?? " ")
                             }
                         }
+                        .onDelete(perform: deleteFriend)
                     }
+                    
                 }
             }
             VStack{
@@ -52,15 +57,48 @@ struct FriendsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarTitle("Friends")
         .onAppear{
+            getFriends()
             FriendsLength = Friends.count
+        }
+    }
+    
+    func getFriends() {
+        let username = UserDefaults.standard.string(forKey: "Username") ?? "nullUser"
+        let FriendObj = Friend.keys
+        Amplify.DataStore.query(Friend.self, where: FriendObj.OwnerUser == username) {result in
+            switch result {
+            case .success(let FriendList):
+                print(FriendList)
+                self.Friends = FriendList
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func deleteFriend(indexSet: IndexSet) {
+        print("Deleted friend at \(indexSet)")
+        
+        var updatedList = Friends
+        updatedList.remove(atOffsets: indexSet)
+        
+        guard let item =
+                Set(updatedList)
+                .symmetricDifference(Friends).first else
+                {return}
+        
+        Amplify.DataStore.delete(item) { result in
+            switch result {
+            case .success:
+                print("Deleted Friend")
+            case .failure(let error):
+                print("Could not delete Friend - \(error)")
+            }
+            
         }
     }
 }
 
-struct FriendObject: Identifiable {
-    let id = UUID()
-    let name: String
-}
 
 
 

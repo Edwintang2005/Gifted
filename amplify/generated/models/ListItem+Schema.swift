@@ -30,7 +30,6 @@ extension ListItem {
     model.pluralName = "ListItems"
     
     model.attributes(
-      .index(fields: ["userID"], name: "byUser"),
       .primaryKey(fields: [listItem.id])
     )
     

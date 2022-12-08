@@ -13,6 +13,7 @@ import SwiftUI
 struct ListView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
+    @State var QueryUsername: String
     @State var listitems = [ListItem]()
     @State var observationToken: AnyCancellable?
     @State var ImageCache = [String: UIImage]()
@@ -20,7 +21,6 @@ struct ListView: View {
     
     var body: some View {
         ZStack {
-            
             if ListLength == 0 {
                 VStack{
                     Spacer()
@@ -85,10 +85,9 @@ struct ListView: View {
     
     // Function that queries database and retrieves any list items created by the user
     func getListItem() {
-        let username = UserDefaults.standard.string(forKey: "Username")
+        let username = QueryUsername
         let ListObj = ListItem.keys
-        guard let name = username else {return}
-        Amplify.DataStore.query(ListItem.self, where: ListObj.userID == name) { result in
+        Amplify.DataStore.query(ListItem.self, where: ListObj.userID == username) { result in
             switch result {
             case.success(let listitems):
                 print(listitems)

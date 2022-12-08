@@ -219,3 +219,18 @@ extension ListItem: Hashable{
         hasher.combine(id + userID)
     }
 }
+
+extension Friend: Identifiable {}
+
+extension Friend: Equatable {
+    public static func ==(lhs: Friend, rhs: Friend)
+        -> Bool {
+        lhs.id == rhs.id && lhs.OwnerUser == rhs.OwnerUser
+    }
+}
+
+extension Friend: Hashable{
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id + OwnerUser)
+    }
+}

@@ -113,7 +113,7 @@ struct MenuView: View{
         VStack{
             
             // Menu Feature to access user's list
-            NavigationLink(destination: ListView()) {
+            NavigationLink(destination: ListView(QueryUsername: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")) {
                 HStack{
                     Image(systemName: "list.bullet.rectangle")
                     Text("My List")
