@@ -15,46 +15,52 @@ struct ListView: View {
     
     @State var listitems = [ListItem]()
     @State var observationToken: AnyCancellable?
-    @State var ImageRender: UIImage?
+    @State var ImageCache = [String: UIImage]()
+    @State var ListLength = Int()
     
     var body: some View {
         ZStack {
-            // Code that takes retrieved list and displays each item seperately - need to change to include preliminary item information too
-            List {
-                ForEach(listitems) {
-                    Item in NavigationLink{
-                        ItemDetailsView(listItem: Item)
-                    } label: {
-                        HStack{
-                            // Small Icon Image Rendering
-                            if let Render = ImageRender {
-                                Image(uiImage: Render)
-                                    .renderingMode(.original)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 60, height: 50)
-                                    .mask { RoundedRectangle(cornerRadius: 4, style: .continuous) }
-                            } else {
-                                Image("ImageNotFound")
-                                    .renderingMode(.original)
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .aspectRatio(contentMode: .fill)
-                                    .mask { RoundedRectangle(cornerRadius: 4, style: .continuous) }
-                            }
-                            VStack(alignment: .leading) {
-                                Text(Item.Name ?? " ").listtext()
-                                Text("$ \(Item.Price ?? " ")").small()
-                            }
-                            .padding(.horizontal)
-                            Spacer()
-                        }.onAppear{getImage(Imagekey: Item.ImageKey)}
-                        
-                    }
-                }
-                .onDelete(perform: deleteItem)
-            }
             
+            if ListLength == 0 {
+                VStack{
+                    Spacer()
+                    Text("You have No List Items! 😢").large()
+                    Spacer()
+                    Text("Why don't we start by adding an item using the + button!").large()
+                    Spacer()
+                }
+            } else {
+                // Code that takes retrieved list and displays each item seperately
+                List {
+                    ForEach(listitems) {
+                        Item in NavigationLink{
+                            ItemDetailsView(listItem: Item)
+                        } label: {
+                            HStack{
+                                // Small Icon Image Rendering
+                                if let key = Item.ImageKey {
+                                    if let Render = ImageCache[key] {
+                                        Image(uiImage: Render).Icon()
+                                    } else {
+                                        Image("ImageNotFound").Icon()
+                                    }
+                                } else {
+                                    Image("ImageNotFound").Icon()
+                                }
+                                
+                                VStack(alignment: .leading) {
+                                    Text(Item.Name ?? " ").listtext()
+                                    Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
+                                }
+                                .padding(.horizontal)
+                                Spacer()
+                            }.onAppear{getImage(Imagekey: Item.ImageKey)}
+                            
+                        }
+                    }
+                    .onDelete(perform: deleteItem)
+                }
+            }
             // Structure that holds + button and pushes it to bottom right corner
             VStack{
                 Spacer()
@@ -70,11 +76,9 @@ struct ListView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarTitle("My List")
-//        .sheet(isPresented: $showAddToList) {
-//            AddToList()
-//        }
         .onAppear{
             getListItem()
+            ListLength = listitems.count
             //observeListItem()
         }
     }
@@ -82,9 +86,9 @@ struct ListView: View {
     // Function that queries database and retrieves any list items created by the user
     func getListItem() {
         let username = UserDefaults.standard.string(forKey: "Username")
-        let too = ListItem.keys
+        let ListObj = ListItem.keys
         guard let name = username else {return}
-        Amplify.DataStore.query(ListItem.self, where: too.userID == name) { result in
+        Amplify.DataStore.query(ListItem.self, where: ListObj.userID == name) { result in
             switch result {
             case.success(let listitems):
                 print(listitems)
@@ -97,36 +101,36 @@ struct ListView: View {
     
     
     // Need to research the necessity of this function, perhaps comes in later???
-    func observeListItem() {
-        let too = ListItem.keys
-        observationToken = Amplify.DataStore.publisher(for: ListItem.self).sink(
-            receiveCompletion: { completion in
-                if case .failure(let error) = completion {
-                    print(error)
-                }
-            },
-            receiveValue: { changes in
-                // decoding recieved model
-                guard let item = try? changes.decodeModel(as: ListItem.self) else {return}
-                
-                switch changes.mutationType{
-                    
-                case "create":
-                    self.listitems.append(item)
-                    
-                case "delete":
-                    if let index = self.listitems.firstIndex(of: item) {
-                        self.listitems.remove(at: index)
-                    }
-                default:
-                    break
-                }
-                
-            }
-            
-        )
-        
-    }
+//    func observeListItem() {
+//        let too = ListItem.keys
+//        observationToken = Amplify.DataStore.publisher(for: ListItem.self).sink(
+//            receiveCompletion: { completion in
+//                if case .failure(let error) = completion {
+//                    print(error)
+//                }
+//            },
+//            receiveValue: { changes in
+//                // decoding recieved model
+//                guard let item = try? changes.decodeModel(as: ListItem.self) else {return}
+//
+//                switch changes.mutationType{
+//
+//                case "create":
+//                    self.listitems.append(item)
+//
+//                case "delete":
+//                    if let index = self.listitems.firstIndex(of: item) {
+//                        self.listitems.remove(at: index)
+//                    }
+//                default:
+//                    break
+//                }
+//                
+//            }
+//
+//        )
+//
+//    }
     
     
     // Function that deletes an item when the user clicks on the delete button
@@ -171,7 +175,7 @@ struct ListView: View {
                 print("Fetched ImageData")
                 let image = UIImage(data: ImageData)
                 DispatchQueue.main.async{
-                    ImageRender = image
+                    ImageCache[Key] = image
                 }
                 return
             case .failure(let error):

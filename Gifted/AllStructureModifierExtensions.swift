@@ -31,6 +31,10 @@ extension Text{
             .foregroundColor(Color.gray)
             .multilineTextAlignment(.center)
     }
+    func large() -> some View{
+        self.font(.callout)
+            .multilineTextAlignment(.center)
+    }
     func homepagename() -> some View{
         self.font(.headline)
             .foregroundColor(.secondary)
@@ -119,6 +123,13 @@ extension Image{
         self.font(.system(size:60))
             .shadow(color: Color.gray.opacity(0.5), radius: 0.2, x: 2, y: 2)
             .padding(.all)
+    }
+    func Icon() -> some View{
+        self.renderingMode(.original)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 60, height: 50)
+            .mask { RoundedRectangle(cornerRadius: 4, style: .continuous) }
     }
 }
 

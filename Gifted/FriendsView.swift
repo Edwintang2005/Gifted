@@ -13,44 +13,54 @@ struct FriendsView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     @State var showAddToFriends = false
+    @State var Friends = [FriendObject]()
+    @State var FriendsLength = Int()
     
     var body: some View {
-        NavigationView{
-            ZStack {
-                VStack {
+        ZStack {
+            VStack {
+                if FriendsLength == 0 {
                     Spacer()
-                    Text("Aww you have no Friends, sad 😢").pretty()
+                    Text("You have No Friends yet! 😢").large()
                     Spacer()
-                    //                    List {
-                    //                        ForEach(filterItem(listed: listitems)) {
-                    //                            Item in Text( Item.id )
-                    //                        }
-                    //                        .onDelete(perform: deleteItem)
-                }
-                Spacer()
-                VStack{
+                    Text("Why don't we start by adding an item using the + button!").large()
                     Spacer()
-                    HStack{
-                        Spacer()
-                        Button{
-                            showAddToFriends.toggle()
-                        } label: {
-                            Image(systemName: "plus.circle.fill")
+                } else {
+                    List {
+                        ForEach(Friends) {
+                            Friend in NavigationLink{
+                                ListView()
+                            } label: {
+                                Text(Friend.name)
+                            }
                         }
-                        .floaty()
                     }
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationBarTitle("Friends")
-            .sheet(isPresented: $showAddToFriends) {
-                AddToFriends()
+            VStack{
+                Spacer()
+                HStack{
+                    Spacer()
+                    NavigationLink{
+                        AddToFriends()
+                    } label: {
+                            Image(systemName: "plus.circle.fill").floaty()
+                    }
+                }
             }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .navigationBarTitle("Friends")
+        .onAppear{
+            FriendsLength = Friends.count
         }
     }
 }
 
-
+struct FriendObject: Identifiable {
+    let id = UUID()
+    let name: String
+}
 
 
 

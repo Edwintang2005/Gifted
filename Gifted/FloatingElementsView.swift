@@ -56,6 +56,7 @@ struct AddToList: View{
             Button{
                 StoreImage(inputImage)
                 saveListItem()
+                UserDefaults.standard.set(nil, forKey: "ImageKey")
             } label: {
                     Text("Save")
                 }.pretty()

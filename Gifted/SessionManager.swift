@@ -120,11 +120,24 @@ final class SessionManager: ObservableObject {
                         self?.getCurrentAuthUser()
                     }
                     // Function that was supposed to create user DB file alongside login however doesn't work
-//                    let ActiveUser = User(id: username, Username: username)
-//                    Amplify.DataStore.save(ActiveUser) {result in
+//                    let UserObj = User.keys
+//                    Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
 //                        switch result {
-//                        case .success:
-//                            print("Successful!")
+//                        case .success(let UserFile):
+//                            let Arraysize = UserFile.count
+//                            if Arraysize == 0 {
+//                                let ActiveUser = User(id: UUID().uuidString, Username: username)
+//                                Amplify.DataStore.save(ActiveUser) {result in
+//                                    switch result {
+//                                    case .success:
+//                                        print("Successful!")
+//                                    case .failure(let error):
+//                                        print(error)
+//                                    }
+//                                }
+//                            } else {
+//                                break
+//                            }
 //                        case .failure(let error):
 //                            print(error)
 //                        }
