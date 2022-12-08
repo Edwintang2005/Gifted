@@ -1,3 +1,9 @@
+type Group @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Name: String
+  Members: [String]
+}
+
 type ListItem @model @auth(rules: [{allow: public}]) {
   id: ID!
   Name: String
@@ -5,6 +11,7 @@ type ListItem @model @auth(rules: [{allow: public}]) {
   ShortDescription: String
   ImageKey: String
   Link: String
+  Reservations: [String]
   userID: ID! @index(name: "byUser")
 }
 
