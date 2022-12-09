@@ -7,6 +7,7 @@ extension GroupLink {
    public enum CodingKeys: String, ModelKey {
     case id
     case GroupID
+    case GroupName
     case OwnerUser
     case createdAt
     case updatedAt
@@ -30,7 +31,8 @@ extension GroupLink {
     
     model.fields(
       .field(groupLink.id, is: .required, ofType: .string),
-      .field(groupLink.GroupID, is: .optional, ofType: .string),
+      .field(groupLink.GroupID, is: .required, ofType: .string),
+      .field(groupLink.GroupName, is: .optional, ofType: .string),
       .field(groupLink.OwnerUser, is: .optional, ofType: .string),
       .field(groupLink.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(groupLink.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)

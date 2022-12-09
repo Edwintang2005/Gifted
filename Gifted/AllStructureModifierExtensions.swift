@@ -253,3 +253,18 @@ extension Friend: Hashable{
         hasher.combine(id + OwnerUser)
     }
 }
+
+extension GroupLink: Identifiable {}
+
+extension GroupLink: Equatable {
+    public static func == (lhs: GroupLink, rhs: GroupLink)
+        -> Bool {
+            lhs.id == rhs.id && lhs.GroupID == rhs.GroupID
+    }
+}
+
+extension GroupLink: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id + GroupID)
+    }
+}

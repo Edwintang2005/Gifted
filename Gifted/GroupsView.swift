@@ -13,36 +13,69 @@ struct GroupsView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     @State var showAddToGroups = false
+    @State var Groups = [GroupLink]()
+    @State var GroupsLength = Int()
     
     var body: some View {
-        NavigationView{
-            ZStack {
-                VStack {
+        ZStack {
+            VStack {
+                if GroupsLength == 0 {
                     Spacer()
-                    Text("Aww you have no Groups, sad 😢").pretty()
+                    Text("You have No Groups yet! 😢").large()
                     Spacer()
-                }
-                Spacer()
-                VStack{
+                    Text("Why don't we start by adding an item using the + button!").large()
                     Spacer()
-                    HStack{
-                        Spacer()
-                        Button{
-                            showAddToGroups.toggle()
-                        } label: {
-                            Image(systemName: "plus.circle.fill")
+                } else {
+                    List {
+                        ForEach(Groups) {
+                            Group in NavigationLink{
+                                ListView(QueryUsername: Group.GroupID )
+                            } label: {
+                                Text(Group.GroupID )
+                            }
                         }
-                        .floaty()
+                        .onDelete(perform: deleteGroup)
                     }
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationBarTitle("Groups")
-            .sheet(isPresented: $showAddToGroups) {
-                AddToGroups()
+            VStack{
+                Spacer()
+                HStack{
+                    Spacer()
+                    NavigationLink{
+                        AddToGroups()
+                    } label: {
+                        Image(systemName: "plus.circle.fill").floaty()
+                    }
+                }
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear{
+            getGroups()
+            GroupsLength = Groups.count
+        }
+        .navigationBarTitle("Groups")
+        .navigationBarItems(trailing: (
+            Button(action: {
+                getGroups()
+                GroupsLength = Groups.count
+            }) {
+                Image(systemName: "arrow.clockwise")
+                    .imageScale(.large)
+            }
+        ))
     }
+    
+    
+    func getGroups() {
+        return // code fetching group items from DB
+    }
+    
+    func deleteGroup(indexSet: IndexSet) {
+        return // Code deleting group items from list and DB
+    }
+    
 }
 
 //struct GroupsView_Previews: PreviewProvider {

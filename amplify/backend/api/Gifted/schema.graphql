@@ -1,6 +1,7 @@
 type GroupLink @model @auth(rules: [{allow: public}]) {
   id: ID!
-  GroupID: String
+  GroupID: String!
+  GroupName: String
   OwnerUser: String
 }
 
