@@ -129,14 +129,21 @@ struct AddToFriends: View{
     
     
     var body: some View{
-        Spacer()
-        TextField("Friend's Username", text: $username).pretty()
-        Button{
-            saveFriend()
-        } label: {
-            Text("Save!")
-        }.pretty()
+        VStack {
+            Spacer()
+            TextField("Friend's Username", text: $username).pretty()
+            Spacer()
+            Button{
+                saveFriend()
+            } label: {
+                Text("Save!")
+            }.pretty()
+            Spacer()
+        }
+        .navigationTitle("Add a Friend!")
+        .padding(.horizontal)
     }
+        
     
     func saveFriend() {
         print(username)

@@ -18,23 +18,30 @@ struct ListView: View {
     @State var observationToken: AnyCancellable?
     @State var ImageCache = [String: UIImage]()
     @State var ListLength = Int()
+    @State var selfQuery = Bool()
     
     var body: some View {
         ZStack {
             if ListLength == 0 {
                 VStack{
-                    Spacer()
-                    Text("You have No List Items! 😢").large()
-                    Spacer()
-                    Text("Why don't we start by adding an item using the + button!").large()
-                    Spacer()
+                    if selfQuery == true {
+                        Spacer()
+                        Text("You have No List Items! 😢").large()
+                        Spacer()
+                        Text("Why don't we start by adding an item using the + button!").large()
+                        Spacer()
+                    } else {
+                        Spacer()
+                        Text("Your friend has no list items, or they do not exist. \n Check your input of their username! 😢").large()
+                        Spacer()
+                    }
                 }
             } else {
                 // Code that takes retrieved list and displays each item seperately
                 List {
                     ForEach(listitems) {
                         Item in NavigationLink{
-                            ItemDetailsView(listItem: Item)
+                            ItemDetailsView(QueryUsername: QueryUsername, listItem: Item)
                         } label: {
                             HStack{
                                 // Small Icon Image Rendering
@@ -62,24 +69,37 @@ struct ListView: View {
                 }
             }
             // Structure that holds + button and pushes it to bottom right corner
-            VStack{
-                Spacer()
-                HStack{
+            if selfQuery == true {
+                VStack{
                     Spacer()
-                    NavigationLink{
-                        AddToList()
-                    } label: {
-                            Image(systemName: "plus.circle.fill").floaty()
+                    HStack{
+                        Spacer()
+                        NavigationLink{
+                            AddToList()
+                        } label: {
+                                Image(systemName: "plus.circle.fill").floaty()
+                        }
                     }
                 }
+            } else {
+                Spacer()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarTitle("My List")
         .onAppear{
+            checkUserIsSelf()
             getListItem()
             ListLength = listitems.count
             //observeListItem()
+        }
+    }
+    
+    func checkUserIsSelf() {
+        if QueryUsername == UserDefaults.standard.string(forKey: "Username") ?? "nullUser" {
+            selfQuery = true
+        } else {
+            selfQuery = false
         }
     }
     

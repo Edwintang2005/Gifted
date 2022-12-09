@@ -133,6 +133,25 @@ extension Image{
     }
 }
 
+// Attempted extension for overlay code of who has reserved, not working
+//extension VStack{
+//    func ImageOverlay(selfQuery: Bool) -> some View{
+//        if selfQuery == true {
+//            self.padding(.all)
+//        } else {
+//            self.padding(.all)
+//            // Overlay of image to represent people who have reserved the item, No actual logic or data structure attatched to this yet
+//                .overlay{
+//                    HStack {
+//                        Image(systemName: "a.circle.fill")
+//                            .imageScale(.large)
+//                    }
+//                    .font(.title3)
+//                    .padding(.horizontal)
+//                }
+//        }
+//    }
+//}
 
 
 // Code for Labelled Divider
