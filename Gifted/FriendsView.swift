@@ -55,11 +55,20 @@ struct FriendsView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationBarTitle("Friends")
         .onAppear{
             getFriends()
             FriendsLength = Friends.count
         }
+        .navigationBarTitle("Friends")
+        .navigationBarItems(trailing: (
+            Button(action: {
+                getFriends()
+                FriendsLength = Friends.count
+                }) {
+                    Image(systemName: "arrow.clockwise")
+                        .imageScale(.large)
+                }
+            ))
     }
     
     func getFriends() {
@@ -96,6 +105,7 @@ struct FriendsView: View {
             }
             
         }
+        getFriends()
     }
 }
 

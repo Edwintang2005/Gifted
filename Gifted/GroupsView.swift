@@ -21,11 +21,6 @@ struct GroupsView: View {
                     Spacer()
                     Text("Aww you have no Groups, sad 😢").pretty()
                     Spacer()
-                    //                    List {
-                    //                        ForEach(filterItem(listed: listitems)) {
-                    //                            Item in Text( Item.id )
-                    //                        }
-                    //                        .onDelete(perform: deleteItem)
                 }
                 Spacer()
                 VStack{

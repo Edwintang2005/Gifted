@@ -122,7 +122,6 @@ struct ListView: View {
             checkUserIsSelf()
             getListItem()
             ListLength = listitems.count
-            
         }
         .navigationBarTitle("\(QueryUsername)'s List")
         .navigationBarItems(trailing: (
@@ -207,6 +206,7 @@ struct ListView: View {
             }
         }
         deleteImage(Imagekey: item.ImageKey)
+        getListItem()
     }
     
     // Function that deletes the image from the database alongside the deletion of the item
