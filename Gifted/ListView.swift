@@ -38,35 +38,67 @@ struct ListView: View {
                 }
             } else {
                 // Code that takes retrieved list and displays each item seperately
-                List {
-                    ForEach(listitems) {
-                        Item in NavigationLink{
-                            ItemDetailsView(QueryUsername: QueryUsername, listItem: Item)
-                        } label: {
-                            HStack{
-                                // Small Icon Image Rendering
-                                if let key = Item.ImageKey {
-                                    if let Render = ImageCache[key] {
-                                        Image(uiImage: Render).Icon()
+                if selfQuery == true {
+                    List {
+                        ForEach(listitems) {
+                            Item in NavigationLink{
+                                ItemDetailsView(QueryUsername: QueryUsername, listItem: Item)
+                            } label: {
+                                HStack{
+                                    // Small Icon Image Rendering
+                                    if let key = Item.ImageKey {
+                                        if let Render = ImageCache[key] {
+                                            Image(uiImage: Render).Icon()
+                                        } else {
+                                            Image("ImageNotFound").Icon()
+                                        }
                                     } else {
                                         Image("ImageNotFound").Icon()
                                     }
-                                } else {
-                                    Image("ImageNotFound").Icon()
-                                }
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text(Item.Name ?? " ").listtext()
+                                        Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
+                                    }
+                                    .padding(.horizontal)
+                                    Spacer()
+                                }.onAppear{getImage(Imagekey: Item.ImageKey)}
                                 
-                                VStack(alignment: .leading) {
-                                    Text(Item.Name ?? " ").listtext()
-                                    Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
-                                }
-                                .padding(.horizontal)
-                                Spacer()
-                            }.onAppear{getImage(Imagekey: Item.ImageKey)}
-                            
+                            }
+                        }
+                        .onDelete(perform: deleteItem)
+                    }
+                } else {
+                    List {
+                        ForEach(listitems) {
+                            Item in NavigationLink{
+                                ItemDetailsView(QueryUsername: QueryUsername, listItem: Item)
+                            } label: {
+                                HStack{
+                                    // Small Icon Image Rendering
+                                    if let key = Item.ImageKey {
+                                        if let Render = ImageCache[key] {
+                                            Image(uiImage: Render).Icon()
+                                        } else {
+                                            Image("ImageNotFound").Icon()
+                                        }
+                                    } else {
+                                        Image("ImageNotFound").Icon()
+                                    }
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text(Item.Name ?? " ").listtext()
+                                        Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
+                                    }
+                                    .padding(.horizontal)
+                                    Spacer()
+                                }.onAppear{getImage(Imagekey: Item.ImageKey)}
+                                
+                            }
                         }
                     }
-                    .onDelete(perform: deleteItem)
                 }
+                
             }
             // Structure that holds + button and pushes it to bottom right corner
             if selfQuery == true {
@@ -86,13 +118,22 @@ struct ListView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationBarTitle("My List")
         .onAppear{
             checkUserIsSelf()
             getListItem()
             ListLength = listitems.count
-            //observeListItem()
+            
         }
+        .navigationBarTitle("\(QueryUsername)'s List")
+        .navigationBarItems(trailing: (
+            Button(action: {
+                getListItem()
+                ListLength = listitems.count
+                }) {
+                    Image(systemName: "arrow.clockwise")
+                        .imageScale(.large)
+                }
+            ))
     }
     
     func checkUserIsSelf() {
@@ -144,18 +185,14 @@ struct ListView: View {
 //                default:
 //                    break
 //                }
-//                
 //            }
-//
 //        )
-//
 //    }
     
     
     // Function that deletes an item when the user clicks on the delete button
     func deleteItem(indexSet: IndexSet) {
         print("Deleted item at \(indexSet)")
-        
         var updatedItems = listitems
         updatedItems.remove(atOffsets: indexSet)
         
