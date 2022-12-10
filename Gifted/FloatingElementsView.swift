@@ -179,4 +179,23 @@ struct AddToGroups: View{
             Text("CLOSE")
         }.pretty()
     }
+    
+    
+}
+
+struct CreateNewGroup: View{
+    
+    @Environment(\.presentationMode) var presentationMode
+    
+    var body: some View{
+        Spacer()
+        Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
+            .pretty()
+        Spacer()
+        Button{
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Text("CLOSE")
+        }.pretty()
+    }
 }

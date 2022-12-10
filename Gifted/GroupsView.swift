@@ -5,6 +5,7 @@
 //  Created by Edwin Tang on 4/12/2022.
 //
 
+import Amplify
 import SwiftUI
 
 // Page for Groups, not built yet, however physical structures are all already built
@@ -15,13 +16,15 @@ struct GroupsView: View {
     @State var showAddToGroups = false
     @State var Groups = [GroupLink]()
     @State var GroupsLength = Int()
+    @State var showFloatingMenu1 = false
+    @State var showFloatingMenu2 = false
     
     var body: some View {
         ZStack {
             VStack {
                 if GroupsLength == 0 {
                     Spacer()
-                    Text("You have No Groups yet! 😢").large()
+                    Text("You have No saved Groups yet! 😢").large()
                     Spacer()
                     Text("Why don't we start by adding an item using the + button!").large()
                     Spacer()
@@ -40,10 +43,44 @@ struct GroupsView: View {
             }
             VStack{
                 Spacer()
+                if showFloatingMenu2 == false {
+                    
+                } else {
+                    VStack(alignment: .trailing) {
+                        NavigationLink{
+                            AddToGroups()
+                        } label: {
+                            
+                            HStack{
+                                Spacer()
+                                Text("Join a Group")
+                                    .padding(.all)
+                            }
+                        }
+                    }
+                }
+                if showFloatingMenu1 == false {
+                    
+                } else {
+                    VStack(alignment: .trailing) {
+                        NavigationLink{
+                            CreateNewGroup()
+                        } label: {
+                            HStack{
+                                Spacer()
+                                Text("Create a Group")
+                                    .padding(.all)
+                            }
+                        }
+                    }
+                }
                 HStack{
                     Spacer()
-                    NavigationLink{
-                        AddToGroups()
+                    Button{
+                        showFloatingMenu1.toggle()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                            self.showFloatingMenu2.toggle()
+                        })
                     } label: {
                         Image(systemName: "plus.circle.fill").floaty()
                     }
@@ -69,13 +106,40 @@ struct GroupsView: View {
     
     
     func getGroups() {
-        return // code fetching group items from DB
+        let username = UserDefaults.standard.string(forKey: "Username") ?? "nullUser"
+        let GroupsLinkObj = GroupLink.keys
+        Amplify.DataStore.query(GroupLink.self, where: GroupsLinkObj.OwnerUser == username) {result in
+            switch result {
+            case .success(let GroupsList):
+                print(GroupsList)
+                self.Groups = GroupsList
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     func deleteGroup(indexSet: IndexSet) {
-        return // Code deleting group items from list and DB
+        print("Deleted group at \(indexSet)")
+        
+        var updatedList = Groups
+        updatedList.remove(atOffsets: indexSet)
+        
+        guard let item =
+            Set(updatedList)
+            .symmetricDifference(Groups).first else
+            {return}
+        
+        Amplify.DataStore.delete(item) { result in
+            switch result {
+            case .success:
+                print("Deleted Group")
+            case .failure(let error):
+                print("Could not delete Group - \(error)")
+            }
+        }
+        getGroups()
     }
-    
 }
 
 //struct GroupsView_Previews: PreviewProvider {

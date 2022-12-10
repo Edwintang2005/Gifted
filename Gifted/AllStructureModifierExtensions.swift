@@ -9,6 +9,8 @@ import SwiftUI
 import Foundation
 import PhotosUI
 
+
+
 // Visual Elements Extensions
 extension Text{
     func pretty() -> some View{
@@ -268,3 +270,19 @@ extension GroupLink: Hashable {
         hasher.combine(id + GroupID)
     }
 }
+
+extension Group: Identifiable {}
+
+extension Group: Equatable {
+    public static func == (lhs: Group, rhs: Group)
+        -> Bool {
+            lhs.id == rhs.id && lhs.ShortID == rhs.ShortID
+    }
+}
+
+extension Group: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id + ShortID)
+    }
+}
+

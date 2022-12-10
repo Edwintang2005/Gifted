@@ -6,6 +6,7 @@ extension Group {
   // MARK: - CodingKeys 
    public enum CodingKeys: String, ModelKey {
     case id
+    case ShortID
     case Name
     case Members
     case createdAt
@@ -30,6 +31,7 @@ extension Group {
     
     model.fields(
       .field(group.id, is: .required, ofType: .string),
+      .field(group.ShortID, is: .required, ofType: .string),
       .field(group.Name, is: .optional, ofType: .string),
       .field(group.Members, is: .optional, ofType: .embeddedCollection(of: String.self)),
       .field(group.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
