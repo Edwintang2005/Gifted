@@ -88,7 +88,7 @@ struct ItemDetailsView: View {
     
     // Function for checking if user is looking at their own list
     func checkUserIsSelf() {
-        if QueryUsername == UserDefaults.standard.string(forKey: "Username") ?? "nullUser" {
+        if QueryUsername == UserDefaults.standard.string(forKey: "Username") ?? "NullUser" {
             selfQuery = true
         } else {
             selfQuery = false

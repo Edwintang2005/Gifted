@@ -106,7 +106,7 @@ struct GroupsView: View {
     
     
     func getGroups() {
-        let username = UserDefaults.standard.string(forKey: "Username") ?? "nullUser"
+        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
         let GroupsLinkObj = GroupLink.keys
         Amplify.DataStore.query(GroupLink.self, where: GroupsLinkObj.OwnerUser == username) {result in
             switch result {

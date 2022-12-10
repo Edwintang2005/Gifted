@@ -80,7 +80,7 @@ struct AddToList: View{
                             ShortDescription: description,
                             ImageKey: UserDefaults.standard.string(forKey: "ImageKey"),
                             Link: link,
-                            userID: UserDefaults.standard.string(forKey: "Username") ?? "nullUser")
+                            userID: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
         Amplify.DataStore.save(item) { result in
             switch result {
             case .success:
@@ -136,7 +136,7 @@ struct AddToFriends: View{
             Button{
                 saveFriend()
             } label: {
-                Text("Save!")
+                Text("Save")
             }.pretty()
             Spacer()
         }
@@ -149,7 +149,7 @@ struct AddToFriends: View{
         print(username)
         let Friend = Friend(id: UUID().uuidString,
                             Username: username,
-                            OwnerUser: UserDefaults.standard.string(forKey: "Username") ?? "nullUser")
+                            OwnerUser: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
         Amplify.DataStore.save(Friend) { result in
             switch result {
             case .success:
@@ -168,19 +168,80 @@ struct AddToGroups: View{
 
     @Environment(\.presentationMode) var presentationMode
     
+    @State var groupID = String()
+    @State var groupName = String()
+    @State var GroupList = [Group]()
+    
+    
     var body: some View{
-        Spacer()
-        Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
-            .pretty()
-        Spacer()
-        Button{
-            presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text("CLOSE")
-        }.pretty()
+        VStack {
+            Spacer()
+            Text("Please Enter the Group Name and ID as presented to group creator!")
+            HStack{
+                TextField("Group Name", text: $groupName).pretty()
+                Text(" # ")
+                TextField("Group ID", text: $groupID).pretty()
+            }
+            Spacer()
+            Button{
+                saveGroupLink()
+            } label: {
+            Text("Save")
+            }.pretty()
+        }
+        .navigationTitle("Join a Group!")
+        .padding(.horizontal)
     }
     
+    func saveGroupLink() {
+        print(groupID)
+        // Creating Link record between user and group
+        let GroupLink = GroupLink(id: UUID().uuidString,
+                                  GroupID: groupID,
+                                  GroupName: groupName,
+                                  OwnerUser: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
+        Amplify.DataStore.save(GroupLink) { result in
+            switch result {
+            case .success:
+                print("Saved Group Link!")
+                presentationMode.wrappedValue.dismiss()
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+        // Appending user name to group
+        getGroup()
+        if GroupList.count == 1 {
+            var tempList = GroupList[0]
+            var MemberList = tempList.Members
+            MemberList?.append( UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
+            tempList.Members = MemberList
+            Amplify.DataStore.save(tempList) {result in
+                switch result {
+                case .success:
+                    print("Added Member to group.")
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        } else {
+            print("Non-unique GroupName and ID")
+        }
+    }
     
+    func getGroup() {
+        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+        let GroupObj = Group.keys
+        Amplify.DataStore.query(Group.self, where: GroupObj.ShortID == groupID && GroupObj.Name == groupName) {result in
+            switch result {
+            case .success(let Group):
+                self.GroupList = Group
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
 
 struct CreateNewGroup: View{

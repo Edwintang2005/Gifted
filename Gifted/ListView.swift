@@ -136,7 +136,7 @@ struct ListView: View {
     }
     
     func checkUserIsSelf() {
-        if QueryUsername == UserDefaults.standard.string(forKey: "Username") ?? "nullUser" {
+        if QueryUsername == UserDefaults.standard.string(forKey: "Username") ?? "NullUser" {
             selfQuery = true
         } else {
             selfQuery = false

@@ -72,7 +72,7 @@ struct FriendsView: View {
     }
     
     func getFriends() {
-        let username = UserDefaults.standard.string(forKey: "Username") ?? "nullUser"
+        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
         let FriendObj = Friend.keys
         Amplify.DataStore.query(Friend.self, where: FriendObj.OwnerUser == username) {result in
             switch result {

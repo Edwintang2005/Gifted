@@ -15,7 +15,7 @@ type Group @model @auth(rules: [{allow: public}]) {
   id: ID!
   ShortID: String!
   Name: String
-  Members: [String]
+  Members: [String!]
 }
 
 type ListItem @model @auth(rules: [{allow: public}]) {
