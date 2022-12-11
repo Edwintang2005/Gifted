@@ -32,7 +32,7 @@ extension GroupLink {
     model.fields(
       .field(groupLink.id, is: .required, ofType: .string),
       .field(groupLink.GroupID, is: .required, ofType: .string),
-      .field(groupLink.GroupName, is: .optional, ofType: .string),
+      .field(groupLink.GroupName, is: .required, ofType: .string),
       .field(groupLink.OwnerUser, is: .optional, ofType: .string),
       .field(groupLink.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(groupLink.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)

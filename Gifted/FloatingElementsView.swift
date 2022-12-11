@@ -215,7 +215,7 @@ struct AddToGroups: View{
         if GroupList.count == 1 {
             var tempList = GroupList[0]
             var MemberList = tempList.Members
-            MemberList?.append( UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
+            MemberList.append( UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
             tempList.Members = MemberList
             Amplify.DataStore.save(tempList) {result in
                 switch result {
@@ -247,16 +247,67 @@ struct AddToGroups: View{
 struct CreateNewGroup: View{
     
     @Environment(\.presentationMode) var presentationMode
+    @State var ShortID = String()
+    @State var Name = String()
+    @State var Members = [String]()
     
     var body: some View{
-        Spacer()
-        Text("Aww Shucks, this page hasn't been developed yet! \n \n Maybe if we had more funding ;(")
-            .pretty()
-        Spacer()
-        Button{
-            presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text("CLOSE")
-        }.pretty()
+        VStack {
+            Spacer()
+            Text("Please Enter a Name for this group. \n To invite your friends, just give them the Name and ID of the group!").pretty()
+            Spacer()
+            TextField("Group Name", text: $Name).pretty()
+            Spacer()
+            Button{
+                saveGroup()
+            } label: {
+                Text("Create")
+            }.pretty()
+        }
+        .navigationTitle("Create a Group!")
+        .padding(.horizontal)
+    }
+    
+    func saveGroup() {
+        print(Name)
+        let Username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+        let GroupNameandID = Name + ShortID
+        ShortID = UUID().uuidString
+        let small = ShortID.prefix(8)
+        ShortID = String(small)
+        Members = [Username]
+        let Group = Group(id: UUID().uuidString,
+                          ShortID: ShortID,
+                          Name: Name,
+                          NameAndShortID: GroupNameandID,
+                          Members: Members)
+        Amplify.DataStore.save(Group) {result in
+            switch result {
+            case .success:
+                print("Saved Group!")
+                createGroupLink()
+                presentationMode.wrappedValue.dismiss()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func createGroupLink() {
+        print(ShortID)
+        // Creating Link record between user and group
+        let GroupLink = GroupLink(id: UUID().uuidString,
+                                  GroupID: ShortID,
+                                  GroupName: Name,
+                                  OwnerUser: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
+        Amplify.DataStore.save(GroupLink) { result in
+            switch result {
+            case .success:
+                print("Saved Group Link!")
+                presentationMode.wrappedValue.dismiss()
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }

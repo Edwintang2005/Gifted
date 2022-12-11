@@ -8,6 +8,7 @@ extension Group {
     case id
     case ShortID
     case Name
+    case NameAndShortID
     case Members
     case createdAt
     case updatedAt
@@ -32,8 +33,9 @@ extension Group {
     model.fields(
       .field(group.id, is: .required, ofType: .string),
       .field(group.ShortID, is: .required, ofType: .string),
-      .field(group.Name, is: .optional, ofType: .string),
-      .field(group.Members, is: .optional, ofType: .embeddedCollection(of: String.self)),
+      .field(group.Name, is: .required, ofType: .string),
+      .field(group.NameAndShortID, is: .required, ofType: .string),
+      .field(group.Members, is: .required, ofType: .embeddedCollection(of: String.self)),
       .field(group.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(group.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

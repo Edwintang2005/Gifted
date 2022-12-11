@@ -5,8 +5,9 @@
 //  Created by Edwin Tang on 3/12/2022.
 //
 
-import SwiftUI
 import Amplify
+import SwiftUI
+
 
 // UI for displaying the details of a list item
 struct ItemDetailsView: View {

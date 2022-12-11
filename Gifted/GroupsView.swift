@@ -32,9 +32,9 @@ struct GroupsView: View {
                     List {
                         ForEach(Groups) {
                             Group in NavigationLink{
-                                ListView(QueryUsername: Group.GroupID )
+                                GroupDetailsView( GroupName: Group.GroupName, Groups: getGroup(groupID: Group.GroupID, groupName: Group.GroupName))
                             } label: {
-                                Text(Group.GroupID )
+                                Text(Group.GroupName )
                             }
                         }
                         .onDelete(perform: deleteGroup)
@@ -91,6 +91,8 @@ struct GroupsView: View {
         .onAppear{
             getGroups()
             GroupsLength = Groups.count
+            showFloatingMenu1 = false
+            showFloatingMenu2 = false
         }
         .navigationBarTitle("Groups")
         .navigationBarItems(trailing: (
@@ -121,7 +123,7 @@ struct GroupsView: View {
     
     func deleteGroup(indexSet: IndexSet) {
         print("Deleted group at \(indexSet)")
-        
+        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
         var updatedList = Groups
         updatedList.remove(atOffsets: indexSet)
         
@@ -138,7 +140,51 @@ struct GroupsView: View {
                 print("Could not delete Group - \(error)")
             }
         }
+        let groupID = item.GroupID
+        let groupName = item.GroupName
+        let groupList = getGroup(groupID: groupID, groupName: groupName)
+        let Group = groupList.first
+        if let GroupObj = Group {
+            var GroupEdited = GroupObj
+            let GroupMembers = GroupObj.Members
+            let GroupMembersUpdated = GroupMembers.filter{ $0 != username}
+            GroupEdited.Members = GroupMembersUpdated
+            if GroupMembersUpdated.count == 0 {
+                Amplify.DataStore.delete(GroupObj) {result in
+                    switch result {
+                    case .success:
+                        print("No Members left so Group Deleted")
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            } else {
+                Amplify.DataStore.save(GroupObj) {result in
+                    switch result {
+                    case .success:
+                        print("Removed Member from Group")
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            }
+        }
         getGroups()
+    }
+    
+    func getGroup(groupID: String, groupName: String) -> [Group] {
+        let GroupObj = Group.keys
+        var GroupList = [Group]()
+        let GroupNameandID = groupName + groupID
+        Amplify.DataStore.query(Group.self, where: GroupObj.NameAndShortID == GroupNameandID) {result in
+            switch result {
+            case .success(let Group):
+                GroupList = Group
+            case .failure(let error):
+                print(error)
+            }
+        }
+        return GroupList
     }
 }
 
