@@ -1,0 +1,31 @@
+type ListItem @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Name: String!
+  Price: String
+  ShortDescription: String
+  ImageKey: String
+  Link: String
+  Reservation: [String!]
+  userID: String!
+}
+
+type Friend @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Username: String!
+  OwnerUser: String!
+}
+
+type GroupLink @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  GroupID: String!
+  GroupName: String!
+  OwnerUser: String
+}
+
+type Group @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  ShortID: String!
+  Name: String!
+  NameAndShortID: String!
+  Members: [String!]!
+}

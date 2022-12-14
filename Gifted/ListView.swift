@@ -57,7 +57,7 @@ struct ListView: View {
                                     }
                                     
                                     VStack(alignment: .leading) {
-                                        Text(Item.Name ?? " ").listtext()
+                                        Text(Item.Name).listtext()
                                         Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
                                     }
                                     .padding(.horizontal)
@@ -87,7 +87,7 @@ struct ListView: View {
                                     }
                                     
                                     VStack(alignment: .leading) {
-                                        Text(Item.Name ?? " ").listtext()
+                                        Text(Item.Name).listtext()
                                         Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
                                     }
                                     .padding(.horizontal)
@@ -158,37 +158,6 @@ struct ListView: View {
         }
     }
     
-    
-    // Need to research the necessity of this function, perhaps comes in later???
-//    func observeListItem() {
-//        let too = ListItem.keys
-//        observationToken = Amplify.DataStore.publisher(for: ListItem.self).sink(
-//            receiveCompletion: { completion in
-//                if case .failure(let error) = completion {
-//                    print(error)
-//                }
-//            },
-//            receiveValue: { changes in
-//                // decoding recieved model
-//                guard let item = try? changes.decodeModel(as: ListItem.self) else {return}
-//
-//                switch changes.mutationType{
-//
-//                case "create":
-//                    self.listitems.append(item)
-//
-//                case "delete":
-//                    if let index = self.listitems.firstIndex(of: item) {
-//                        self.listitems.remove(at: index)
-//                    }
-//                default:
-//                    break
-//                }
-//            }
-//        )
-//    }
-    
-    
     // Function that deletes an item when the user clicks on the delete button
     func deleteItem(indexSet: IndexSet) {
         print("Deleted item at \(indexSet)")
@@ -239,14 +208,35 @@ struct ListView: View {
             }
         }
     }
-
     
-    // Function that basically stops displaying list items that don't belong to the user, however could be useful in future
-
-//    func filterItem(listed: [ListItem]) -> [ListItem] {
-//        return listed.filter {Item in
-//            Item.userID == UserDefaults.standard.string(forKey: "Username")
-//        }
+    
+    // Need to research the necessity of this function, perhaps comes in later???
+//    func observeListItem() {
+//        let too = ListItem.keys
+//        observationToken = Amplify.DataStore.publisher(for: ListItem.self).sink(
+//            receiveCompletion: { completion in
+//                if case .failure(let error) = completion {
+//                    print(error)
+//                }
+//            },
+//            receiveValue: { changes in
+//                // decoding recieved model
+//                guard let item = try? changes.decodeModel(as: ListItem.self) else {return}
+//
+//                switch changes.mutationType{
+//
+//                case "create":
+//                    self.listitems.append(item)
+//
+//                case "delete":
+//                    if let index = self.listitems.firstIndex(of: item) {
+//                        self.listitems.remove(at: index)
+//                    }
+//                default:
+//                    break
+//                }
+//            }
+//        )
 //    }
 }
 

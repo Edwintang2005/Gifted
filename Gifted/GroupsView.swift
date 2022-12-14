@@ -159,7 +159,7 @@ struct GroupsView: View {
                     }
                 }
             } else {
-                Amplify.DataStore.save(GroupObj) {result in
+                Amplify.DataStore.save(GroupEdited) {result in
                     switch result {
                     case .success:
                         print("Removed Member from Group")

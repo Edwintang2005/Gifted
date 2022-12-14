@@ -30,7 +30,7 @@ extension Friend {
     
     model.fields(
       .field(friend.id, is: .required, ofType: .string),
-      .field(friend.Username, is: .optional, ofType: .string),
+      .field(friend.Username, is: .required, ofType: .string),
       .field(friend.OwnerUser, is: .required, ofType: .string),
       .field(friend.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(friend.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)

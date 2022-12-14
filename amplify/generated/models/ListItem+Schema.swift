@@ -11,7 +11,7 @@ extension ListItem {
     case ShortDescription
     case ImageKey
     case Link
-    case Reservations
+    case Reservation
     case userID
     case createdAt
     case updatedAt
@@ -35,12 +35,12 @@ extension ListItem {
     
     model.fields(
       .field(listItem.id, is: .required, ofType: .string),
-      .field(listItem.Name, is: .optional, ofType: .string),
+      .field(listItem.Name, is: .required, ofType: .string),
       .field(listItem.Price, is: .optional, ofType: .string),
       .field(listItem.ShortDescription, is: .optional, ofType: .string),
       .field(listItem.ImageKey, is: .optional, ofType: .string),
       .field(listItem.Link, is: .optional, ofType: .string),
-      .field(listItem.Reservations, is: .optional, ofType: .embeddedCollection(of: String.self)),
+      .field(listItem.Reservation, is: .optional, ofType: .embeddedCollection(of: String.self)),
       .field(listItem.userID, is: .required, ofType: .string),
       .field(listItem.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(listItem.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)

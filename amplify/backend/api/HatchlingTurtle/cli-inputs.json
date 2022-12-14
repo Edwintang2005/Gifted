@@ -1,7 +1,7 @@
 {
   "version": 1,
   "serviceConfiguration": {
-    "apiName": "Gifted",
+    "apiName": "HatchlingTurtle",
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "API_KEY",

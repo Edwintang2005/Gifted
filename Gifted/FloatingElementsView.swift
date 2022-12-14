@@ -80,6 +80,7 @@ struct AddToList: View{
                             ShortDescription: description,
                             ImageKey: UserDefaults.standard.string(forKey: "ImageKey"),
                             Link: link,
+                            Reservation: [],
                             userID: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
         Amplify.DataStore.save(item) { result in
             switch result {
@@ -231,7 +232,6 @@ struct AddToGroups: View{
     }
     
     func getGroup() {
-        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
         let GroupObj = Group.keys
         Amplify.DataStore.query(Group.self, where: GroupObj.ShortID == groupID && GroupObj.Name == groupName) {result in
             switch result {
@@ -271,10 +271,10 @@ struct CreateNewGroup: View{
     func saveGroup() {
         print(Name)
         let Username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
-        let GroupNameandID = Name + ShortID
         ShortID = UUID().uuidString
         let small = ShortID.prefix(8)
         ShortID = String(small)
+        let GroupNameandID = Name + ShortID
         Members = [Username]
         let Group = Group(id: UUID().uuidString,
                           ShortID: ShortID,

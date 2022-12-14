@@ -30,20 +30,24 @@ struct GroupDetailsView: View {
                     Text("There appears to be more than one group with that name and ID. \n Contact the group owner to delete your group and make a new one!").medium()
                 } else {
                     List{
-                        ForEach(Group.Members, id: \.self) {
-                            Member in NavigationLink{
-                                ListView(QueryUsername: Member)
-                            } label: {
-                                Text(Member).listtext()
+                        Section{
+                            ForEach(Group.Members, id: \.self) {
+                                Member in NavigationLink{
+                                    ListView(QueryUsername: Member)
+                                } label: {
+                                    Text(Member).listtext()
+                                }
                             }
+                        } header: {
+                            Text("Members of this group (Including yourself):")
                         }
                     }
                 }
             }
         }
-        .padding(.horizontal)
         .onAppear{
             GetTitle()
+            print(Groups)
         }
         .navigationTitle(Title)
     }

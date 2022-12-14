@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3hatchlingturtlestorage47b07fb4",
+  "bucketName": "hatchlingturtle-storage-47b07fb4",
+  "policyUUID": "7b0d18d6",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

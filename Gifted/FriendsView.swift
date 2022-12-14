@@ -32,9 +32,9 @@ struct FriendsView: View {
                     List {
                         ForEach(Friends) {
                             Friend in NavigationLink{
-                                ListView(QueryUsername: Friend.Username ?? "NullUser")
+                                ListView(QueryUsername: Friend.Username )
                             } label: {
-                                Text(Friend.Username ?? " ")
+                                Text(Friend.Username )
                             }
                         }
                         .onDelete(perform: deleteFriend)

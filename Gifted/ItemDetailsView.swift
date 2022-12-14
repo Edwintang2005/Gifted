@@ -15,6 +15,8 @@ struct ItemDetailsView: View {
     @State var QueryUsername: String
     @State var ImageRender: UIImage?
     @State var selfQuery = Bool()
+    @State var Reserved = Bool()
+    @State var username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
     
     let listItem : ListItem
     
@@ -60,29 +62,59 @@ struct ItemDetailsView: View {
             if selfQuery == true {
                 Spacer()
             } else {
-                Spacer()
-                Button {
-                        print("Reserve Button Clicked") // Dud function to be replaced later
-                    }
-                        label: {
-                                Text("Reserve for purchase")
+                if let reservations = listItem.Reservation{
+                    List{
+                        Section {
+                            ForEach(reservations, id: \.self) {
+                                Member in Text(Member).listtext()
                             }
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding(.all)
-                    .foregroundColor(.white)
-                    .background {
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .foregroundColor(.pink)
-                            .padding(.horizontal)
+                        } header: {
+                            Text("These people reserved this item:")
+                        }
                     }
+                }
+                Spacer()
+                if Reserved == true {
+                    Button {
+                            unreserveItem()
+                        }
+                            label: {
+                                    Text("Remove Reservation")
+                                }
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding(.all)
+                        .foregroundColor(.white)
+                        .background {
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .foregroundColor(.pink)
+                                .padding(.horizontal)
+                        }
+                } else {
+                    Button {
+                            reserveItem()
+                        }
+                            label: {
+                                    Text("Reserve for purchase")
+                                }
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding(.all)
+                        .foregroundColor(.white)
+                        .background {
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .foregroundColor(.pink)
+                                .padding(.horizontal)
+                        }
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.vertical)
-        .navigationTitle(listItem.Name ?? " ")
+        .navigationTitle(listItem.Name)
         .onAppear{
             checkUserIsSelf()
+            checkReservation()
             getImage(Imagekey: listItem.ImageKey)
             }
     }
@@ -93,6 +125,16 @@ struct ItemDetailsView: View {
             selfQuery = true
         } else {
             selfQuery = false
+        }
+    }
+    
+    func checkReservation() {
+        Reserved = false
+        guard let reservationList = listItem.Reservation else {return}
+        if reservationList.contains(username) {
+            Reserved = true
+        } else {
+            Reserved = false
         }
     }
     
@@ -110,6 +152,52 @@ struct ItemDetailsView: View {
                 return
             case .failure(let error):
                 print("Could not get Image URL - \(error)")
+            }
+        }
+    }
+    
+    func reserveItem() {
+        Amplify.DataStore.query(ListItem.self, byId: listItem.id) { result in
+            switch result {
+            case .success(let Item):
+                guard var item = Item else {return}
+                var reservedByList = item.Reservation
+                reservedByList?.append(username)
+                item.Reservation = reservedByList
+                Amplify.DataStore.save(item) {results in
+                    switch results {
+                    case .success:
+                        print("Reserved!")
+                    case .failure(let error):
+                        print("Could not reserve Item - \(error)")
+                    }
+                    
+                }
+            case .failure(let error):
+                print("Could not Reserve Item - \(error)")
+            }
+        }
+    }
+    
+    func unreserveItem() {
+        Amplify.DataStore.query(ListItem.self, byId: listItem.id) { result in
+            switch result {
+            case .success(let Item):
+                guard var item = Item else {return}
+                var reservedByList = item.Reservation
+                reservedByList?.removeAll{$0 == username}
+                item.Reservation = reservedByList
+                Amplify.DataStore.save(item) {results in
+                    switch results {
+                    case .success:
+                        print("Unreserved!")
+                    case .failure(let error):
+                        print("Could not remove reservation - \(error)")
+                    }
+                    
+                }
+            case .failure(let error):
+                print("Could not Unreserve Item - \(error)")
             }
         }
     }

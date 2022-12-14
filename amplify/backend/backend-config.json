@@ -1,22 +1,21 @@
 {
   "auth": {
-    "Gifted": {
+    "HatchlingTurtle": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
-        "socialProviders": [
-          "FACEBOOK",
-          "GOOGLE"
-        ],
+        "socialProviders": [],
         "usernameAttributes": [],
         "signupAttributes": [
           "EMAIL"
         ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": []
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE"
+          ]
         },
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -29,7 +28,7 @@
     }
   },
   "api": {
-    "Gifted": {
+    "HatchlingTurtle": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -52,7 +51,7 @@
     }
   },
   "storage": {
-    "s3giftedstoragefadb757a": {
+    "s3hatchlingturtlestorage47b07fb4": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": []

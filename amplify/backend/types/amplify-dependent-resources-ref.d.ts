@@ -1,10 +1,8 @@
 export type AmplifyDependentResourcesAttributes = {
     "auth": {
-        "Gifted": {
+        "HatchlingTurtle": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
-            "HostedUIDomain": "string",
-            "OAuthMetadata": "string",
             "UserPoolId": "string",
             "UserPoolArn": "string",
             "UserPoolName": "string",
@@ -13,14 +11,14 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "api": {
-        "Gifted": {
+        "HatchlingTurtle": {
             "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
         }
     },
     "storage": {
-        "s3giftedstoragefadb757a": {
+        "s3hatchlingturtlestorage47b07fb4": {
             "BucketName": "string",
             "Region": "string"
         }
