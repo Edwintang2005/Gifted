@@ -30,6 +30,7 @@
 		E894FFB1293C75DD00095DD2 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FFB0293C75DD00095DD2 /* ListView.swift */; };
 		E894FFB3293C767C00095DD2 /* FloatingElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */; };
 		E8957C592940095C00058AC2 /* AllStructureModifierExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */; };
+		E8B238E7294C83FB0045136B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B238E6294C83FB0045136B /* MenuViewController.swift */; };
 		E8F1602829455FF100FDD251 /* GroupDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1602729455FF100FDD251 /* GroupDetailsView.swift */; };
 		E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B46293AF173003E23B5 /* GiftedApp.swift */; };
 		E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F91B48293AF173003E23B5 /* ContentView.swift */; };
@@ -59,6 +60,7 @@
 		E894FFB0293C75DD00095DD2 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingElementsView.swift; sourceTree = "<group>"; };
 		E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllStructureModifierExtensions.swift; sourceTree = "<group>"; };
+		E8B238E6294C83FB0045136B /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = Gifted/MenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		E8F1602729455FF100FDD251 /* GroupDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsView.swift; sourceTree = "<group>"; };
 		E8F91B43293AF173003E23B5 /* Gifted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gifted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8F91B46293AF173003E23B5 /* GiftedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftedApp.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */,
 				E87BE3E3293B5C2A007DC233 /* SessionManager.swift */,
 				E8F91B46293AF173003E23B5 /* GiftedApp.swift */,
+				E8B238E6294C83FB0045136B /* MenuViewController.swift */,
 				E81723BB294BF6180022A09E /* Views */,
 				E8F91B4A293AF177003E23B5 /* Assets.xcassets */,
 				E8F91B66293B124B003E23B5 /* amplifyconfiguration.json */,
@@ -277,6 +280,7 @@
 				E8582B172943F96C00B766C5 /* ListItem.swift in Sources */,
 				E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */,
 				E87BE3E4293B5C2A007DC233 /* SessionManager.swift in Sources */,
+				E8B238E7294C83FB0045136B /* MenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

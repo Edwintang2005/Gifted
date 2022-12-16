@@ -13,11 +13,14 @@ struct GroupsView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
     
+    
     @State var showAddToGroups = false
     @State var Groups = [GroupLink]()
     @State var GroupsLength = Int()
     @State var showFloatingMenu1 = false
     @State var showFloatingMenu2 = false
+    
+    @Binding var ShowMenu: Bool
     
     var body: some View {
         ZStack {
@@ -94,7 +97,15 @@ struct GroupsView: View {
             showFloatingMenu1 = false
             showFloatingMenu2 = false
         }
+        .onDisappear{
+            do {
+                withAnimation {
+                    self.ShowMenu.toggle()
+                }
+            }
+        }
         .navigationBarTitle("Groups")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: (
             Button(action: {
                 getGroups()

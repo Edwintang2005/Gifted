@@ -20,6 +20,8 @@ struct ListView: View {
     @State var ListLength = Int()
     @State var selfQuery = Bool()
     
+    @Binding var ShowMenu: Bool
+    
     var body: some View {
         ZStack {
             if ListLength == 0 {
@@ -122,7 +124,15 @@ struct ListView: View {
             getListItem()
             ListLength = listitems.count
         }
+        .onDisappear{
+            do {
+                withAnimation {
+                    self.ShowMenu.toggle()
+                }
+            }
+        }
         .navigationBarTitle("\(QueryUsername)'s List")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: (
             Button(action: {
                 getListItem()

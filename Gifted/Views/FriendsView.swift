@@ -18,6 +18,12 @@ struct FriendsView: View {
     @State var showAddToFriends = false
     @State var Friends = [Friend]()
     @State var FriendsLength = Int()
+    @State var falseBinding = false
+    
+    
+    @Binding var ShowMenu: Bool
+    
+    
     
     var body: some View {
         ZStack {
@@ -32,7 +38,7 @@ struct FriendsView: View {
                     List {
                         ForEach(Friends) {
                             Friend in NavigationLink{
-                                ListView(QueryUsername: Friend.Username )
+                                ListView(QueryUsername: Friend.Username, ShowMenu: self.$falseBinding)
                             } label: {
                                 Text(Friend.Username )
                             }
@@ -59,7 +65,15 @@ struct FriendsView: View {
             getFriends()
             FriendsLength = Friends.count
         }
+        .onDisappear{
+            do {
+                withAnimation {
+                    self.ShowMenu.toggle()
+                }
+            }
+        }
         .navigationBarTitle("Friends")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: (
             Button(action: {
                 getFriends()
