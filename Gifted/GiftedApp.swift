@@ -18,11 +18,13 @@ import AWSS3StoragePlugin // Base Plugin for interaction with Storage (Basically
 struct GiftedApp: App {
     
     @ObservedObject var sessionManager = SessionManager()
+    @ObservedObject var menuViewController = MenuViewController()
     
     // All Amplify and AWS Functionality require this configuration before anything can work, getCurrentAuthUser verifies if user is signed in
     init() {
         configureAmplify()
         sessionManager.getCurrentAuthUser()
+        menuViewController.showMain()
     }
     
     // Main logic/ UI controlboard
@@ -56,6 +58,7 @@ struct GiftedApp: App {
             case .session(let user):
                 ContentView(user: user)
                     .environmentObject(sessionManager)
+                    .environmentObject(menuViewController)
             }
         }
     }

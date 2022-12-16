@@ -14,6 +14,7 @@ struct GroupDetailsView: View {
     @State var GroupName: String
     @State var Title = String()
     @State var InputLength = Int()
+    @State var falseBinding = false
     
     let Groups : [Group]
     
@@ -33,7 +34,7 @@ struct GroupDetailsView: View {
                         Section{
                             ForEach(Group.Members, id: \.self) {
                                 Member in NavigationLink{
-                                    ListView(QueryUsername: Member)
+                                    ListView(QueryUsername: Member, ShowMenu: self.$falseBinding)
                                 } label: {
                                     Text(Member).listtext()
                                 }

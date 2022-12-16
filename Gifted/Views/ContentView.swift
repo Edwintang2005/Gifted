@@ -11,13 +11,19 @@ import AWSPluginsCore
 import AWSCognitoIdentityProvider
 
 
+
+
 // Window Post-login, includes a menu to navigate to friends tab
 struct ContentView: View {
     
+    @EnvironmentObject var menuViewController: MenuViewController
     @EnvironmentObject var sessionManager: SessionManager
+    
+    
     
     @State var ShowMenu = false
     
+    let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
     let user: AuthUser
     
     var body: some View {
@@ -39,31 +45,53 @@ struct ContentView: View {
         
         // The function that causes the display of both the Home page and the Menu
         return NavigationView {
-                    GeometryReader { geometry in
-                        ZStack(alignment: .leading) {
-                            MainView(ShowMenu: self.$ShowMenu)
-                                .frame(width: geometry.size.width, height: geometry.size.height)
-                                .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
-                                .disabled(self.ShowMenu ? true : false)
-                            if self.ShowMenu {
-                                MenuView()
-                                    .frame(width: geometry.size.width/2)
-                                    .transition(.move(edge: .leading))
-                            }
-                        }
-                            .gesture(drag)
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    switch self.menuViewController.menuDisplay {
+                        
+                    case .mainWindow:
+                        MainView(ShowMenu: self.$ShowMenu)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
+                            .disabled(self.ShowMenu ? true : false)
+                        
+                    case .list:
+                        ListView(QueryUsername: username, ShowMenu: self.$ShowMenu)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
+                            .disabled(self.ShowMenu ? true : false)
+                        
+                    case .friends:
+                        FriendsView(ShowMenu: self.$ShowMenu)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
+                            .disabled(self.ShowMenu ? true : false)
+                        
+                    case .groups:
+                        GroupsView(ShowMenu: self.$ShowMenu)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
+                            .disabled(self.ShowMenu ? true : false)
                     }
-                        .navigationBarItems(leading: (
-                            Button(action: {
-                                withAnimation {
-                                    self.ShowMenu.toggle()
-                                }
-                            }) {
-                                Image(systemName: "line.horizontal.3")
-                                    .imageScale(.large)
-                            }
-                        ))
+                    if self.ShowMenu {
+                        MenuView()
+                            .frame(width: geometry.size.width/2)
+                            .transition(.move(edge: .leading))
+                    }
+                }
+                .gesture(drag)
             }
+            .navigationBarItems(leading: (
+                Button(action: {
+                    withAnimation {
+                        self.ShowMenu.toggle()
+                    }
+                }) {
+                    Image(systemName: "line.horizontal.3")
+                        .imageScale(.large)
+                }
+            ))
+        }
     }
 }
 
@@ -87,7 +115,6 @@ struct MainView: View{
                 // Text that displays the User's name
                 Text("Hello, \(username)!").homepagename()
                 Spacer()
-                Button("Sign Out", action: sessionManager.signOut)
             }
             // replace below with Roger's design of Homescreen
             List {
@@ -131,10 +158,19 @@ struct MainView: View{
         .padding()
         .navigationBarTitle("Home")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear{ // Basically hides the menu everytime the homescreen is displayed
+        .navigationBarItems(trailing: (
+            Button("Sign Out", action: sessionManager.signOut)
+        ))
+        .onAppear{
             getListItem()
             getGroups()
-            ShowMenu = false
+        }
+        .onDisappear{
+            do {
+                withAnimation {
+                    self.ShowMenu.toggle()
+                }
+            }
         }
     }
     
@@ -188,14 +224,29 @@ struct MainView: View{
 // Object for the popup menu
 struct MenuView: View{
     
+    @EnvironmentObject var menuViewController: MenuViewController
     @EnvironmentObject var sessionManager: SessionManager
+    
+    
     let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
     
     var body: some View{
         VStack{
+            // Menu Feature to navigate to Home Page
+            Button {
+                menuViewController.showMain()
+            } label: {
+                HStack{
+                    Image(systemName: "house.fill")
+                    Text("Home")
+                }
+            }
+            .padding(.all)
             
             // Menu Feature to access user's list
-            NavigationLink(destination: ListView(QueryUsername: username)) {
+            Button {
+                menuViewController.showList()
+            } label: {
                 HStack{
                     Image(systemName: "list.bullet.rectangle")
                     Text("My List")
@@ -203,7 +254,9 @@ struct MenuView: View{
             }
             .padding(.all)
             // Menu Feature to access user's friends
-            NavigationLink(destination: FriendsView()) {
+            Button {
+                menuViewController.showFriends()
+            } label: {
                 HStack{
                     Image(systemName: "person.2.fill")
                     Text("Friends")
@@ -211,7 +264,9 @@ struct MenuView: View{
             }
             .padding(.all)
             // Menu Feature to access user's groups
-            NavigationLink(destination: GroupsView()) {
+            Button {
+                menuViewController.showGroups()
+            } label: {
                 HStack{
                     Image(systemName: "person.3.sequence.fill")
                     Text("Groups")
