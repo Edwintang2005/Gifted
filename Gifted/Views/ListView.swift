@@ -63,7 +63,6 @@ struct ListView: View {
                                     .padding(.horizontal)
                                     Spacer()
                                 }.onAppear{getImage(Imagekey: Item.ImageKey)}
-                                
                             }
                         }
                         .onDelete(perform: deleteItem)
