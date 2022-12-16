@@ -39,7 +39,7 @@ struct GroupDetailsView: View {
                                 }
                             }
                         } header: {
-                            Text("Members of this group (Including yourself):")
+                            Text("Members (Including yourself):")
                         }
                     }
                 }

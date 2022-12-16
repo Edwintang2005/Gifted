@@ -72,31 +72,113 @@ struct MainView: View{
     
     @EnvironmentObject var sessionManager: SessionManager
     
+    @State var listitems = [ListItem]()
+    @State var Groups = [GroupLink]()
+    @State var ImageCache = [String: UIImage]()
+    let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+    
     //Variable for whether or not to show the menu
     @Binding var ShowMenu: Bool
     
     
     var body: some View{
-        ScrollView{
-            VStack(spacing: 50) {
-                HStack {
-                    // Text that displays the User's name
-                    Text("Hello, \(UserDefaults.standard.string(forKey: "Username") ?? "Anonymous User 😊")!").homepagename()
-                    Spacer()
-                    Button("Sign Out", action: sessionManager.signOut)
-                }
-                // replace below with Roger's design of Homescreen
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundColor(.accentColor)
-                Text("Hello, world!")
+        VStack(spacing: 50) {
+            HStack {
+                // Text that displays the User's name
+                Text("Hello, \(username)!").homepagename()
+                Spacer()
+                Button("Sign Out", action: sessionManager.signOut)
             }
-            .padding()
+            // replace below with Roger's design of Homescreen
+            List {
+                Section {
+                    Text("Your Items:")
+                    ForEach(listitems) {
+                        Item in NavigationLink{
+                            ItemDetailsView(QueryUsername: username, listItem: Item)
+                        } label: {
+                            HStack{
+                                // Small Icon Image Rendering
+                                if let key = Item.ImageKey {
+                                    if let Render = ImageCache[key] {
+                                        Image(uiImage: Render).Icon()
+                                    } else {
+                                        Image("ImageNotFound").Icon()
+                                    }
+                                } else {
+                                    Image("ImageNotFound").Icon()
+                                }
+                                
+                                VStack(alignment: .leading) {
+                                    Text(Item.Name).listtext()
+                                    Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
+                                }
+                                .padding(.horizontal)
+                                Spacer()
+                            }.onAppear{getImage(Imagekey: Item.ImageKey)}
+                        }
+                    }
+                    Text("Your Groups:")
+                    ForEach(Groups) {
+                        Group in Text(Group.GroupName )
+                    }
+                } header: {
+                    Text("Preview your Items and Groups!")
+                }
+                
+            }
         }
+        .padding()
         .navigationBarTitle("Home")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear{ // Basically hides the menu everytime the homescreen is displayed
+            getListItem()
+            getGroups()
             ShowMenu = false
+        }
+    }
+    
+    func getListItem() {
+        let ListObj = ListItem.keys
+        Amplify.DataStore.query(ListItem.self, where: ListObj.userID == username) { result in
+            switch result {
+            case.success(let listitems):
+                print(listitems)
+                self.listitems = listitems
+            case.failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getGroups() {
+        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+        let GroupsLinkObj = GroupLink.keys
+        Amplify.DataStore.query(GroupLink.self, where: GroupsLinkObj.OwnerUser == username) {result in
+            switch result {
+            case .success(let GroupsList):
+                print(GroupsList)
+                self.Groups = GroupsList
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getImage(Imagekey: String?) {
+        guard let Key = Imagekey else {return}
+        Amplify.Storage.downloadData(key: Key) { result in
+            switch result {
+            case .success(let ImageData):
+                print("Fetched ImageData")
+                let image = UIImage(data: ImageData)
+                DispatchQueue.main.async{
+                    ImageCache[Key] = image
+                }
+                return
+            case .failure(let error):
+                print("Could not get Image URL - \(error)")
+            }
         }
     }
 }
@@ -107,13 +189,13 @@ struct MainView: View{
 struct MenuView: View{
     
     @EnvironmentObject var sessionManager: SessionManager
-    
+    let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
     
     var body: some View{
         VStack{
             
             // Menu Feature to access user's list
-            NavigationLink(destination: ListView(QueryUsername: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")) {
+            NavigationLink(destination: ListView(QueryUsername: username)) {
                 HStack{
                     Image(systemName: "list.bullet.rectangle")
                     Text("My List")
