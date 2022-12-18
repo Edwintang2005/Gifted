@@ -25,12 +25,15 @@ struct ConfirmationView: View {
                 .aspectRatio(contentMode: .fit)
             TextField("Confirmation Code", text: $confirmationCode).pretty()
             Text("Check your email for a code").medium()
-            Button("Confirm", action: {
+            Button {
                 sessionManager.confirm(
                     username: username,
                     code: confirmationCode
                 )
-            }).pretty()
+            } label: {
+                Text("Confirm")
+                    .frame(maxWidth: .infinity)
+            }.pretty()
             Spacer()
             Text("Brought to you with ❤️ from Edwin Tang and Roger Yao").small()
         }

@@ -23,51 +23,62 @@ struct LoginView: View {
             // Username signin functionality
             VStack {
                 Spacer()
-                Text("Welcome to Gifted!").pretty()
-                Spacer()
-                Text("Login Here:")
-                    .font(.title3)
+                Text("Welcome to \n Gifted!")
+                    .pretty()
                 Spacer()
                 TextField("Username", text: $username).pretty()
                 SecureField("Password", text: $password).pretty()
-                Button("Login", action: {
+                Button {
                     sessionManager.login(
                         username: username,
                         password: password
                     )
                     print("logged in")
                     Username = username
-                }).pretty()
+                } label: {
+                    Text("Login")
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity)
+                }.pretty()
             }
             .padding(.horizontal)
             // The Big line with an or in the middle, for appearances
             LabelledDivider(label: "OR")
             // vertical stack created for easier button placement
             VStack(spacing: 8) {
-                // Button for Gmail Signin
-                Button{ action:do {
-                    sessionManager.showUnavailable() // Dud function, replace with actual functionality later
+                HStack{
+                    // Button for Gmail Signin
+                    Button{ action:do {
+                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
+                    }
+                    } label: {
+                        HStack{
+                            Image(systemName: "envelope.fill")
+                                .imageScale(.medium)
+                            Text(" Gmail")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
+                    }.google()
+                    // Button for Facebook signin
+                    Button {
+                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
+                    } label: {
+                        HStack{
+                            Image(systemName: "f.cursive")
+                                .imageScale(.medium)
+                            Text(" Facebook")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
+                    }.facebook()
                 }
-                } label: {
-                    Image(systemName: "envelope.fill")
-                        .imageScale(.medium)
-                    Text("Continue with Gmail")
-                }.google()
-                // Button for Facebook signin
-                Button {
-                    sessionManager.showUnavailable() // Dud function, replace with actual functionality later
-                } label: {
-                    Image(systemName: "f.cursive")
-                        .imageScale(.medium)
-                    Text("Continue with Facebook")
-                }.facebook()
                 Spacer()
                 Button("Don't have an account? Sign up.", action: sessionManager.showSignUp)
                 Spacer()
                 Text("Brought to you with ❤️ from Edwin Tang and Roger Yao").small()
             }
             .padding(.horizontal)
-            Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipped()
