@@ -41,6 +41,9 @@ extension Text{
         self.font(.headline)
             .foregroundColor(.secondary)
     }
+    func verif() -> some View{
+        self.font(.headline)
+    }
 }
 
 extension TextField {
@@ -64,8 +67,8 @@ extension Button {
         self.font(.title3)
             .padding(.all)
             .frame(maxWidth: .infinity)
-            .foregroundColor(.white)
-            .background(Color.blue)
+            .foregroundColor(Color(.systemBackground))
+            .background(Color.primary)
             .cornerRadius(50)
             .shadow(color: Color.black.opacity(0.2), radius: 30, x: 2, y: 2)
             .padding(.all)
@@ -94,7 +97,7 @@ extension Button {
             .foregroundColor(Color(.systemBackground))
             .background {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color(.displayP3, red: 23/255, green: 120/255, blue: 242/255))
+                .fill(Color(.displayP3, red: 66/255, green: 103/255, blue: 178/255))
             }
     }
 }
