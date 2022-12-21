@@ -100,6 +100,7 @@ struct MainView: View{
     
     @EnvironmentObject var sessionManager: SessionManager
     
+    @State private var NameOfUser = ""
     @State var listitems = [ListItem]()
     @State var Groups = [GroupLink]()
     @State var ImageCache = [String: UIImage]()
@@ -113,7 +114,7 @@ struct MainView: View{
         VStack(spacing: 50) {
             HStack {
                 // Text that displays the User's name
-                Text("Hello, \(username)!").homepagename()
+                Text("Hello, \(NameOfUser)!").homepagename()
                 Spacer()
             }
             // replace below with Roger's design of Homescreen
@@ -164,6 +165,7 @@ struct MainView: View{
         .onAppear{
             getListItem()
             getGroups()
+            fetchUserInfo()
         }
         .onDisappear{
             do {
@@ -176,7 +178,7 @@ struct MainView: View{
     
     func getListItem() {
         let ListObj = ListItem.keys
-        Amplify.DataStore.query(ListItem.self, where: ListObj.userID == username) { result in
+        Amplify.DataStore.query(ListItem.self, where: ListObj.UserID == username) { result in
             switch result {
             case.success(let listitems):
                 print(listitems)
@@ -214,6 +216,18 @@ struct MainView: View{
                 return
             case .failure(let error):
                 print("Could not get Image URL - \(error)")
+            }
+        }
+    }
+    
+    func fetchUserInfo() {
+        Amplify.Auth.fetchUserAttributes() { result in
+            switch result {
+            case .success(let attributes):
+                let name = attributes.filter {$0.key == .name}
+                NameOfUser = name.first?.value ?? ""
+            case .failure(let error):
+                print("Fetching user attributes failed with error \(error)")
             }
         }
     }

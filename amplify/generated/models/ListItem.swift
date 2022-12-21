@@ -10,7 +10,7 @@ public struct ListItem: Model {
   public var ImageKey: String?
   public var Link: String?
   public var Reservation: [String]?
-  public var userID: String
+  public var UserID: String
   public var createdAt: Temporal.DateTime?
   public var updatedAt: Temporal.DateTime?
   
@@ -21,7 +21,7 @@ public struct ListItem: Model {
       ImageKey: String? = nil,
       Link: String? = nil,
       Reservation: [String]? = nil,
-      userID: String) {
+      UserID: String) {
     self.init(id: id,
       Name: Name,
       Price: Price,
@@ -29,7 +29,7 @@ public struct ListItem: Model {
       ImageKey: ImageKey,
       Link: Link,
       Reservation: Reservation,
-      userID: userID,
+      UserID: UserID,
       createdAt: nil,
       updatedAt: nil)
   }
@@ -40,7 +40,7 @@ public struct ListItem: Model {
       ImageKey: String? = nil,
       Link: String? = nil,
       Reservation: [String]? = nil,
-      userID: String,
+      UserID: String,
       createdAt: Temporal.DateTime? = nil,
       updatedAt: Temporal.DateTime? = nil) {
       self.id = id
@@ -50,7 +50,7 @@ public struct ListItem: Model {
       self.ImageKey = ImageKey
       self.Link = Link
       self.Reservation = Reservation
-      self.userID = userID
+      self.UserID = UserID
       self.createdAt = createdAt
       self.updatedAt = updatedAt
   }

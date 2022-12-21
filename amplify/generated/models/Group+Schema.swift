@@ -10,6 +10,7 @@ extension Group {
     case Name
     case NameAndShortID
     case Members
+    case ImageKey
     case createdAt
     case updatedAt
   }
@@ -36,6 +37,7 @@ extension Group {
       .field(group.Name, is: .required, ofType: .string),
       .field(group.NameAndShortID, is: .required, ofType: .string),
       .field(group.Members, is: .required, ofType: .embeddedCollection(of: String.self)),
+      .field(group.ImageKey, is: .optional, ofType: .string),
       .field(group.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(group.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

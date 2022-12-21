@@ -18,8 +18,8 @@ struct ConfirmationView: View {
     var body: some View {
         VStack {
             
-            Text("Verification for \n \(username)").pretty()
-            Spacer()
+            Text("Verification for").pretty()
+            Text(username).pretty()
             Image("VerificationStock")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -39,7 +39,6 @@ struct ConfirmationView: View {
         }
         .padding()
     }
-    
 }
 
 struct ConfirmationView_Previews: PreviewProvider {

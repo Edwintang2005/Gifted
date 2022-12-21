@@ -1,4 +1,11 @@
 export type AmplifyDependentResourcesAttributes = {
+    "api": {
+        "HatchlingTurtle": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
+    },
     "auth": {
         "HatchlingTurtle": {
             "IdentityPoolId": "string",
@@ -10,15 +17,8 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientID": "string"
         }
     },
-    "api": {
-        "HatchlingTurtle": {
-            "GraphQLAPIKeyOutput": "string",
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
-        }
-    },
     "storage": {
-        "s3hatchlingturtlestorage47b07fb4": {
+        "s3hatchlingturtlestoragec3f4068f": {
             "BucketName": "string",
             "Region": "string"
         }
