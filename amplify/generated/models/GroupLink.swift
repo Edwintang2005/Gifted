@@ -6,14 +6,14 @@ public struct GroupLink: Model {
   public let id: String
   public var GroupID: String
   public var GroupName: String
-  public var OwnerUser: String?
+  public var OwnerUser: String
   public var createdAt: Temporal.DateTime?
   public var updatedAt: Temporal.DateTime?
   
   public init(id: String = UUID().uuidString,
       GroupID: String,
       GroupName: String,
-      OwnerUser: String? = nil) {
+      OwnerUser: String) {
     self.init(id: id,
       GroupID: GroupID,
       GroupName: GroupName,
@@ -24,7 +24,7 @@ public struct GroupLink: Model {
   internal init(id: String = UUID().uuidString,
       GroupID: String,
       GroupName: String,
-      OwnerUser: String? = nil,
+      OwnerUser: String,
       createdAt: Temporal.DateTime? = nil,
       updatedAt: Temporal.DateTime? = nil) {
       self.id = id

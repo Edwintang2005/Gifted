@@ -81,7 +81,7 @@ struct AddToList: View{
                             ImageKey: UserDefaults.standard.string(forKey: "ImageKey"),
                             Link: link,
                             Reservation: [],
-                            userID: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
+                            UserID: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
         Amplify.DataStore.save(item) { result in
             switch result {
             case .success:

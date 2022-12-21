@@ -156,7 +156,7 @@ struct ListView: View {
     func getListItem() {
         let username = QueryUsername
         let ListObj = ListItem.keys
-        Amplify.DataStore.query(ListItem.self, where: ListObj.userID == username) { result in
+        Amplify.DataStore.query(ListItem.self, where: ListObj.UserID == username) { result in
             switch result {
             case.success(let listitems):
                 print(listitems)

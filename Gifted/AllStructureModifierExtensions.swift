@@ -234,13 +234,13 @@ extension ListItem: Identifiable {}
 
 extension ListItem: Equatable{
     public static func ==(lhs: ListItem, rhs: ListItem) -> Bool {
-        lhs.id == rhs.id && lhs.userID == rhs.userID
+        lhs.id == rhs.id && lhs.UserID == rhs.UserID
     }
 }
 
 extension ListItem: Hashable{
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(id + userID)
+        hasher.combine(id + UserID)
     }
 }
 

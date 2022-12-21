@@ -49,8 +49,11 @@ final class SessionManager: ObservableObject {
     }
     
     // Controller function to show signup page
-    func signUp(username: String, email: String, password: String) {
-        let attributes = [AuthUserAttribute(.email, value: email)]
+    func signUp(username: String, email: String, name: String, password: String) {
+        let attributes = [
+            AuthUserAttribute(.email, value: email),
+            AuthUserAttribute(.name, value: name)
+        ]
         let options = AuthSignUpRequest.Options(userAttributes: attributes)
         
         _ = Amplify.Auth.signUp(

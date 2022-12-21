@@ -8,6 +8,7 @@ public struct Group: Model {
   public var Name: String
   public var NameAndShortID: String
   public var Members: [String]
+  public var ImageKey: String?
   public var createdAt: Temporal.DateTime?
   public var updatedAt: Temporal.DateTime?
   
@@ -15,12 +16,14 @@ public struct Group: Model {
       ShortID: String,
       Name: String,
       NameAndShortID: String,
-      Members: [String] = []) {
+      Members: [String] = [],
+      ImageKey: String? = nil) {
     self.init(id: id,
       ShortID: ShortID,
       Name: Name,
       NameAndShortID: NameAndShortID,
       Members: Members,
+      ImageKey: ImageKey,
       createdAt: nil,
       updatedAt: nil)
   }
@@ -29,6 +32,7 @@ public struct Group: Model {
       Name: String,
       NameAndShortID: String,
       Members: [String] = [],
+      ImageKey: String? = nil,
       createdAt: Temporal.DateTime? = nil,
       updatedAt: Temporal.DateTime? = nil) {
       self.id = id
@@ -36,6 +40,7 @@ public struct Group: Model {
       self.Name = Name
       self.NameAndShortID = NameAndShortID
       self.Members = Members
+      self.ImageKey = ImageKey
       self.createdAt = createdAt
       self.updatedAt = updatedAt
   }
