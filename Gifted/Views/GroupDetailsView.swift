@@ -11,10 +11,9 @@ import SwiftUI
 
 struct GroupDetailsView: View {
     
-    @State var GroupName: String
+    @State var GroupNameAndID: String
     @State var Title = String()
     @State var InputLength = Int()
-    @State var falseBinding = false
     
     let Groups : [Group]
     
@@ -34,7 +33,7 @@ struct GroupDetailsView: View {
                         Section{
                             ForEach(Group.Members, id: \.self) {
                                 Member in NavigationLink{
-                                    ListView(QueryUsername: Member, ShowMenu: self.$falseBinding)
+                                    ListView(QueryUsername: Member)
                                 } label: {
                                     Text(Member).listtext()
                                 }
@@ -54,8 +53,9 @@ struct GroupDetailsView: View {
     }
     
     func GetTitle() {
-        let GroupObject = Groups.first
-        Title = (GroupObject?.Name ?? " ") + " # " + (GroupObject?.ShortID ?? " ")
+        if let GroupObject = Groups.first {
+            Title = (GroupObject.Name ) + " # " + (GroupObject.ShortID )
+        }
         InputLength = Groups.count
     }
 }

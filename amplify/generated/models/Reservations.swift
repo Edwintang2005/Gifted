@@ -2,35 +2,35 @@
 import Amplify
 import Foundation
 
-public struct GroupLink: Model {
+public struct Reservations: Model {
   public let id: String
-  public var GroupID: String
-  public var GroupName: String
   public var OwnerUser: String
+  public var ItemID: String
+  public var ReservedBy: [String]?
   public var createdAt: Temporal.DateTime?
   public var updatedAt: Temporal.DateTime?
   
   public init(id: String = UUID().uuidString,
-      GroupID: String,
-      GroupName: String,
-      OwnerUser: String) {
+      OwnerUser: String,
+      ItemID: String,
+      ReservedBy: [String]? = nil) {
     self.init(id: id,
-      GroupID: GroupID,
-      GroupName: GroupName,
       OwnerUser: OwnerUser,
+      ItemID: ItemID,
+      ReservedBy: ReservedBy,
       createdAt: nil,
       updatedAt: nil)
   }
   internal init(id: String = UUID().uuidString,
-      GroupID: String,
-      GroupName: String,
       OwnerUser: String,
+      ItemID: String,
+      ReservedBy: [String]? = nil,
       createdAt: Temporal.DateTime? = nil,
       updatedAt: Temporal.DateTime? = nil) {
       self.id = id
-      self.GroupID = GroupID
-      self.GroupName = GroupName
       self.OwnerUser = OwnerUser
+      self.ItemID = ItemID
+      self.ReservedBy = ReservedBy
       self.createdAt = createdAt
       self.updatedAt = updatedAt
   }

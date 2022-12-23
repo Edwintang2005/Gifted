@@ -30,7 +30,9 @@ struct SignUpView: View {
         VStack {
             TextField("Username", text: $username).pretty()
             TextField("Name (First and last)", text: $name).pretty()
+                .keyboardType(.namePhonePad)
             TextField("Email", text: $email).pretty()
+                .keyboardType(.emailAddress)
             SecureField("Password", text: $password).pretty()
             HStack {
                 VStack(alignment: .leading) {

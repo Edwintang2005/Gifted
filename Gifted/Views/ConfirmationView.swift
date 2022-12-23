@@ -17,7 +17,6 @@ struct ConfirmationView: View {
     
     var body: some View {
         VStack {
-            
             Text("Verification for").pretty()
             Text(username).pretty()
             Image("VerificationStock")

@@ -9,8 +9,6 @@ public struct ListItem: Model {
   public var ShortDescription: String?
   public var ImageKey: String?
   public var Link: String?
-  public var Reservation: [String]?
-  public var UserID: String
   public var createdAt: Temporal.DateTime?
   public var updatedAt: Temporal.DateTime?
   
@@ -19,17 +17,13 @@ public struct ListItem: Model {
       Price: String? = nil,
       ShortDescription: String? = nil,
       ImageKey: String? = nil,
-      Link: String? = nil,
-      Reservation: [String]? = nil,
-      UserID: String) {
+      Link: String? = nil) {
     self.init(id: id,
       Name: Name,
       Price: Price,
       ShortDescription: ShortDescription,
       ImageKey: ImageKey,
       Link: Link,
-      Reservation: Reservation,
-      UserID: UserID,
       createdAt: nil,
       updatedAt: nil)
   }
@@ -39,8 +33,6 @@ public struct ListItem: Model {
       ShortDescription: String? = nil,
       ImageKey: String? = nil,
       Link: String? = nil,
-      Reservation: [String]? = nil,
-      UserID: String,
       createdAt: Temporal.DateTime? = nil,
       updatedAt: Temporal.DateTime? = nil) {
       self.id = id
@@ -49,8 +41,6 @@ public struct ListItem: Model {
       self.ShortDescription = ShortDescription
       self.ImageKey = ImageKey
       self.Link = Link
-      self.Reservation = Reservation
-      self.UserID = UserID
       self.createdAt = createdAt
       self.updatedAt = updatedAt
   }
