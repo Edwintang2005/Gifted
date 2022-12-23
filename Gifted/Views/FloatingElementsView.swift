@@ -33,7 +33,8 @@ struct AddToList: View{
         VStack(alignment: .leading) {
             Spacer()
             TextField("Name", text: $name).pretty()
-            TextField("Link?", text: $link).pretty()
+            TextField("Link", text: $link).pretty()
+                .keyboardType(.URL)
             TextField("Price", text: $price).pretty()
                 .keyboardType(.decimalPad) // enforces number input for prices
             TextField("Short Description", text: $description).pretty()
@@ -62,34 +63,56 @@ struct AddToList: View{
             Spacer()
         }
         .padding(.horizontal)
-        .navigationTitle("Create a New Item!")
+        .navigationTitle("Create a New Item")
         .onChange(of: inputImage) { _ in loadImage() }
         .sheet(isPresented: $showingImagePicker) {
             ImagePicker(image: $inputImage)
         }
-        
     }
     
     
     // Function that updates list items to the cloud
     func saveListItem() {
+        
+        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+        let UserObj = User.keys
+        
         print(name)
         let item = ListItem(id: UUID().uuidString,
                             Name: name,
                             Price: price,
                             ShortDescription: description,
                             ImageKey: UserDefaults.standard.string(forKey: "ImageKey"),
-                            Link: link,
-                            Reservation: [],
-                            UserID: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
+                            Link: link)
         Amplify.DataStore.save(item) { result in
             switch result {
             case .success:
                 print("Saved Item")
-                presentationMode.wrappedValue.dismiss()
-            case .failure(let error):
-                print(error)
+                // Adding Item to User's list
                 
+                Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
+                    switch result {
+                    case.success(let user):
+                        if var singleUser = user.first {
+                            var list = singleUser.Items
+                            list.append(item.id)
+                            singleUser.Items = list
+                            Amplify.DataStore.save (singleUser) {result in
+                                switch result {
+                                case .success:
+                                    print("Successfully added Item")
+                                    presentationMode.wrappedValue.dismiss()
+                                case .failure(let error):
+                                    print("Could not add item - \(error)")
+                                }
+                            }
+                        }
+                    case.failure(let error):
+                        print("Could not fetch User - \(error)")
+                    }
+                }
+            case .failure(let error):
+                print("Could not create Item - \(error)")
             }
         }
         
@@ -148,18 +171,9 @@ struct AddToFriends: View{
     
     func saveFriend() {
         print(username)
-        let Friend = Friend(id: UUID().uuidString,
-                            Username: username,
-                            OwnerUser: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
-        Amplify.DataStore.save(Friend) { result in
-            switch result {
-            case .success:
-                print("Saved Friend!")
-                presentationMode.wrappedValue.dismiss()
-            case .failure(let error):
-                print(error)
-            }
-        }
+        // Insert code to add to Friends List
+        
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
@@ -196,20 +210,8 @@ struct AddToGroups: View{
     
     func saveGroupLink() {
         print(groupID)
-        // Creating Link record between user and group
-        let GroupLink = GroupLink(id: UUID().uuidString,
-                                  GroupID: groupID,
-                                  GroupName: groupName,
-                                  OwnerUser: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
-        Amplify.DataStore.save(GroupLink) { result in
-            switch result {
-            case .success:
-                print("Saved Group Link!")
-                presentationMode.wrappedValue.dismiss()
-            case .failure(let error):
-                print(error)
-            }
-        }
+        // Insert code for Creating Link record between user and group
+        
         
         // Appending user name to group
         getGroup()
@@ -222,6 +224,7 @@ struct AddToGroups: View{
                 switch result {
                 case .success:
                     print("Added Member to group.")
+                    presentationMode.wrappedValue.dismiss()
                 case .failure(let error):
                     print(error)
                 }
@@ -277,8 +280,8 @@ struct CreateNewGroup: View{
         let GroupNameandID = Name + ShortID
         Members = [Username]
         let Group = Group(id: UUID().uuidString,
-                          ShortID: ShortID,
                           Name: Name,
+                          ShortID: ShortID,
                           NameAndShortID: GroupNameandID,
                           Members: Members)
         Amplify.DataStore.save(Group) {result in
@@ -295,19 +298,6 @@ struct CreateNewGroup: View{
     
     func createGroupLink() {
         print(ShortID)
-        // Creating Link record between user and group
-        let GroupLink = GroupLink(id: UUID().uuidString,
-                                  GroupID: ShortID,
-                                  GroupName: Name,
-                                  OwnerUser: UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
-        Amplify.DataStore.save(GroupLink) { result in
-            switch result {
-            case .success:
-                print("Saved Group Link!")
-                presentationMode.wrappedValue.dismiss()
-            case .failure(let error):
-                print(error)
-            }
-        }
+        // Replace with code to append group to user file
     }
 }

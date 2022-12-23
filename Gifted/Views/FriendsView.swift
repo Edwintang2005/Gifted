@@ -16,13 +16,8 @@ struct FriendsView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     @State var showAddToFriends = false
-    @State var Friends = [Friend]()
+    @State var Friends = [String]()
     @State var FriendsLength = Int()
-    @State var falseBinding = false
-    
-    
-    @Binding var ShowMenu: Bool
-    
     
     
     var body: some View {
@@ -36,11 +31,11 @@ struct FriendsView: View {
                     Spacer()
                 } else {
                     List {
-                        ForEach(Friends) {
+                        ForEach(Friends, id: \.self) {
                             Friend in NavigationLink{
-                                ListView(QueryUsername: Friend.Username, ShowMenu: self.$falseBinding)
+                                ListView(QueryUsername: Friend)
                             } label: {
-                                Text(Friend.Username )
+                                Text(Friend)
                             }
                         }
                         .onDelete(perform: deleteFriend)
@@ -55,7 +50,7 @@ struct FriendsView: View {
                     NavigationLink{
                         AddToFriends()
                     } label: {
-                            Image(systemName: "plus.circle.fill").floaty()
+                        Image(systemName: "plus.circle.fill").floaty()
                     }
                 }
             }
@@ -65,34 +60,29 @@ struct FriendsView: View {
             getFriends()
             FriendsLength = Friends.count
         }
-        .onDisappear{
-            do {
-                withAnimation {
-                    self.ShowMenu.toggle()
-                }
-            }
-        }
         .navigationBarTitle("Friends")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: (
             Button(action: {
                 getFriends()
                 FriendsLength = Friends.count
-                }) {
-                    Image(systemName: "arrow.clockwise")
-                        .imageScale(.large)
-                }
-            ))
+            }) {
+                Image(systemName: "arrow.clockwise")
+                    .imageScale(.large)
+            }
+        ))
     }
     
     func getFriends() {
         let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
-        let FriendObj = Friend.keys
-        Amplify.DataStore.query(Friend.self, where: FriendObj.OwnerUser == username) {result in
+        let UserObj = User.keys
+        Amplify.DataStore.query(User.self, where: UserObj.Username == username) {result in
             switch result {
-            case .success(let FriendList):
-                print(FriendList)
-                self.Friends = FriendList
+            case .success(let user):
+                if let singleUser = user.first {
+                    print(singleUser.Friends)
+                    self.Friends = singleUser.Friends
+                }
             case .failure(let error):
                 print(error)
             }
@@ -107,18 +97,20 @@ struct FriendsView: View {
         
         guard let item =
                 Set(updatedList)
-                .symmetricDifference(Friends).first else
-                {return}
+            .symmetricDifference(Friends).first else
+        {return}
         
-        Amplify.DataStore.delete(item) { result in
-            switch result {
-            case .success:
-                print("Deleted Friend")
-            case .failure(let error):
-                print("Could not delete Friend - \(error)")
-            }
-            
-        }
+        // Function to remove friend from list required
+        
+        //        Amplify.DataStore.delete(item) { result in
+        //            switch result {
+        //            case .success:
+        //                print("Deleted Friend")
+        //            case .failure(let error):
+        //                print("Could not delete Friend - \(error)")
+        //            }
+        //
+        //        }
         getFriends()
     }
 }
@@ -127,7 +119,7 @@ struct FriendsView: View {
 
 
 
-  
+
 //struct FriendsView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        FriendsView()

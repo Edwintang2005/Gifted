@@ -31,12 +31,12 @@ struct ContentView: View {
         // Animations for showing and hiding the menu
         let drag = DragGesture()
                     .onEnded {
-                        if $0.translation.width < -100 {
+                        if $0.translation.width < -60 {
                             withAnimation {
                                 self.ShowMenu = false
                             }
                         }
-                        if $0.translation.width > 100 {
+                        if $0.translation.width > 60 {
                             withAnimation{
                                 self.ShowMenu = true
                             }
@@ -50,31 +50,31 @@ struct ContentView: View {
                     switch self.menuViewController.menuDisplay {
                         
                     case .mainWindow:
-                        MainView(ShowMenu: self.$ShowMenu)
+                        MainView()
                             .frame(width: geometry.size.width, height: geometry.size.height)
                             .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
                             .disabled(self.ShowMenu ? true : false)
                         
                     case .list:
-                        ListView(QueryUsername: username, ShowMenu: self.$ShowMenu)
+                        ListView(QueryUsername: username)
                             .frame(width: geometry.size.width, height: geometry.size.height)
                             .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
                             .disabled(self.ShowMenu ? true : false)
                         
                     case .friends:
-                        FriendsView(ShowMenu: self.$ShowMenu)
+                        FriendsView()
                             .frame(width: geometry.size.width, height: geometry.size.height)
                             .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
                             .disabled(self.ShowMenu ? true : false)
                         
                     case .groups:
-                        GroupsView(ShowMenu: self.$ShowMenu)
+                        GroupsView()
                             .frame(width: geometry.size.width, height: geometry.size.height)
                             .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
                             .disabled(self.ShowMenu ? true : false)
                     }
                     if self.ShowMenu {
-                        MenuView()
+                        MenuView(ShowMenu: self.$ShowMenu)
                             .frame(width: geometry.size.width/2)
                             .transition(.move(edge: .leading))
                     }
@@ -96,19 +96,13 @@ struct ContentView: View {
 }
 
 // Object for the Main view or what is essentially our home screen
-struct MainView: View{
+struct MainView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
     
     @State private var NameOfUser = ""
-    @State var listitems = [ListItem]()
-    @State var Groups = [GroupLink]()
     @State var ImageCache = [String: UIImage]()
     let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
-    
-    //Variable for whether or not to show the menu
-    @Binding var ShowMenu: Bool
-    
     
     var body: some View{
         VStack(spacing: 50) {
@@ -118,43 +112,47 @@ struct MainView: View{
                 Spacer()
             }
             // replace below with Roger's design of Homescreen
-            List {
-                Section {
-                    Text("Your Items:")
-                    ForEach(listitems) {
-                        Item in NavigationLink{
-                            ItemDetailsView(QueryUsername: username, listItem: Item)
-                        } label: {
-                            HStack{
-                                // Small Icon Image Rendering
-                                if let key = Item.ImageKey {
-                                    if let Render = ImageCache[key] {
-                                        Image(uiImage: Render).Icon()
-                                    } else {
-                                        Image("ImageNotFound").Icon()
-                                    }
-                                } else {
-                                    Image("ImageNotFound").Icon()
-                                }
-                                
-                                VStack(alignment: .leading) {
-                                    Text(Item.Name).listtext()
-                                    Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
-                                }
-                                .padding(.horizontal)
-                                Spacer()
-                            }.onAppear{getImage(Imagekey: Item.ImageKey)}
-                        }
-                    }
-                    Text("Your Groups:")
-                    ForEach(Groups) {
-                        Group in Text(Group.GroupName )
-                    }
-                } header: {
-                    Text("Preview your Items and Groups!")
-                }
-                
-            }
+            Spacer()
+            
+            // Old Home Screen, functionality not available yet
+            
+//            List {
+//                Section {
+//                    Text("Your Items:")
+//                    ForEach(listitems) {
+//                        Item in NavigationLink{
+//                            ItemDetailsView(QueryUsername: username, listItem: Item)
+//                        } label: {
+//                            HStack{
+//                                // Small Icon Image Rendering
+//                                if let key = Item.ImageKey {
+//                                    if let Render = ImageCache[key] {
+//                                        Image(uiImage: Render).Icon()
+//                                    } else {
+//                                        Image("ImageNotFound").Icon()
+//                                    }
+//                                } else {
+//                                    Image("ImageNotFound").Icon()
+//                                }
+//
+//                                VStack(alignment: .leading) {
+//                                    Text(Item.Name).listtext()
+//                                    Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
+//                                }
+//                                .padding(.horizontal)
+//                                Spacer()
+//                            }.onAppear{getImage(Imagekey: Item.ImageKey)}
+//                        }
+//                    }
+//                    Text("Your Groups:")
+//                    ForEach(Groups) {
+//                        Group in Text(Group.GroupName )
+//                    }
+//                } header: {
+//                    Text("Preview your Items and Groups!")
+//                }
+//
+//            }
         }
         .padding()
         .navigationBarTitle("Home")
@@ -163,43 +161,7 @@ struct MainView: View{
             Button("Sign Out", action: sessionManager.signOut)
         ))
         .onAppear{
-            getListItem()
-            getGroups()
             fetchUserInfo()
-        }
-        .onDisappear{
-            do {
-                withAnimation {
-                    self.ShowMenu.toggle()
-                }
-            }
-        }
-    }
-    
-    func getListItem() {
-        let ListObj = ListItem.keys
-        Amplify.DataStore.query(ListItem.self, where: ListObj.UserID == username) { result in
-            switch result {
-            case.success(let listitems):
-                print(listitems)
-                self.listitems = listitems
-            case.failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    func getGroups() {
-        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
-        let GroupsLinkObj = GroupLink.keys
-        Amplify.DataStore.query(GroupLink.self, where: GroupsLinkObj.OwnerUser == username) {result in
-            switch result {
-            case .success(let GroupsList):
-                print(GroupsList)
-                self.Groups = GroupsList
-            case .failure(let error):
-                print(error)
-            }
         }
     }
     
@@ -241,6 +203,7 @@ struct MenuView: View{
     @EnvironmentObject var menuViewController: MenuViewController
     @EnvironmentObject var sessionManager: SessionManager
     
+    @Binding var ShowMenu: Bool
     
     let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
     
@@ -249,6 +212,7 @@ struct MenuView: View{
             // Menu Feature to navigate to Home Page
             Button {
                 menuViewController.showMain()
+                animateCollapse()
             } label: {
                 HStack{
                     Image(systemName: "house.fill")
@@ -260,6 +224,7 @@ struct MenuView: View{
             // Menu Feature to access user's list
             Button {
                 menuViewController.showList()
+                animateCollapse()
             } label: {
                 HStack{
                     Image(systemName: "list.bullet.rectangle")
@@ -270,6 +235,7 @@ struct MenuView: View{
             // Menu Feature to access user's friends
             Button {
                 menuViewController.showFriends()
+                animateCollapse()
             } label: {
                 HStack{
                     Image(systemName: "person.2.fill")
@@ -280,6 +246,7 @@ struct MenuView: View{
             // Menu Feature to access user's groups
             Button {
                 menuViewController.showGroups()
+                animateCollapse()
             } label: {
                 HStack{
                     Image(systemName: "person.3.sequence.fill")
@@ -288,6 +255,13 @@ struct MenuView: View{
             }
             .padding(.all)
             Spacer()
+        }
+    }
+    
+    // For animating the dissapearance of menu
+    func animateCollapse() {
+        withAnimation {
+            self.ShowMenu = false
         }
     }
 }

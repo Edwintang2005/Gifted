@@ -11,8 +11,6 @@ extension ListItem {
     case ShortDescription
     case ImageKey
     case Link
-    case Reservation
-    case UserID
     case createdAt
     case updatedAt
   }
@@ -40,8 +38,6 @@ extension ListItem {
       .field(listItem.ShortDescription, is: .optional, ofType: .string),
       .field(listItem.ImageKey, is: .optional, ofType: .string),
       .field(listItem.Link, is: .optional, ofType: .string),
-      .field(listItem.Reservation, is: .optional, ofType: .embeddedCollection(of: String.self)),
-      .field(listItem.UserID, is: .required, ofType: .string),
       .field(listItem.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(listItem.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

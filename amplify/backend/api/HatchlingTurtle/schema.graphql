@@ -1,23 +1,25 @@
+type Reservations @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  OwnerUser: String!
+  ItemID: String!
+  ReservedBy: [String!]
+}
+
 type Group @model @auth(rules: [{allow: public}]) {
   id: ID!
-  ShortID: String!
   Name: String!
+  ShortID: String!
   NameAndShortID: String!
   Members: [String!]!
   ImageKey: String
 }
 
-type GroupLink @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  GroupID: String!
-  GroupName: String!
-  OwnerUser: String!
-}
-
-type Friend @model @auth(rules: [{allow: public}]) {
+type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   Username: String!
-  OwnerUser: String!
+  Items: [String!]!
+  Friends: [String!]!
+  Groups: [String!]!
 }
 
 type ListItem @model @auth(rules: [{allow: public}]) {
@@ -27,6 +29,5 @@ type ListItem @model @auth(rules: [{allow: public}]) {
   ShortDescription: String
   ImageKey: String
   Link: String
-  Reservation: [String!]
-  UserID: String!
 }
+ 

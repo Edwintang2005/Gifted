@@ -64,7 +64,7 @@ extension SecureField {
 
 extension Button {
     func pretty() -> some View {
-        self.font(.title3)
+        self.font(.headline)
             .padding(.all)
             .frame(maxWidth: .infinity)
             .foregroundColor(Color(.systemBackground))
@@ -234,43 +234,13 @@ extension ListItem: Identifiable {}
 
 extension ListItem: Equatable{
     public static func ==(lhs: ListItem, rhs: ListItem) -> Bool {
-        lhs.id == rhs.id && lhs.UserID == rhs.UserID
+        lhs.id == rhs.id && lhs.Name == rhs.Name
     }
 }
 
 extension ListItem: Hashable{
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(id + UserID)
-    }
-}
-
-extension Friend: Identifiable {}
-
-extension Friend: Equatable {
-    public static func ==(lhs: Friend, rhs: Friend)
-        -> Bool {
-        lhs.id == rhs.id && lhs.OwnerUser == rhs.OwnerUser
-    }
-}
-
-extension Friend: Hashable{
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id + OwnerUser)
-    }
-}
-
-extension GroupLink: Identifiable {}
-
-extension GroupLink: Equatable {
-    public static func == (lhs: GroupLink, rhs: GroupLink)
-        -> Bool {
-            lhs.id == rhs.id && lhs.GroupID == rhs.GroupID
-    }
-}
-
-extension GroupLink: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id + GroupID)
+        hasher.combine(id + Name)
     }
 }
 
