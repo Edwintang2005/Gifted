@@ -11,9 +11,6 @@ struct LoginView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
     
-    // Variable for storing the User's username for use throughout the app
-    @AppStorage("Username") var Username: String = ""
-    
     // Variables for the input fields to satisfy login functionality
     @State var username = ""
     @State var password = ""
@@ -34,7 +31,6 @@ struct LoginView: View {
                         password: password
                     )
                     print("logged in")
-                    Username = username
                 } label: {
                     Text("Login")
                         .padding(.horizontal)

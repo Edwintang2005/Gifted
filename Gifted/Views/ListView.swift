@@ -36,7 +36,7 @@ struct ListView: View {
                         Spacer()
                     } else {
                         Spacer()
-                        Text("Your friend has no list items, or they do not exist. \n Check your input of their username! 😢").large()
+                        Text("Your friend has no list items! 😢").large()
                         Spacer()
                     }
                 }
@@ -169,10 +169,9 @@ struct ListView: View {
             switch result {
             case.success(let user):
                 if let singleUser = user.first {
-                    let list = singleUser.Items
-                    print(list)
+                    print(singleUser.Items)
                     // Appending each item in list of IDs to displayable list
-                    list.forEach{ item in
+                    singleUser.Items.forEach{ item in
                         Amplify.DataStore.query(ListItem.self, byId: item) { result in
                             switch result {
                             case .success(let individualItem):

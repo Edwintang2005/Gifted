@@ -22,7 +22,9 @@ struct ConfirmationView: View {
             Image("VerificationStock")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-            TextField("Confirmation Code", text: $confirmationCode).pretty()
+            TextField("Confirmation Code", text: $confirmationCode)
+                .pretty()
+                .keyboardType(.numberPad)
             Text("Check your email for a code").medium()
             Button {
                 sessionManager.confirm(
