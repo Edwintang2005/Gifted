@@ -46,7 +46,7 @@ struct ItemDetailsView: View {
                 }
             }
             .padding(.all)
-
+            
             // Information displayed below the image
             HStack {
                 VStack(alignment: .leading, spacing: 3) {
@@ -69,7 +69,7 @@ struct ItemDetailsView: View {
                     Spacer()
                 }
             }
-                .padding(.horizontal)
+            .padding(.horizontal)
             // Buttons below details
             if selfQuery == true {
                 // Owner User querying, hence add to list or remove from list
@@ -94,18 +94,18 @@ struct ItemDetailsView: View {
                 Spacer()
                 if Reserved == true {
                     Button {
-                            unreserveItem()
-                        } label: {
-                                    Text("Remove Reservation")
-                                }
-                        .pretty()
+                        unreserveItem()
+                    } label: {
+                        Text("Remove Reservation")
+                    }
+                    .pretty()
                 } else {
                     Button {
-                            reserveItem()
-                        } label: {
-                                    Text("Reserve for purchase")
-                                }
-                        .pretty()
+                        reserveItem()
+                    } label: {
+                        Text("Reserve for purchase")
+                    }
+                    .pretty()
                 }
             }
         }
@@ -113,7 +113,7 @@ struct ItemDetailsView: View {
         .padding(.vertical)
         .onAppear{
             DetermineButton()
-            }
+        }
         .navigationTitle(listItem.Name)
         .navigationBarItems(trailing: (
             Button(action: {
@@ -193,12 +193,12 @@ struct ItemDetailsView: View {
     
     func checkReservation() {
         Reserved = false
-//        guard let reservationList = listItem.Reservation else {return}
-//        if reservationList.contains(username) {
-//            Reserved = true
-//        } else {
-//            Reserved = false
-//        }
+        //        guard let reservationList = listItem.Reservation else {return}
+        //        if reservationList.contains(username) {
+        //            Reserved = true
+        //        } else {
+        //            Reserved = false
+        //        }
     }
     
     func checkList() {
@@ -243,26 +243,26 @@ struct ItemDetailsView: View {
         print("Button Pressed!")
         // Dud reserve Item function, need to redo
         
-//        Amplify.DataStore.query(ListItem.self, byId: listItem.id) { result in
-//            switch result {
-//            case .success(let Item):
-//                guard var item = Item else {return}
-//                var reservedByList = item.Reservation
-//                reservedByList?.append(username)
-//                item.Reservation = reservedByList
-//                Amplify.DataStore.save(item) {results in
-//                    switch results {
-//                    case .success:
-//                        print("Reserved!")
-//                    case .failure(let error):
-//                        print("Could not reserve Item - \(error)")
-//                    }
-//
-//                }
-//            case .failure(let error):
-//                print("Could not Reserve Item - \(error)")
-//            }
-//        }
+        //        Amplify.DataStore.query(ListItem.self, byId: listItem.id) { result in
+        //            switch result {
+        //            case .success(let Item):
+        //                guard var item = Item else {return}
+        //                var reservedByList = item.Reservation
+        //                reservedByList?.append(username)
+        //                item.Reservation = reservedByList
+        //                Amplify.DataStore.save(item) {results in
+        //                    switch results {
+        //                    case .success:
+        //                        print("Reserved!")
+        //                    case .failure(let error):
+        //                        print("Could not reserve Item - \(error)")
+        //                    }
+        //
+        //                }
+        //            case .failure(let error):
+        //                print("Could not Reserve Item - \(error)")
+        //            }
+        //        }
         refreshItem()
         DetermineButton()
     }
@@ -271,26 +271,26 @@ struct ItemDetailsView: View {
         print("Button Pressed!")
         // Dud unreserve Item function, need to redo
         
-//        Amplify.DataStore.query(ListItem.self, byId: listItem.id) { result in
-//            switch result {
-//            case .success(let Item):
-//                guard var item = Item else {return}
-//                var reservedByList = item.Reservation
-//                reservedByList?.removeAll{$0 == username}
-//                item.Reservation = reservedByList
-//                Amplify.DataStore.save(item) {results in
-//                    switch results {
-//                    case .success:
-//                        print("Unreserved!")
-//                    case .failure(let error):
-//                        print("Could not remove reservation - \(error)")
-//                    }
-//
-//                }
-//            case .failure(let error):
-//                print("Could not Unreserve Item - \(error)")
-//            }
-//        }
+        //        Amplify.DataStore.query(ListItem.self, byId: listItem.id) { result in
+        //            switch result {
+        //            case .success(let Item):
+        //                guard var item = Item else {return}
+        //                var reservedByList = item.Reservation
+        //                reservedByList?.removeAll{$0 == username}
+        //                item.Reservation = reservedByList
+        //                Amplify.DataStore.save(item) {results in
+        //                    switch results {
+        //                    case .success:
+        //                        print("Unreserved!")
+        //                    case .failure(let error):
+        //                        print("Could not remove reservation - \(error)")
+        //                    }
+        //
+        //                }
+        //            case .failure(let error):
+        //                print("Could not Unreserve Item - \(error)")
+        //            }
+        //        }
         refreshItem()
         DetermineButton()
     }

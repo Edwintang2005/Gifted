@@ -14,7 +14,7 @@ import Amplify
 struct AddToList: View{
 
     @Environment(\.presentationMode) var presentationMode
-        
+    
     
     //Variables for the form
     @State var name = String()
@@ -149,6 +149,8 @@ struct AddToFriends: View{
     
     @Environment(\.presentationMode) var presentationMode
     
+    let selfUsername = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+    
     @State var username = String()
     
     
@@ -170,10 +172,44 @@ struct AddToFriends: View{
         
     
     func saveFriend() {
-        print(username)
-        // Insert code to add to Friends List
         
-        presentationMode.wrappedValue.dismiss()
+        let UserObj = User.keys
+        print(username)
+        
+        
+        
+        // Fetching ID of Friend and adding to friend list
+        Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
+            switch result {
+            case.success(let Friends):
+                if let Friend = Friends.first {
+                    // Fetching own User Item
+                    Amplify.DataStore.query(User.self, where: UserObj.Username == selfUsername) { result in
+                        switch result {
+                        case .success( let user):
+                            if var userSelf = user.first {
+                                var friends = userSelf.Friends
+                                friends.append(Friend.id)
+                                userSelf.Friends = friends
+                                Amplify.DataStore.save(userSelf) {result in
+                                    switch result {
+                                    case .success:
+                                        print("Successfully added Friend")
+                                        presentationMode.wrappedValue.dismiss()
+                                    case .failure(let error):
+                                        print("Could not add Friend - \(error)")
+                                    }
+                                }
+                            }
+                        case .failure(let error):
+                            print("Could not fetch Self - \(error)")
+                        }
+                    }
+                }
+            case.failure(let error):
+                print("Could not fetch Friend - \(error)")
+            }
+        }
     }
 }
 
@@ -187,56 +223,37 @@ struct AddToGroups: View{
     @State var groupName = String()
     @State var GroupList = [Group]()
     
+    @State private var searchedText = ""
+    
+    var groupListFiltered: [Group] {
+        if searchedText.isEmpty {
+            return GroupList
+        } else {
+            return GroupList.filter { $0.Name.contains(searchedText)}
+        }
+    }
     
     var body: some View{
         VStack {
-            Spacer()
-            Text("Please Enter the Group Name and ID as presented to group creator!")
-            HStack{
-                TextField("Group Name", text: $groupName).pretty()
-                Text(" # ")
-                TextField("Group ID", text: $groupID).pretty()
-            }
-            Spacer()
-            Button{
-                saveGroupLink()
-            } label: {
-            Text("Save")
-            }.pretty()
-        }
-        .navigationTitle("Join a Group!")
-        .padding(.horizontal)
-    }
-    
-    func saveGroupLink() {
-        print(groupID)
-        // Insert code for Creating Link record between user and group
-        
-        
-        // Appending user name to group
-        getGroup()
-        if GroupList.count == 1 {
-            var tempList = GroupList[0]
-            var MemberList = tempList.Members
-            MemberList.append( UserDefaults.standard.string(forKey: "Username") ?? "NullUser")
-            tempList.Members = MemberList
-            Amplify.DataStore.save(tempList) {result in
-                switch result {
-                case .success:
-                    print("Added Member to group.")
-                    presentationMode.wrappedValue.dismiss()
-                case .failure(let error):
-                    print(error)
+            List {
+                ForEach(groupListFiltered) {
+                    group in NavigationLink{
+                        GroupDetailsView(GroupPassed: group)
+                    } label: {
+                        Text("\(group.Name) # \(group.ShortID)")
+                    }
                 }
             }
-        } else {
-            print("Non-unique GroupName and ID")
         }
+        .onAppear{
+            getGroups()
+        }
+        .searchable(text: $searchedText)
+        .navigationTitle("Find a Group")
     }
     
-    func getGroup() {
-        let GroupObj = Group.keys
-        Amplify.DataStore.query(Group.self, where: GroupObj.ShortID == groupID && GroupObj.Name == groupName) {result in
+    func getGroups() {
+        Amplify.DataStore.query(Group.self) {result in
             switch result {
             case .success(let Group):
                 self.GroupList = Group
@@ -254,6 +271,10 @@ struct CreateNewGroup: View{
     @State var Name = String()
     @State var Members = [String]()
     
+    @State var showingImagePicker = false
+    @State var inputImage: UIImage?
+    @State var image: Image?
+    
     var body: some View{
         VStack {
             Spacer()
@@ -261,34 +282,57 @@ struct CreateNewGroup: View{
             Spacer()
             TextField("Group Name", text: $Name).pretty()
             Spacer()
+            Text("Select an image for this Item:").small()
+            ZStack(alignment: .center){
+                if (image == nil) {
+                    Rectangle()
+                        .fill(.secondary)
+                    Text("Tap to Select an image").listtext()
+                } else {
+                    image?
+                        .resizable()
+                        .scaledToFit()
+                }
+            }
+            .onTapGesture{
+                showingImagePicker = true
+            }
             Button{
+                StoreImage(inputImage)
                 saveGroup()
+                UserDefaults.standard.set(nil, forKey: "ImageKey")
             } label: {
                 Text("Create")
             }.pretty()
         }
         .navigationTitle("Create a Group!")
         .padding(.horizontal)
+        .onChange(of: inputImage) { _ in loadImage() }
+        .sheet(isPresented: $showingImagePicker) {
+            ImagePicker(image: $inputImage)
+        }
     }
     
     func saveGroup() {
         print(Name)
-        let Username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+        let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
+        
         ShortID = UUID().uuidString
         let small = ShortID.prefix(8)
         ShortID = String(small)
         let GroupNameandID = Name + ShortID
-        Members = [Username]
+        Members = [userID]
         let Group = Group(id: UUID().uuidString,
                           Name: Name,
                           ShortID: ShortID,
                           NameAndShortID: GroupNameandID,
-                          Members: Members)
+                          Members: Members,
+                          ImageKey: UserDefaults.standard.string(forKey: "ImageKey"))
         Amplify.DataStore.save(Group) {result in
             switch result {
             case .success:
                 print("Saved Group!")
-                createGroupLink()
+                addGrouptoUser(GroupObj: Group)
                 presentationMode.wrappedValue.dismiss()
             case .failure(let error):
                 print(error)
@@ -296,8 +340,53 @@ struct CreateNewGroup: View{
         }
     }
     
-    func createGroupLink() {
-        print(ShortID)
+    func addGrouptoUser(GroupObj: Group) {
+        let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
+        
+        print(GroupObj.ShortID)
         // Replace with code to append group to user file
+        
+        Amplify.DataStore.query(User.self, byId: userID) { result in
+            switch result {
+            case .success(let user):
+                if var returnedUser = user {
+                    var userGroups = returnedUser.Groups
+                    userGroups.append(GroupObj.id)
+                    returnedUser.Groups = userGroups
+                    Amplify.DataStore.save(returnedUser) { result in
+                        switch result {
+                        case .success:
+                            print("Added Group to User")
+                        case .failure(let error):
+                            print("Could not add Group to User - \(error)")
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Could not get User - \(error)")
+            }
+        }
+        
+    }
+    
+    func StoreImage(_ image: UIImage?) {
+        guard let ImageData = image?.jpegData(compressionQuality:0.5) else {return}
+        let key = UUID().uuidString + ".jpg"
+        print(key)
+        @AppStorage("ImageKey") var ImageKey: String = ""
+        ImageKey = key
+        _ = Amplify.Storage.uploadData(key: key, data: ImageData) { result in
+            switch result {
+            case .success:
+                print("Uploaded to DB!")
+            case .failure(let error):
+                print("Could not Upload - \(error)")
+            }
+        }
+    }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        image = Image(uiImage: inputImage)
     }
 }

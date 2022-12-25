@@ -15,7 +15,7 @@ struct GroupsView: View {
     
     
     @State var showAddToGroups = false
-    @State var Groups = [String]()
+    @State var Groups = [Group]()
     @State var GroupsLength = Int()
     @State var showFloatingMenu1 = false
     @State var showFloatingMenu2 = false
@@ -32,11 +32,11 @@ struct GroupsView: View {
                     Spacer()
                 } else {
                     List {
-                        ForEach(Groups, id: \.self) {
+                        ForEach(Groups) {
                             Group in NavigationLink{
-                                GroupDetailsView( GroupNameAndID: Group, Groups: getGroup( GroupNameandID: Group))
+                                GroupDetailsView(GroupPassed: Group)
                             } label: {
-                                Text(Group)
+                                Text(Group.Name)
                             }
                         }
                         .onDelete(perform: deleteGroup)
@@ -111,14 +111,28 @@ struct GroupsView: View {
     
     
     func getGroups() {
-        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
-        let UserObj = User.keys
-        Amplify.DataStore.query(User.self, where: UserObj.Username == username) {result in
+        let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
+        
+        var GroupsList = [Group]()
+        
+        Amplify.DataStore.query(User.self, byId: userID) {result in
             switch result {
             case .success(let user):
-                if let singleUser = user.first {
-                    print(singleUser.Groups)
-                    self.Groups = singleUser.Groups
+                if let UserObject = user {
+                    print(UserObject.Groups)
+                    UserObject.Groups.forEach{ groupID in
+                        Amplify.DataStore.query(Group.self, byId: groupID) { result in
+                            switch result {
+                            case .success(let individualGroup):
+                                if let group = individualGroup {
+                                    GroupsList.append(group)
+                                }
+                            case .failure(let error):
+                                print("Could not fetch group - \(error)")
+                            }
+                        }
+                    }
+                    self.Groups = GroupsList
                 }
             case .failure(let error):
                 print(error)
@@ -151,21 +165,6 @@ struct GroupsView: View {
         // Need to delete group object or remove user
         
         getGroups()
-    }
-    
-    func getGroup(GroupNameandID: String) -> [Group] {
-        let GroupObj = Group.keys
-        var GroupList = [Group]()
-        
-        Amplify.DataStore.query(Group.self, where: GroupObj.NameAndShortID == GroupNameandID) {result in
-            switch result {
-            case .success(let Group):
-                GroupList = Group
-            case .failure(let error):
-                print(error)
-            }
-        }
-        return GroupList
     }
 }
 

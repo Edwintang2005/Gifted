@@ -51,14 +51,6 @@ final class SessionManager: ObservableObject {
     // Controller function to show signup page
     func signUp(username: String, email: String, name: String, password: String) {
         
-        let user = User(
-            id: UUID().uuidString,
-            Username: username,
-            Items: [String](),
-            Friends: [String](),
-            Groups: [String]()
-        )
-        
         let attributes = [
             AuthUserAttribute(.email, value: email),
             AuthUserAttribute(.name, value: name)
@@ -70,19 +62,10 @@ final class SessionManager: ObservableObject {
             password: password,
             options: options
         ) { [weak self] result in
-            
             switch result {
             
             case .success(let signUpResult):
                 print("Sign up result:", signUpResult)
-                Amplify.DataStore.save(user) { result in
-                    switch result {
-                    case .success:
-                        print("User Record Created!")
-                    case .failure(let error):
-                        print("Could not create user - \(error)")
-                    }
-                }
                 switch signUpResult.nextStep {
                 case .done:
                     print("Finished sign up")
@@ -98,7 +81,6 @@ final class SessionManager: ObservableObject {
             case .failure(let error):
                 print("Sing up error", error)
             }
-            
         }
     }
     

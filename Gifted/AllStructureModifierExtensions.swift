@@ -259,3 +259,16 @@ extension Group: Hashable {
     }
 }
 
+extension User: Identifiable {}
+
+extension User: Equatable{
+    public static func ==(lhs: User, rhs: User) -> Bool {
+        lhs.id == rhs.id && lhs.Username == rhs.Username
+    }
+}
+
+extension User: Hashable{
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id + Username)
+    }
+}

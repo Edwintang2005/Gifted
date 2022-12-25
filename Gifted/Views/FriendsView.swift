@@ -14,9 +14,10 @@ import SwiftUI
 struct FriendsView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
+    let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
     
     @State var showAddToFriends = false
-    @State var Friends = [String]()
+    @State var Friends = [User]()
     @State var FriendsLength = Int()
     
     
@@ -31,16 +32,15 @@ struct FriendsView: View {
                     Spacer()
                 } else {
                     List {
-                        ForEach(Friends, id: \.self) {
+                        ForEach(Friends) {
                             Friend in NavigationLink{
-                                ListView(QueryUsername: Friend)
+                                ListView(QueryUsername: Friend.Username)
                             } label: {
-                                Text(Friend)
+                                Text(Friend.Username)
                             }
                         }
                         .onDelete(perform: deleteFriend)
                     }
-                    
                 }
             }
             VStack{
@@ -74,23 +74,40 @@ struct FriendsView: View {
     }
     
     func getFriends() {
-        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+        
         let UserObj = User.keys
+        
+        var FriendList = [User]()
+        
         Amplify.DataStore.query(User.self, where: UserObj.Username == username) {result in
             switch result {
             case .success(let user):
                 if let singleUser = user.first {
                     print(singleUser.Friends)
-                    self.Friends = singleUser.Friends
+                    singleUser.Friends.forEach{friend in
+                        Amplify.DataStore.query(User.self, byId: friend) { result in
+                            switch result {
+                            case .success(let Friend):
+                                if let appendingFriend = Friend {
+                                    FriendList.append(appendingFriend)
+                                }
+                            case .failure(let error):
+                                print("Could not fetch friend - \(error)")
+                            }
+                        }
+                    }
+                    self.Friends = FriendList
                 }
             case .failure(let error):
-                print(error)
+                print("Could not fetch User - \(error)")
             }
         }
     }
     
     func deleteFriend(indexSet: IndexSet) {
         print("Deleted friend at \(indexSet)")
+        
+        let UserObj = User.keys
         
         var updatedList = Friends
         updatedList.remove(atOffsets: indexSet)
@@ -100,17 +117,27 @@ struct FriendsView: View {
             .symmetricDifference(Friends).first else
         {return}
         
-        // Function to remove friend from list required
-        
-        //        Amplify.DataStore.delete(item) { result in
-        //            switch result {
-        //            case .success:
-        //                print("Deleted Friend")
-        //            case .failure(let error):
-        //                print("Could not delete Friend - \(error)")
-        //            }
-        //
-        //        }
+        // Function to remove friend from list
+        Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
+            switch result {
+            case.success(let user):
+                if var singleUser = user.first {
+                    var friends = singleUser.Friends
+                    friends = friends.filter { $0 != item.id }
+                    singleUser.Friends = friends
+                    Amplify.DataStore.save (singleUser) {result in
+                        switch result {
+                        case .success:
+                            print("Successfully deleted Friend")
+                        case .failure(let error):
+                            print("Could not delete Friend - \(error)")
+                        }
+                    }
+                }
+            case.failure(let error):
+                print("Could not fetch User - \(error)")
+            }
+        }
         getFriends()
     }
 }
