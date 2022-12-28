@@ -12,7 +12,7 @@ import SwiftUI
 struct GroupsView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
-    
+    let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
     @State var showAddToGroups = false
     @State var Groups = [Group]()
@@ -111,7 +111,6 @@ struct GroupsView: View {
     
     
     func getGroups() {
-        let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
         
         var GroupsList = [Group]()
         
@@ -142,7 +141,7 @@ struct GroupsView: View {
     
     func deleteGroup(indexSet: IndexSet) {
         print("Deleted group at \(indexSet)")
-        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+        
         var updatedList = Groups
         updatedList.remove(atOffsets: indexSet)
         
@@ -150,20 +149,69 @@ struct GroupsView: View {
             Set(updatedList)
             .symmetricDifference(Groups).first else
             {return}
-        
-        // Need to remove group from user page
-        
-//        Amplify.DataStore.delete(item) { result in
-//            switch result {
-//            case .success:
-//                print("Deleted Group")
-//            case .failure(let error):
-//                print("Could not delete Group - \(error)")
-//            }
-//        }
-        
-        // Need to delete group object or remove user
-        
+        var GroupPassed = item
+        var groupMembers = item.Members
+        groupMembers = groupMembers.filter { $0 != userID}
+        GroupPassed.Members = groupMembers
+        if groupMembers.count == 0 {
+            Amplify.DataStore.delete(item) { result in
+                switch result {
+                case .success:
+                    print("No Members so Group Deleted")
+                    Amplify.DataStore.query(User.self, byId: userID) { result in
+                        switch result {
+                        case .success(let userQueried):
+                            if var queriedUser = userQueried {
+                                var groupsList = queriedUser.Groups
+                                groupsList = groupsList.filter { $0 != GroupPassed.id}
+                                queriedUser.Groups = groupsList
+                                Amplify.DataStore.save(queriedUser) {result in
+                                    switch result {
+                                    case .success:
+                                        print("Removed Group from User")
+                                    case .failure(let error):
+                                        print("Could not remove group from user - \(error)")
+                                    }
+                                }
+                            }
+                        case .failure(let error):
+                            print("Could not get user to remove group - \(error)")
+                        }
+                    }
+                case .failure(let error):
+                    print("Could not leave group - \(error)")
+                }
+            }
+        } else {
+            Amplify.DataStore.save(GroupPassed) { result in
+                switch result {
+                case .success:
+                    print("Group left!")
+                    Amplify.DataStore.query(User.self, byId: userID) { result in
+                        switch result {
+                        case .success(let userQueried):
+                            if var queriedUser = userQueried {
+                                var groupsList = queriedUser.Groups
+                                groupsList = groupsList.filter { $0 != GroupPassed.id}
+                                queriedUser.Groups = groupsList
+                                Amplify.DataStore.save(queriedUser) {result in
+                                    switch result {
+                                    case .success:
+                                        print("Removed Group from User")
+                                    case .failure(let error):
+                                        print("Could not remove group from user - \(error)")
+                                    }
+                                }
+                            }
+                        case .failure(let error):
+                            print("Could not get user to remove group - \(error)")
+                        }
+                    }
+                case .failure(let error):
+                    print("Could not leave group - \(error)")
+                }
+            }
+        }
         getGroups()
     }
 }

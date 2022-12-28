@@ -15,6 +15,7 @@ struct FriendsView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
     let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+    let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
     @State var showAddToFriends = false
     @State var Friends = [User]()
@@ -75,14 +76,12 @@ struct FriendsView: View {
     
     func getFriends() {
         
-        let UserObj = User.keys
-        
         var FriendList = [User]()
         
-        Amplify.DataStore.query(User.self, where: UserObj.Username == username) {result in
+        Amplify.DataStore.query(User.self, byId: userID) {result in
             switch result {
             case .success(let user):
-                if let singleUser = user.first {
+                if let singleUser = user {
                     print(singleUser.Friends)
                     singleUser.Friends.forEach{friend in
                         Amplify.DataStore.query(User.self, byId: friend) { result in
@@ -107,8 +106,6 @@ struct FriendsView: View {
     func deleteFriend(indexSet: IndexSet) {
         print("Deleted friend at \(indexSet)")
         
-        let UserObj = User.keys
-        
         var updatedList = Friends
         updatedList.remove(atOffsets: indexSet)
         
@@ -118,10 +115,10 @@ struct FriendsView: View {
         {return}
         
         // Function to remove friend from list
-        Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
+        Amplify.DataStore.query(User.self, byId: userID) { result in
             switch result {
             case.success(let user):
-                if var singleUser = user.first {
+                if var singleUser = user {
                     var friends = singleUser.Friends
                     friends = friends.filter { $0 != item.id }
                     singleUser.Friends = friends

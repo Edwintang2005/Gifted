@@ -15,6 +15,7 @@ struct ListView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     @State var QueryUsername: String
+    let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     @State var listitems = [ListItem]()
     
     //@State var observationToken: AnyCancellable?
@@ -159,16 +160,14 @@ struct ListView: View {
     
     // Function that queries database and retrieves any list items created by the user
     func getList() {
-        let username = QueryUsername
-        let UserObj = User.keys
         
         var Listitems = [ListItem]()
         
         // Getting the list of items from user data
-        Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
+        Amplify.DataStore.query(User.self, byId: userID) { result in
             switch result {
             case.success(let user):
-                if let singleUser = user.first {
+                if let singleUser = user {
                     print(singleUser.Items)
                     // Appending each item in list of IDs to displayable list
                     singleUser.Items.forEach{ item in
@@ -193,20 +192,17 @@ struct ListView: View {
     
     // Function that deletes an item when the user clicks on the delete button
     func deleteItem(indexSet: IndexSet) {
-        
-        let username = QueryUsername
-        let UserObj = User.keys
-        
+
         var updatedItems = listitems
         updatedItems.remove(atOffsets: indexSet)
         
         guard let item = Set(updatedItems).symmetricDifference(listitems).first else {return}
         
         // Removing item from User's List
-        Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
+        Amplify.DataStore.query(User.self, byId: userID) { result in
             switch result {
             case.success(let user):
-                if var singleUser = user.first {
+                if var singleUser = user {
                     var list = singleUser.Items
                     list = list.filter { $0 != item.id }
                     singleUser.Items = list
@@ -263,6 +259,7 @@ struct ListView: View {
     
     
     // Need to research the necessity of this function, perhaps comes in later???
+    
     //    func observeListItem() {
     //        let too = ListItem.keys
     //        observationToken = Amplify.DataStore.publisher(for: ListItem.self).sink(

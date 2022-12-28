@@ -52,26 +52,26 @@ struct ContentView: View {
                     case .mainWindow:
                         MainView()
                             .frame(width: geometry.size.width, height: geometry.size.height)
-                            .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
-                            .disabled(self.ShowMenu ? true : false)
+                            .offset(x: ShowMenu ? geometry.size.width/2 : 0)
+                            .disabled( ShowMenu ? true : false)
                         
                     case .list:
                         ListView(QueryUsername: username)
                             .frame(width: geometry.size.width, height: geometry.size.height)
-                            .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
-                            .disabled(self.ShowMenu ? true : false)
+                            .offset(x: ShowMenu ? geometry.size.width/2 : 0)
+                            .disabled( ShowMenu ? true : false)
                         
                     case .friends:
                         FriendsView()
                             .frame(width: geometry.size.width, height: geometry.size.height)
-                            .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
-                            .disabled(self.ShowMenu ? true : false)
+                            .offset(x: ShowMenu ? geometry.size.width/2 : 0)
+                            .disabled( ShowMenu ? true : false)
                         
                     case .groups:
                         GroupsView()
                             .frame(width: geometry.size.width, height: geometry.size.height)
-                            .offset(x: self.ShowMenu ? geometry.size.width/2 : 0)
-                            .disabled(self.ShowMenu ? true : false)
+                            .offset(x: ShowMenu ? geometry.size.width/2 : 0)
+                            .disabled( ShowMenu ? true : false)
                     }
                     if self.ShowMenu {
                         MenuView(ShowMenu: self.$ShowMenu)
@@ -196,42 +196,40 @@ struct MainView: View {
                 print("Fetching user attributes failed with error \(error)")
             }
         }
+        
         //Get Username and create/check for user object - need to resolve occassional query return empty issue
         
         if let user = Amplify.Auth.getCurrentUser() {
             Username = user.username
             UserID = user.userId
             print(Username)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                Amplify.DataStore.query(User.self, byId: user.userId) { result in
-                    switch result {
-                    case .success(let UserList):
-                        print(UserList ?? "NO USER")
-                        if UserList != nil {
-                            print("User Record Already Exists!")
-                        } else {
-                            let user = User(
-                                id: user.userId,
-                                Username: Username,
-                                Items: [String](),
-                                Friends: [String](),
-                                Groups: [String]()
-                            )
-                            Amplify.DataStore.save(user) { result in
-                                switch result {
-                                case .success:
-                                    print("User Record Created!")
-                                case .failure(let error):
-                                    print("Could not create user - \(error)")
-                                }
+            Amplify.DataStore.query(User.self, byId: user.userId) { result in
+                switch result {
+                case .success(let UserList):
+                    print(UserList ?? "NO USER")
+                    if UserList != nil {
+                        print("User Record Already Exists!")
+                    } else {
+                        let user = User(
+                            id: user.userId,
+                            Username: Username,
+                            Items: [String](),
+                            Friends: [String](),
+                            Groups: [String]()
+                        )
+                        Amplify.DataStore.save(user) { result in
+                            switch result {
+                            case .success:
+                                print("User Record Created!")
+                            case .failure(let error):
+                                print("Could not create user - \(error)")
                             }
                         }
-                    case .failure(let error):
-                        print("Could not query for user - \(error)")
                     }
+                case .failure(let error):
+                    print("Could not query for user - \(error)")
                 }
             }
-            
         }
         
     }
