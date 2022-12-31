@@ -13,8 +13,12 @@ import Amplify
 //Page view used in lists to allow users to add to their list
 struct AddToList: View{
 
+    @ObservedObject var dataStore = DataStore()
     @Environment(\.presentationMode) var presentationMode
     
+    // Variables required for functions
+    @Binding var lists: [UserList]
+    @Binding var listNumber: Int
     
     //Variables for the form
     @State var name = String()
@@ -89,33 +93,12 @@ struct AddToList: View{
             case .success:
                 print("Saved Item")
                 // Adding Item to User's list
-                
-                Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
-                    switch result {
-                    case.success(let user):
-                        if var singleUser = user.first {
-                            var list = singleUser.Items
-                            list.append(item.id)
-                            singleUser.Items = list
-                            Amplify.DataStore.save (singleUser) {result in
-                                switch result {
-                                case .success:
-                                    print("Successfully added Item")
-                                    presentationMode.wrappedValue.dismiss()
-                                case .failure(let error):
-                                    print("Could not add item - \(error)")
-                                }
-                            }
-                        }
-                    case.failure(let error):
-                        print("Could not fetch User - \(error)")
-                    }
-                }
+                dataStore.changeLists(action: .addTo, list: lists[listNumber], change: item)
+                presentationMode.wrappedValue.dismiss()
             case .failure(let error):
                 print("Could not create Item - \(error)")
             }
         }
-        
     }
     
     // Function that saves image input if exists in the database Storage

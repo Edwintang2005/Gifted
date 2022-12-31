@@ -12,8 +12,13 @@ struct ItemSearchView: View {
     
     @State var listitems = [ListItem]()
     @Binding var ImageCache : [String: UIImage]
+    @Binding var lists: [UserList]
+    @Binding var listNumber: Int
+    
+    
     @State private var searchedText = ""
-    @State var QueryUsername = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+    let QueryUsername = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+    let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
     var listitemsFiltered: [ListItem] {
         if searchedText.isEmpty {
@@ -29,9 +34,9 @@ struct ItemSearchView: View {
                 ForEach(listitemsFiltered) {
                     Item in NavigationLink{
                         if let key = Item.ImageKey {
-                            ItemDetailsView(listItem: Item, ImageRender: ImageCache[key], QueryUsername: $QueryUsername)
+                            ItemDetailsView(list: lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userID)
                         } else {
-                            ItemDetailsView(listItem: Item, QueryUsername: $QueryUsername)
+                            ItemDetailsView(list: lists[listNumber], listItem: Item, QueryID: userID)
                         }
                     } label: {
                         HStack{
@@ -72,7 +77,7 @@ struct ItemSearchView: View {
                         .imageScale(.large)
                 }
                 NavigationLink{
-                    AddToList()
+                    AddToList(lists: $lists, listNumber: $listNumber)
                 } label: {
                     Image(systemName: "plus")
                         .imageScale(.large)

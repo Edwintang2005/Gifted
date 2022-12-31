@@ -24,7 +24,6 @@ struct GiftedApp: App {
     init() {
         configureAmplify()
         sessionManager.getCurrentAuthUser()
-        menuViewController.showMain()
     }
     
     // Main logic/ UI controlboard

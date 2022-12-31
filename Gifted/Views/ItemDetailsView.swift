@@ -14,12 +14,15 @@ import SwiftUI
 // UI for displaying the details of a list item
 struct ItemDetailsView: View {
     
+    @ObservedObject var dataStore = DataStore()
+    
     // Variables passed into view
+    @State var list : UserList
     @State var listItem : ListItem
     @State var ImageRender: UIImage?
-    @Binding var QueryUsername: String
-    @State var username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
-    
+    @State var QueryID: String
+    let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+    let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
     // Variables for View functionality
     @State var addedToList = Bool()
@@ -128,7 +131,7 @@ struct ItemDetailsView: View {
     
     // Function for checking if user is looking at their own list and determining button displayed
     func DetermineButton() {
-        if QueryUsername == UserDefaults.standard.string(forKey: "Username") ?? "NullUser" {
+        if QueryID == userID {
             selfQuery = true
             checkList()
         } else {
@@ -137,58 +140,15 @@ struct ItemDetailsView: View {
         }
     }
     
-    func addToList() {
-        let UserObj = User.keys
-        Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
-            switch result {
-            case .success(let user):
-                if var singleUser = user.first {
-                    var list = singleUser.Items
-                    list.append(listItem.id)
-                    singleUser.Items = list
-                    Amplify.DataStore.save (singleUser) {result in
-                        switch result {
-                        case .success:
-                            print("Successfully added Item")
-                        case .failure(let error):
-                            print("Could not add item - \(error)")
-                        }
-                    }
-                }
-            case .failure(let error):
-                print("Could not fetch User - \(error)")
+    func checkList() {
+        let listItems = dataStore.fetchListItems(listid: list.id)
+        listItems.forEach{ item in
+            if item.id == listItem.id {
+                addedToList = true
+            } else {
+                addedToList = false
             }
         }
-        refreshItem()
-        DetermineButton()
-    }
-    
-    func deleteFromList() {
-        // Removing item from User's List
-        let UserObj = User.keys
-        
-        Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
-            switch result {
-            case .success(let user):
-                if var singleUser = user.first {
-                    var list = singleUser.Items
-                    list = list.filter { $0 != listItem.id }
-                    singleUser.Items = list
-                    Amplify.DataStore.save (singleUser) {result in
-                        switch result {
-                        case .success:
-                            print("Successfully deleted Item")
-                        case .failure(let error):
-                            print("Could not delete item - \(error)")
-                        }
-                    }
-                }
-            case .failure(let error):
-                print("Could not fetch User - \(error)")
-            }
-        }
-        refreshItem()
-        DetermineButton()
     }
     
     func checkReservation() {
@@ -201,24 +161,17 @@ struct ItemDetailsView: View {
         //        }
     }
     
-    func checkList() {
-        let UserObj = User.keys
-        
-        Amplify.DataStore.query(User.self, where: UserObj.Username == QueryUsername) { result in
-            switch result {
-            case .success(let user):
-                if let singleUser = user.first {
-                    let list = singleUser.Items
-                    if list.contains(listItem.id) {
-                        addedToList = true
-                    } else {
-                        addedToList = false
-                    }
-                }
-            case .failure(let error):
-                print("Could not fetch User - \(error)")
-            }
-        }
+    func addToList() {
+        dataStore.changeLists(action: .addTo, list: list, change: listItem)
+        refreshItem()
+        DetermineButton()
+    }
+    
+    func deleteFromList() {
+        // Removing item from User's List
+        dataStore.changeLists(action: .removeFrom, list: list, change: listItem)
+        refreshItem()
+        DetermineButton()
     }
     
     // Function for fetching image to display

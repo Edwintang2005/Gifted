@@ -29,7 +29,7 @@ struct GroupDetailsView: View {
                     Section{
                         ForEach(members) {
                             Member in NavigationLink{
-                                ListView(QueryUsername: Member.id)
+                                ListView(QueryID: userID)
                             } label: {
                                 Text(Member.Username)
                                     .listtext()

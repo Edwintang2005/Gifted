@@ -23,6 +23,7 @@ struct ContentView: View {
     
     @State var ShowMenu = false
     
+    let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
     let user: AuthUser
     
@@ -56,7 +57,7 @@ struct ContentView: View {
                             .disabled( ShowMenu ? true : false)
                         
                     case .list:
-                        ListView(QueryUsername: username)
+                        ListView(QueryID: userID)
                             .frame(width: geometry.size.width, height: geometry.size.height)
                             .offset(x: ShowMenu ? geometry.size.width/2 : 0)
                             .disabled( ShowMenu ? true : false)
@@ -92,14 +93,20 @@ struct ContentView: View {
                 }
             ))
         }
+        .onAppear{
+            menuViewController.showMain()
+        }
     }
 }
 
 // Object for the Main view or what is essentially our home screen
 struct MainView: View {
     
+    @ObservedObject var dataStore = DataStore()
+    
     @EnvironmentObject var sessionManager: SessionManager
     
+    @State private var userProfile = User(Username: "NULL")
     @State private var NameOfUser = ""
     @State var ImageCache = [String: UIImage]()
     
@@ -116,46 +123,6 @@ struct MainView: View {
             }
             // replace below with Roger's design of Homescreen
             Spacer()
-            
-            // Old Home Screen, functionality not available yet
-            
-//            List {
-//                Section {
-//                    Text("Your Items:")
-//                    ForEach(listitems) {
-//                        Item in NavigationLink{
-//                            ItemDetailsView(QueryUsername: username, listItem: Item)
-//                        } label: {
-//                            HStack{
-//                                // Small Icon Image Rendering
-//                                if let key = Item.ImageKey {
-//                                    if let Render = ImageCache[key] {
-//                                        Image(uiImage: Render).Icon()
-//                                    } else {
-//                                        Image("ImageNotFound").Icon()
-//                                    }
-//                                } else {
-//                                    Image("ImageNotFound").Icon()
-//                                }
-//
-//                                VStack(alignment: .leading) {
-//                                    Text(Item.Name).listtext()
-//                                    Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
-//                                }
-//                                .padding(.horizontal)
-//                                Spacer()
-//                            }.onAppear{getImage(Imagekey: Item.ImageKey)}
-//                        }
-//                    }
-//                    Text("Your Groups:")
-//                    ForEach(Groups) {
-//                        Group in Text(Group.GroupName )
-//                    }
-//                } header: {
-//                    Text("Preview your Items and Groups!")
-//                }
-//
-//            }
         }
         .padding()
         .navigationBarTitle("Home")
@@ -186,7 +153,6 @@ struct MainView: View {
     }
     
     func fetchUserInfo() {
-        
         Amplify.Auth.fetchUserAttributes() { result in
             switch result {
             case .success(let attributes):
@@ -203,35 +169,15 @@ struct MainView: View {
             Username = user.username
             UserID = user.userId
             print(Username)
-            Amplify.DataStore.query(User.self, byId: user.userId) { result in
-                switch result {
-                case .success(let UserList):
-                    print(UserList ?? "NO USER")
-                    if UserList != nil {
-                        print("User Record Already Exists!")
-                    } else {
-                        let user = User(
-                            id: user.userId,
-                            Username: Username,
-                            Items: [String](),
-                            Friends: [String](),
-                            Groups: [String]()
-                        )
-                        Amplify.DataStore.save(user) { result in
-                            switch result {
-                            case .success:
-                                print("User Record Created!")
-                            case .failure(let error):
-                                print("Could not create user - \(error)")
-                            }
-                        }
-                    }
-                case .failure(let error):
-                    print("Could not query for user - \(error)")
-                }
+            
+            let userObject = dataStore.fetchUser(userID: UserID)
+            if userObject.Username == "NULL" {
+                dataStore.createUser(userID: UserID, username: Username)
+            } else {
+                print(userObject)
+                userProfile = userObject
             }
         }
-        
     }
 }
 

@@ -12,11 +12,17 @@ import SwiftUI
 // Main window to display every list item
 struct ListView: View {
     
+    @ObservedObject var dataStore = DataStore()
     @EnvironmentObject var sessionManager: SessionManager
     
-    @State var QueryUsername: String
+    
+    @State var QueryID: String
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
+    
+    @State var userProfile = User(Username: "NULL")
+    @State var lists = [UserList]()
     @State var listitems = [ListItem]()
+    @State var listNumber = 0
     
     //@State var observationToken: AnyCancellable?
     
@@ -48,9 +54,9 @@ struct ListView: View {
                         ForEach(listitems) {
                             Item in NavigationLink{
                                 if let key = Item.ImageKey {
-                                    ItemDetailsView(listItem: Item, ImageRender: ImageCache[key], QueryUsername: $QueryUsername)
+                                    ItemDetailsView(list: lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
                                 } else {
-                                    ItemDetailsView(listItem: Item, QueryUsername: $QueryUsername)
+                                    ItemDetailsView(list: lists[listNumber], listItem: Item, QueryID: userProfile.id)
                                 }
                             } label: {
                                 HStack{
@@ -67,7 +73,7 @@ struct ListView: View {
                                     
                                     VStack(alignment: .leading) {
                                         Text(Item.Name).listtext()
-                                        Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
+                                        Text("$ \(Item.Price ?? "NO PRICE ATTATCHED")").small()
                                     }
                                     .padding(.horizontal)
                                     Spacer()
@@ -82,9 +88,9 @@ struct ListView: View {
                         ForEach(listitems) {
                             Item in NavigationLink{
                                 if let key = Item.ImageKey {
-                                    ItemDetailsView(listItem: Item, ImageRender: ImageCache[key], QueryUsername: $QueryUsername)
+                                    ItemDetailsView(list: lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
                                 } else {
-                                    ItemDetailsView(listItem: Item, QueryUsername: $QueryUsername)
+                                    ItemDetailsView(list: lists[listNumber], listItem: Item, QueryID: userProfile.id)
                                 }
                             } label: {
                                 HStack{
@@ -121,7 +127,7 @@ struct ListView: View {
                     HStack{
                         Spacer()
                         NavigationLink{
-                            ItemSearchView(ImageCache: $ImageCache)
+                            ItemSearchView(ImageCache: $ImageCache, lists: $lists, listNumber: $listNumber)
                         } label: {
                             Image(systemName: "plus.circle.fill").floaty()
                         }
@@ -137,7 +143,7 @@ struct ListView: View {
             getList()
             ListLength = listitems.count
         }
-        .navigationBarTitle("\(QueryUsername)'s List")
+        .navigationBarTitle("\(userProfile.Username)'s List")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: (
             Button(action: {
@@ -151,7 +157,7 @@ struct ListView: View {
     }
     
     func checkUserIsSelf() {
-        if QueryUsername == UserDefaults.standard.string(forKey: "Username") ?? "NullUser" {
+        if QueryID == userID {
             selfQuery = true
         } else {
             selfQuery = false
@@ -160,34 +166,11 @@ struct ListView: View {
     
     // Function that queries database and retrieves any list items created by the user
     func getList() {
-        
-        var Listitems = [ListItem]()
-        
+        // Getting User Data
+        userProfile = dataStore.fetchUser(userID: QueryID)
         // Getting the list of items from user data
-        Amplify.DataStore.query(User.self, byId: userID) { result in
-            switch result {
-            case.success(let user):
-                if let singleUser = user {
-                    print(singleUser.Items)
-                    // Appending each item in list of IDs to displayable list
-                    singleUser.Items.forEach{ item in
-                        Amplify.DataStore.query(ListItem.self, byId: item) { result in
-                            switch result {
-                            case .success(let individualItem):
-                                if let appendingItem = individualItem {
-                                    Listitems.append(appendingItem)
-                                }
-                            case .failure(let error):
-                                print("Could not fetch item - \(error)")
-                            }
-                        }
-                    }
-                    self.listitems = Listitems
-                }
-            case.failure(let error):
-                print("Could not fetch list - \(error)")
-            }
-        }
+        let allLists = dataStore.fetchLists(userID: QueryID)
+        listitems = dataStore.fetchListItems(listid: allLists[listNumber].id)
     }
     
     // Function that deletes an item when the user clicks on the delete button
@@ -199,26 +182,8 @@ struct ListView: View {
         guard let item = Set(updatedItems).symmetricDifference(listitems).first else {return}
         
         // Removing item from User's List
-        Amplify.DataStore.query(User.self, byId: userID) { result in
-            switch result {
-            case.success(let user):
-                if var singleUser = user {
-                    var list = singleUser.Items
-                    list = list.filter { $0 != item.id }
-                    singleUser.Items = list
-                    Amplify.DataStore.save (singleUser) {result in
-                        switch result {
-                        case .success:
-                            print("Successfully deleted Item")
-                        case .failure(let error):
-                            print("Could not delete item - \(error)")
-                        }
-                    }
-                }
-            case.failure(let error):
-                print("Could not fetch User - \(error)")
-            }
-        }
+        let allLists = dataStore.fetchLists(userID: QueryID)
+        dataStore.changeLists(action: .removeFrom, list: allLists[listNumber], change: item)
         getList()
     }
     

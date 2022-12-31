@@ -7,9 +7,9 @@ extension User {
    public enum CodingKeys: String, ModelKey {
     case id
     case Username
-    case Lists
     case Friends
     case Groups
+    case Lists
     case createdAt
     case updatedAt
   }
@@ -33,9 +33,9 @@ extension User {
     model.fields(
       .field(user.id, is: .required, ofType: .string),
       .field(user.Username, is: .required, ofType: .string),
-      .field(user.Lists, is: .required, ofType: .embeddedCollection(of: String.self)),
       .field(user.Friends, is: .required, ofType: .embeddedCollection(of: String.self)),
       .field(user.Groups, is: .required, ofType: .embeddedCollection(of: String.self)),
+      .hasMany(user.Lists, is: .optional, ofType: List.self, associatedWith: List.keys.userID),
       .field(user.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(user.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

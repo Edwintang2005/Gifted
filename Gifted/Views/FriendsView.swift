@@ -35,7 +35,7 @@ struct FriendsView: View {
                     List {
                         ForEach(Friends) {
                             Friend in NavigationLink{
-                                ListView(QueryUsername: Friend.Username)
+                                ListView(QueryID: Friend.id)
                             } label: {
                                 Text(Friend.Username)
                             }
