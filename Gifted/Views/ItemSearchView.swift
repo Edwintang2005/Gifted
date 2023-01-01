@@ -34,9 +34,9 @@ struct ItemSearchView: View {
                 ForEach(listitemsFiltered) {
                     Item in NavigationLink{
                         if let key = Item.ImageKey {
-                            ItemDetailsView(list: lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userID)
+                            ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userID)
                         } else {
-                            ItemDetailsView(list: lists[listNumber], listItem: Item, QueryID: userID)
+                            ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userID)
                         }
                     } label: {
                         HStack{

@@ -54,9 +54,9 @@ struct ListView: View {
                         ForEach(listitems) {
                             Item in NavigationLink{
                                 if let key = Item.ImageKey {
-                                    ItemDetailsView(list: lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
+                                    ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
                                 } else {
-                                    ItemDetailsView(list: lists[listNumber], listItem: Item, QueryID: userProfile.id)
+                                    ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userProfile.id)
                                 }
                             } label: {
                                 HStack{
@@ -88,9 +88,9 @@ struct ListView: View {
                         ForEach(listitems) {
                             Item in NavigationLink{
                                 if let key = Item.ImageKey {
-                                    ItemDetailsView(list: lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
+                                    ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
                                 } else {
-                                    ItemDetailsView(list: lists[listNumber], listItem: Item, QueryID: userProfile.id)
+                                    ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userProfile.id)
                                 }
                             } label: {
                                 HStack{
@@ -118,7 +118,6 @@ struct ListView: View {
                         }
                     }
                 }
-                
             }
             // Structure that holds + button and pushes it to bottom right corner
             if selfQuery == true {
@@ -146,12 +145,20 @@ struct ListView: View {
         .navigationBarTitle("\(userProfile.Username)'s List")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: (
-            Button(action: {
-                getList()
-                ListLength = listitems.count
-            }) {
-                Image(systemName: "arrow.clockwise")
-                    .imageScale(.large)
+            HStack {
+                Button(action: {
+                    getList()
+                    ListLength = listitems.count
+                }) {
+                    Image(systemName: "arrow.clockwise")
+                        .imageScale(.large)
+                }
+//                Button(action: {
+//                    createList()
+//                }) {
+//                    Image(systemName: "text.badge.plus")
+//                        .imageScale(.large)
+//                }
             }
         ))
     }
@@ -169,8 +176,8 @@ struct ListView: View {
         // Getting User Data
         userProfile = dataStore.fetchUser(userID: QueryID)
         // Getting the list of items from user data
-        let allLists = dataStore.fetchLists(userID: QueryID)
-        listitems = dataStore.fetchListItems(listid: allLists[listNumber].id)
+        lists = dataStore.fetchLists(userID: QueryID)
+        listitems = dataStore.fetchListItems(listid: lists[listNumber].id)
     }
     
     // Function that deletes an item when the user clicks on the delete button
@@ -178,12 +185,11 @@ struct ListView: View {
 
         var updatedItems = listitems
         updatedItems.remove(atOffsets: indexSet)
-        
         guard let item = Set(updatedItems).symmetricDifference(listitems).first else {return}
         
         // Removing item from User's List
-        let allLists = dataStore.fetchLists(userID: QueryID)
-        dataStore.changeLists(action: .removeFrom, list: allLists[listNumber], change: item)
+        lists = dataStore.fetchLists(userID: QueryID)
+        dataStore.changeLists(action: .removeFrom, list: lists[listNumber], change: item)
         getList()
     }
     
@@ -222,7 +228,9 @@ struct ListView: View {
         }
     }
     
-    
+    func createList() {
+        dataStore.createList(userID: userID, name: "TESTLIST") // replace with a variable later
+    }
     // Need to research the necessity of this function, perhaps comes in later???
     
     //    func observeListItem() {

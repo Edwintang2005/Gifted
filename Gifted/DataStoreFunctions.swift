@@ -122,8 +122,8 @@ final class DataStore: ObservableObject {
         }
     }
     
-    func deleteList(queryID: String, list: UserList) {
-        var user = fetchUser(userID: queryID)
+    func deleteList(userID: String, list: UserList) {
+        var user = fetchUser(userID: userID)
         var removed = false
         user.Lists = user.Lists.filter { $0 != list.id}
         Amplify.DataStore.save(user) {
@@ -142,6 +142,66 @@ final class DataStore: ObservableObject {
                     print("Deleted List")
                 case .failure(let error):
                     print("Could not delete List - \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func createFirstList(userID: String, name: String) {
+        var created = false
+        let newList = UserList(
+            id: userID,
+            userID: userID,
+            Name: name,
+            ListItems: [String]())
+        Amplify.DataStore.save(newList) {
+            switch $0 {
+            case .success:
+                print("List Created")
+                created = true
+            case .failure(let error):
+                print("Could not create List - \(error.localizedDescription)")
+            }
+        }
+        if created {
+            var user = fetchUser(userID: userID)
+            user.Lists.append(newList.id)
+            Amplify.DataStore.save(user) {
+                switch $0 {
+                case .success:
+                    print("List added to profile")
+                case .failure(let error):
+                    print("Could not add List to user - \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func createList(userID: String, name: String) {
+        var created = false
+        let newList = UserList(
+            id: UUID().uuidString,
+            userID: userID,
+            Name: name,
+            ListItems: [String]())
+        Amplify.DataStore.save(newList) {
+            switch $0 {
+            case .success:
+                print("List Created")
+                created = true
+            case .failure(let error):
+                print("Could not create List - \(error.localizedDescription)")
+            }
+        }
+        if created {
+            var user = fetchUser(userID: userID)
+            user.Lists.append(newList.id)
+            Amplify.DataStore.save(user) {
+                switch $0 {
+                case .success:
+                    print("List added to profile")
+                case .failure(let error):
+                    print("Could not add List to user - \(error.localizedDescription)")
                 }
             }
         }

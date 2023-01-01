@@ -19,6 +19,8 @@
 		E81197C8295FE7F800B90D1C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81197BD295FE7F800B90D1C /* Group.swift */; };
 		E81197C9295FE7F800B90D1C /* Group+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81197BE295FE7F800B90D1C /* Group+Schema.swift */; };
 		E81197CA295FE7F800B90D1C /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81197BF295FE7F800B90D1C /* UserList.swift */; };
+		E81197CC295FFEF600B90D1C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81197CB295FFEF600B90D1C /* MainView.swift */; };
+		E81197CE29601B2900B90D1C /* DisplayCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81197CD29601B2900B90D1C /* DisplayCards.swift */; };
 		E84B6DD4295584460030DD6B /* ItemSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84B6DD3295584460030DD6B /* ItemSearchView.swift */; };
 		E87BE3E4293B5C2A007DC233 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87BE3E3293B5C2A007DC233 /* SessionManager.swift */; };
 		E894FF9A293C165200095DD2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FF99293C165200095DD2 /* SignUpView.swift */; };
@@ -61,6 +63,8 @@
 		E81197BD295FE7F800B90D1C /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		E81197BE295FE7F800B90D1C /* Group+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Group+Schema.swift"; sourceTree = "<group>"; };
 		E81197BF295FE7F800B90D1C /* UserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
+		E81197CB295FFEF600B90D1C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		E81197CD29601B2900B90D1C /* DisplayCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayCards.swift; sourceTree = "<group>"; };
 		E84B6DD3295584460030DD6B /* ItemSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSearchView.swift; sourceTree = "<group>"; };
 		E87BE3E3293B5C2A007DC233 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		E894FF99293C165200095DD2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -126,10 +130,12 @@
 		E81723BB294BF6180022A09E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E81197CD29601B2900B90D1C /* DisplayCards.swift */,
 				E894FF99293C165200095DD2 /* SignUpView.swift */,
 				E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */,
 				E8F91B56293AF234003E23B5 /* LoginView.swift */,
 				E8F91B48293AF173003E23B5 /* ContentView.swift */,
+				E81197CB295FFEF600B90D1C /* MainView.swift */,
 				E894FFB0293C75DD00095DD2 /* ListView.swift */,
 				E84B6DD3295584460030DD6B /* ItemSearchView.swift */,
 				E8F91B54293AF20D003E23B5 /* ItemDetailsView.swift */,
@@ -271,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8F91B59293AF264003E23B5 /* FriendsView.swift in Sources */,
+				E81197CC295FFEF600B90D1C /* MainView.swift in Sources */,
 				E8F91B55293AF20D003E23B5 /* ItemDetailsView.swift in Sources */,
 				E894FFB1293C75DD00095DD2 /* ListView.swift in Sources */,
 				E81197C8295FE7F800B90D1C /* Group.swift in Sources */,
@@ -289,6 +296,7 @@
 				E81197B3295F945100B90D1C /* DataStoreFunctions.swift in Sources */,
 				E81197C2295FE7F800B90D1C /* UserList+Schema.swift in Sources */,
 				E81197C6295FE7F800B90D1C /* Reservations+Schema.swift in Sources */,
+				E81197CE29601B2900B90D1C /* DisplayCards.swift in Sources */,
 				E8F1602829455FF100FDD251 /* GroupDetailsView.swift in Sources */,
 				E81197C0295FE7F800B90D1C /* ListItem.swift in Sources */,
 				E81197C3295FE7F800B90D1C /* User+Schema.swift in Sources */,

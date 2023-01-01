@@ -17,7 +17,7 @@ struct ItemDetailsView: View {
     @ObservedObject var dataStore = DataStore()
     
     // Variables passed into view
-    @State var list : UserList
+    @Binding var list : UserList
     @State var listItem : ListItem
     @State var ImageRender: UIImage?
     @State var QueryID: String
@@ -257,6 +257,16 @@ struct ItemDetailsView: View {
                 }
             case .failure(let error):
                 print("Could not update item - \(error)")
+            }
+        }
+        Amplify.DataStore.query(UserList.self, byId: list.id) { result in
+            switch result {
+            case .success(let update):
+                if let updatedlist = update {
+                    list = updatedlist
+                }
+            case .failure(let error):
+                print("Could not update list - \(error)")
             }
         }
     }

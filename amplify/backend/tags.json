@@ -7,4 +7,8 @@
     "Key": "user:Application",
     "Value": "{project-name}"
   }
+  {
+    "Key": "auto-delete",
+    "Value": "no"
+  }
 ]

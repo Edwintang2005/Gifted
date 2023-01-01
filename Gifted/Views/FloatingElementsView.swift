@@ -78,9 +78,6 @@ struct AddToList: View{
     // Function that updates list items to the cloud
     func saveListItem() {
         
-        let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
-        let UserObj = User.keys
-        
         print(name)
         let item = ListItem(id: UUID().uuidString,
                             Name: name,

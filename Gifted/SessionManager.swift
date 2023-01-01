@@ -5,10 +5,10 @@
 //  Created by Edwin Tang on 3/12/2022.
 //
 
-import Foundation
 import Amplify
 import AWSPluginsCore
-
+import Foundation
+import SwiftUI
 
 // Global variable that controls the state that the user is in regarding signin. This saves even after app close
 enum AuthState {
@@ -24,6 +24,9 @@ final class SessionManager: ObservableObject {
     
     @Published var authState: AuthState = .login
     
+    // To login after confirmation of signup
+    @AppStorage("LoginUsername") var loginuser: String = ""
+    @AppStorage("LoginPassword") var loginpass: String = ""
     
     func getCurrentAuthUser() {
         if let user = Amplify.Auth.getCurrentUser() {
@@ -74,6 +77,8 @@ final class SessionManager: ObservableObject {
                     print(details ?? "no details")
                     
                     DispatchQueue.main.async {
+                        self?.loginuser = username
+                        self?.loginpass = password
                         self?.authState = .confirmCode(username: username)
                     }
                 }
@@ -96,7 +101,11 @@ final class SessionManager: ObservableObject {
                 print(confirmResult)
                 if confirmResult.isSignupComplete {
                     DispatchQueue.main.async {
-                        self?.showLogin()
+                        if let usernme = self?.loginuser, let pass = self?.loginpass {
+                            self?.login(username: usernme, password: pass)
+                        } else {
+                            self?.showLogin()
+                        }
                     }
                 }
                 
@@ -118,7 +127,17 @@ final class SessionManager: ObservableObject {
                 print(signInResult)
                 if signInResult.isSignedIn {
                     DispatchQueue.main.async {
+                        self?.loginuser = ""
+                        self?.loginpass = ""
                         self?.getCurrentAuthUser()
+                        Amplify.DataStore.start { result in
+                            switch result {
+                            case .success:
+                                print("DataStore started")
+                            case .failure(let error):
+                                print("Error starting DataStore: \(error)")
+                            }
+                        }
                     }
                 }
             case .failure(let error):
@@ -134,11 +153,29 @@ final class SessionManager: ObservableObject {
             case .success:
                 DispatchQueue.main.async {
                     self?.getCurrentAuthUser()
+                    self?.backendStopandReset()
                 }
-                Amplify.DataStore.clear()
-                
             case .failure(let error):
                 print("Sign out error:", error)
+            }
+        }
+    }
+    
+    func backendStopandReset() {
+        Amplify.DataStore.clear { result in
+            switch result {
+            case .success:
+                print("DataStore cleared")
+            case .failure(let error):
+                print("Error clearing DataStore: \(error)")
+            }
+        }
+        Amplify.DataStore.stop { result in
+            switch result {
+            case .success:
+                print("DataStore stopped")
+            case .failure(let error):
+                print("Error stopping DataStore: \(error)")
             }
         }
     }
