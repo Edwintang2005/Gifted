@@ -18,7 +18,7 @@ struct FriendsView: View {
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
     @State var showAddToFriends = false
-    @State var Friends = [User]()
+    @State var Friends = [UserProfile]()
     @State var FriendsLength = Int()
     
     
@@ -76,15 +76,15 @@ struct FriendsView: View {
     
     func getFriends() {
         
-        var FriendList = [User]()
+        var FriendList = [UserProfile]()
         
-        Amplify.DataStore.query(User.self, byId: userID) {result in
+        Amplify.DataStore.query(UserProfile.self, byId: userID) {result in
             switch result {
             case .success(let user):
                 if let singleUser = user {
                     print(singleUser.Friends)
                     singleUser.Friends.forEach{friend in
-                        Amplify.DataStore.query(User.self, byId: friend) { result in
+                        Amplify.DataStore.query(UserProfile.self, byId: friend) { result in
                             switch result {
                             case .success(let Friend):
                                 if let appendingFriend = Friend {
@@ -115,7 +115,7 @@ struct FriendsView: View {
         {return}
         
         // Function to remove friend from list
-        Amplify.DataStore.query(User.self, byId: userID) { result in
+        Amplify.DataStore.query(UserProfile.self, byId: userID) { result in
             switch result {
             case.success(let user):
                 if var singleUser = user {

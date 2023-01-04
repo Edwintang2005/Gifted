@@ -77,9 +77,6 @@ struct LoginView: View {
             .padding(.horizontal)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .clipped()
-        .background(Color(.systemBackground))
-        .mask { RoundedRectangle(cornerRadius: 43, style: .continuous) }
     }
 }
 

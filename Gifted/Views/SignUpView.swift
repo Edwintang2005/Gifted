@@ -21,34 +21,42 @@ struct SignUpView: View {
     private var requirements: Array<Bool> {
         [
             password.count >= 8,  // Verifying Minimum Length
-            isValidEmailAddress(emailAddressString: email),
-            allFilled(username: username, email: email, name: name, password: password)
+            isValidEmailAddress(emailAddressString: email), // Verifying email address
+            capitalLetterTest(password: password), // verifying capital letter
+            lowerLetterTest(password: password), // verifying lower letter
+            numberTest(password: password) // verifying number
         ]
     }
     
     var body: some View {
-        VStack {
+        
+        VStack(alignment: .leading) {
             TextField("Username", text: $username).pretty()
             TextField("Name (First and last)", text: $name).pretty()
                 .keyboardType(.namePhonePad)
             TextField("Email", text: $email).pretty()
                 .keyboardType(.emailAddress)
+            Text("•  Valid Email Address")
+                .verif()
+                .foregroundColor(self.requirements[1] ? .green: .red)
+                .padding(.horizontal)
             SecureField("Password", text: $password).pretty()
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Signup Conditions:").homepagename()
-                    Text("•  Valid Email Address")
-                        .verif()
-                        .foregroundColor(self.requirements[1] ? .green: .red)
-                    Text("•  Password longer than 8 characters")
-                        .verif()
-                        .foregroundColor(self.requirements[0] ? .green : .red)
-                    Text("•  All Fields filled")
-                        .verif()
-                        .foregroundColor(self.requirements[2] ? .green : .red)
-                }
-                Spacer()
+            VStack(alignment: .leading) {
+                Text("Password Requirements:").homepagename()
+                Text("•  Password longer than 8 characters")
+                    .verif()
+                    .foregroundColor(self.requirements[0] ? .green : .red)
+                Text("•  Password contains capital letters")
+                    .verif()
+                    .foregroundColor(self.requirements[2] ? .green : .red)
+                Text("•  Password contains lower-case letters")
+                    .verif()
+                    .foregroundColor(self.requirements[3] ? .green : .red)
+                Text("•  Password contains a number")
+                    .verif()
+                    .foregroundColor(self.requirements[4] ? .green : .red)
             }
+            .padding(.all)
             Button {
                 sessionManager.signUp(
                     username: username,
@@ -59,10 +67,15 @@ struct SignUpView: View {
             } label: {
                 Text("Sign up!")
                     .frame(maxWidth: .infinity)
-            }.pretty()
+            }
+            .pretty()
+            .padding(.top)
             Spacer()
-            Button("Already have an account? Log in.", action: sessionManager.showLogin)
-            Text("Brought to you with ❤️ from Edwin Tang and Roger Yao").small()
+            HStack {
+                Spacer()
+                Button("Already have an account? Log in.", action: sessionManager.showLogin)
+                Spacer()
+            }
         }
         .padding()
     }
@@ -77,8 +90,7 @@ struct SignUpView: View {
             let nsString = emailAddressString as NSString
             let results = regex.matches(in: emailAddressString, range: NSRange(location: 0, length: nsString.length))
             
-            if results.count == 0
-            {
+            if results.count == 0 {
                 returnValue = false
             }
             
@@ -90,16 +102,58 @@ struct SignUpView: View {
         return  returnValue
     }
     
-    func allFilled(username: String, email: String, name: String, password: String) -> Bool {
-        if username.count != 0 && email.count != 0 {
-            if name.count != 0 && password.count != 0 {
-                return true
-            } else {
-                return false
+    func capitalLetterTest(password: String) -> Bool {
+        var returnValue = true
+        let capitalRegEx = ".*[A-Z]+.*"
+        do {
+            let regex = try NSRegularExpression(pattern: capitalRegEx)
+            let nsString = password as NSString
+            let results = regex.matches(in: password, range: NSRange(location: 0, length: nsString.length))
+            
+            if results.count == 0 {
+                returnValue = false
             }
-        } else {
-            return false
+        } catch let error as NSError {
+            print("Invalid Regex: \(error.localizedDescription)")
+            returnValue = false
         }
+        return returnValue
+    }
+    
+    func lowerLetterTest(password: String) -> Bool {
+        var returnValue = true
+        let lowerRegEx = ".*[a-z]+.*"
+        do {
+            let regex = try NSRegularExpression(pattern: lowerRegEx)
+            let nsString = password as NSString
+            let results = regex.matches(in: password, range: NSRange(location: 0, length: nsString.length))
+            
+            if results.count == 0 {
+                returnValue = false
+            }
+        } catch let error as NSError {
+            print("Invalid Regex: \(error.localizedDescription)")
+            returnValue = false
+        }
+        return returnValue
+    }
+    
+    func numberTest(password: String) -> Bool {
+        var returnValue = true
+        let numberRegEx = ".*[0-9]+.*"
+        do {
+            let regex = try NSRegularExpression(pattern: numberRegEx)
+            let nsString = password as NSString
+            let results = regex.matches(in: password, range: NSRange(location: 0, length: nsString.length))
+            
+            if results.count == 0 {
+                returnValue = false
+            }
+        } catch let error as NSError {
+            print("Invalid Regex: \(error.localizedDescription)")
+            returnValue = false
+        }
+        return returnValue
     }
 }
 

@@ -6,14 +6,14 @@ public struct Reservations: Model {
   public let id: String
   public var OwnerUser: String
   public var ItemID: String
-  public var ReservedBy: [String]?
+  public var ReservedBy: [String]
   public var createdAt: Temporal.DateTime?
   public var updatedAt: Temporal.DateTime?
   
   public init(id: String = UUID().uuidString,
       OwnerUser: String,
       ItemID: String,
-      ReservedBy: [String]? = nil) {
+      ReservedBy: [String] = []) {
     self.init(id: id,
       OwnerUser: OwnerUser,
       ItemID: ItemID,
@@ -24,7 +24,7 @@ public struct Reservations: Model {
   internal init(id: String = UUID().uuidString,
       OwnerUser: String,
       ItemID: String,
-      ReservedBy: [String]? = nil,
+      ReservedBy: [String] = [],
       createdAt: Temporal.DateTime? = nil,
       updatedAt: Temporal.DateTime? = nil) {
       self.id = id

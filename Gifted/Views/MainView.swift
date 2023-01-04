@@ -15,12 +15,13 @@ struct MainView: View {
     
     @EnvironmentObject var sessionManager: SessionManager
     
-    @State private var userProfile = User(Username: "NULL")
-    @State private var NameOfUser = ""
+    @State private var userProfile = UserProfile(Username: "NULL", Name: String())
     
     @State var listitems = [ListItem]()
     var listitemsLength = Int()
     @State var ImageCache = [String: UIImage]()
+    
+    @AppStorage("NameOfUser") var NameOfUser: String = ""
     
     // Variable for storing the User's username for use throughout the app
     @AppStorage("Username") var Username: String = ""
@@ -98,8 +99,7 @@ struct MainView: View {
             
             let userObject = dataStore.fetchUser(userID: UserID)
             if userObject.Username == "NULL" {
-                dataStore.createUser(userID: UserID, username: Username)
-                dataStore.createFirstList(userID: UserID, name: "\(Username)'s List")
+                dataStore.createUser(userID: UserID, username: Username, nameofUser: NameOfUser)
             } else {
                 print(userObject)
                 userProfile = userObject

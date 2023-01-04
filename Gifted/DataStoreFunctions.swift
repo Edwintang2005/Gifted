@@ -16,10 +16,11 @@ final class DataStore: ObservableObject {
         case removeFrom
     }
     
-    func createUser(userID: String, username: String) {
-        let user = User(
+    func createUser(userID: String, username: String, nameofUser: String) {
+        let user = UserProfile(
             id: userID,
             Username: username,
+            Name: nameofUser,
             Lists: [String](),
             Friends: [String](),
             Groups: [String]()
@@ -28,15 +29,16 @@ final class DataStore: ObservableObject {
             switch $0 {
             case .success:
                 print("User Record Created!")
+                self.createFirstList(userID: userID, name: "\(nameofUser)'s List")
             case .failure(let error):
                 print("Error creating record - \(error.localizedDescription)")
             }
         }
     }
     
-    func fetchUser(userID: String) -> User {
-        var returnValue = User(Username: "NULL")
-        Amplify.DataStore.query(User.self, byId: userID) {
+    func fetchUser(userID: String) -> UserProfile {
+        var returnValue = UserProfile(Username: "NULL", Name: String())
+        Amplify.DataStore.query(UserProfile.self, byId: userID) {
             switch $0 {
             case .success(let result):
                 print("Fetched User")

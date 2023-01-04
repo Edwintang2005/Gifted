@@ -18,8 +18,9 @@ struct ListView: View {
     
     @State var QueryID: String
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
+    let nameOfUser = UserDefaults.standard.string(forKey: "NameOfUser") ?? "NullUser"
     
-    @State var userProfile = User(Username: "NULL")
+    @State var userProfile = UserProfile(Username: "NULL", Name: String())
     @State var lists = [UserList]()
     @State var listitems = [ListItem]()
     @State var listNumber = 0
@@ -175,6 +176,7 @@ struct ListView: View {
     func getList() {
         // Getting User Data
         userProfile = dataStore.fetchUser(userID: QueryID)
+        resolveNoList()
         // Getting the list of items from user data
         lists = dataStore.fetchLists(userID: QueryID)
         listitems = dataStore.fetchListItems(listid: lists[listNumber].id)
@@ -228,8 +230,10 @@ struct ListView: View {
         }
     }
     
-    func createList() {
-        dataStore.createList(userID: userID, name: "TESTLIST") // replace with a variable later
+    func resolveNoList() {
+        if userProfile.Lists.count == 0 {
+            dataStore.createFirstList(userID: userID, name: nameOfUser)
+        }
     }
     // Need to research the necessity of this function, perhaps comes in later???
     

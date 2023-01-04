@@ -33,7 +33,7 @@ extension Reservations {
       .field(reservations.id, is: .required, ofType: .string),
       .field(reservations.OwnerUser, is: .required, ofType: .string),
       .field(reservations.ItemID, is: .required, ofType: .string),
-      .field(reservations.ReservedBy, is: .optional, ofType: .embeddedCollection(of: String.self)),
+      .field(reservations.ReservedBy, is: .required, ofType: .embeddedCollection(of: String.self)),
       .field(reservations.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(reservations.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

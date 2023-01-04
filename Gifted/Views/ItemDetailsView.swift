@@ -249,16 +249,6 @@ struct ItemDetailsView: View {
     }
     
     func refreshItem() {
-        Amplify.DataStore.query(ListItem.self, byId: listItem.id) { result in
-            switch result {
-            case .success(let update):
-                if let updatedItem = update {
-                    listItem = updatedItem
-                }
-            case .failure(let error):
-                print("Could not update item - \(error)")
-            }
-        }
         Amplify.DataStore.query(UserList.self, byId: list.id) { result in
             switch result {
             case .success(let update):

@@ -20,11 +20,15 @@ struct ContentView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     
-    
-    @State var ShowMenu = false
+    @State var opacity = 1.0
+    @State var ShowMenu = false {
+        didSet{
+            adjustOpacity() // Code that adjust opacity as ShowMenu changes
+        }
+    }
     
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
-    let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+
     let user: AuthUser
     
     var body: some View {
@@ -34,12 +38,12 @@ struct ContentView: View {
                     .onEnded {
                         if $0.translation.width < -60 {
                             withAnimation {
-                                self.ShowMenu = false
+                                ShowMenu = false
                             }
                         }
                         if $0.translation.width > 60 {
                             withAnimation{
-                                self.ShowMenu = true
+                                ShowMenu = true
                             }
                         }
                     }
@@ -47,37 +51,40 @@ struct ContentView: View {
         // The function that causes the display of both the Home page and the Menu
         return NavigationView {
             GeometryReader { geometry in
-                ZStack(alignment: .leading) {
+                HStack {
+                    if self.ShowMenu {
+                        MenuView(opacity: $opacity,ShowMenu: $ShowMenu)
+                            .frame(width: geometry.size.width/2)
+                            .transition(.move(edge: .leading))
+                    }
+                    
+                    Divider()
+                    
                     switch self.menuViewController.menuDisplay {
                         
                     case .mainWindow:
                         MainView()
                             .frame(width: geometry.size.width, height: geometry.size.height)
-                            .offset(x: ShowMenu ? geometry.size.width/2 : 0)
                             .disabled( ShowMenu ? true : false)
+                            .opacity(opacity)
                         
                     case .list:
                         ListView(QueryID: userID)
                             .frame(width: geometry.size.width, height: geometry.size.height)
-                            .offset(x: ShowMenu ? geometry.size.width/2 : 0)
                             .disabled( ShowMenu ? true : false)
+                            .opacity(opacity)
                         
                     case .friends:
                         FriendsView()
                             .frame(width: geometry.size.width, height: geometry.size.height)
-                            .offset(x: ShowMenu ? geometry.size.width/2 : 0)
                             .disabled( ShowMenu ? true : false)
+                            .opacity(opacity)
                         
                     case .groups:
                         GroupsView()
                             .frame(width: geometry.size.width, height: geometry.size.height)
-                            .offset(x: ShowMenu ? geometry.size.width/2 : 0)
                             .disabled( ShowMenu ? true : false)
-                    }
-                    if self.ShowMenu {
-                        MenuView(ShowMenu: self.$ShowMenu)
-                            .frame(width: geometry.size.width/2)
-                            .transition(.move(edge: .leading))
+                            .opacity(opacity)
                     }
                 }
                 .gesture(drag)
@@ -85,7 +92,7 @@ struct ContentView: View {
             .navigationBarItems(leading: (
                 Button(action: {
                     withAnimation {
-                        self.ShowMenu.toggle()
+                        ShowMenu.toggle()
                     }
                 }) {
                     Image(systemName: "line.horizontal.3")
@@ -97,6 +104,15 @@ struct ContentView: View {
             menuViewController.showMain()
         }
     }
+    
+    // function for adjusting opacity
+    private func adjustOpacity() {
+        if ShowMenu {
+            opacity = 0.6
+        } else {
+            opacity = 1.0
+        }
+    }
 }
 
 // Object for the popup menu
@@ -105,65 +121,118 @@ struct MenuView: View{
     @EnvironmentObject var menuViewController: MenuViewController
     @EnvironmentObject var sessionManager: SessionManager
     
-    @Binding var ShowMenu: Bool
-    
-    let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+    // Variables passed from ContentView
+    @Binding var opacity: Double
+    @Binding var ShowMenu: Bool {
+        didSet{
+            adjustOpacity() // Code that adjusts Opacity of ContentView as ShowMenu changes
+        }
+    }
     
     var body: some View{
-        VStack{
-            // Menu Feature to navigate to Home Page
-            Button {
-                menuViewController.showMain()
-                animateCollapse()
-            } label: {
-                HStack{
-                    Image(systemName: "house.fill")
-                    Text("Home")
+        ZStack{
+            Rectangle()
+                .foregroundColor(Color(.systemBackground))
+            VStack{
+                // Menu Feature to navigate to Home Page
+                
+                Button {
+                    menuViewController.showMain()
+                    animateCollapse()
+                } label: {
+                    if menuViewController.menuDisplay == .mainWindow {
+                        HStack{
+                            Image(systemName: "house.fill")
+                            Text("Home")
+                        }
+                        .padding(.all)
+                    } else {
+                        HStack{
+                            Image(systemName: "house")
+                            Text("Home")
+                        }
+                        .padding(.all)
+                    }
                 }
-            }
-            .padding(.all)
-            
-            // Menu Feature to access user's list
-            Button {
-                menuViewController.showList()
-                animateCollapse()
-            } label: {
-                HStack{
-                    Image(systemName: "list.bullet.rectangle")
-                    Text("My List")
+                
+                // Menu Feature to access user's list
+                Button {
+                    menuViewController.showList()
+                    animateCollapse()
+                } label: {
+                    if menuViewController.menuDisplay == .list {
+                        HStack{
+                            Image(systemName: "list.clipboard.fill")
+                            Text("My List")
+                        }
+                        .padding(.all)
+                    } else {
+                        HStack{
+                            Image(systemName: "list.bullet.clipboard")
+                            Text("My List")
+                        }
+                        .padding(.all)
+                    }
                 }
-            }
-            .padding(.all)
-            // Menu Feature to access user's friends
-            Button {
-                menuViewController.showFriends()
-                animateCollapse()
-            } label: {
-                HStack{
-                    Image(systemName: "person.2.fill")
-                    Text("Friends")
+                
+                // Menu Feature to access user's friends
+                Button {
+                    menuViewController.showFriends()
+                    animateCollapse()
+                } label: {
+                    if menuViewController.menuDisplay == .friends {
+                        HStack{
+                            Image(systemName: "person.2.fill")
+                            Text("Friends")
+                        }
+                        .padding(.all)
+                    } else {
+                        HStack{
+                            Image(systemName: "person.2")
+                            Text("Friends")
+                        }
+                        .padding(.all)
+                    }
                 }
-            }
-            .padding(.all)
-            // Menu Feature to access user's groups
-            Button {
-                menuViewController.showGroups()
-                animateCollapse()
-            } label: {
-                HStack{
-                    Image(systemName: "person.3.sequence.fill")
-                    Text("Groups")
+                
+                // Menu Feature to access user's groups
+                Button {
+                    menuViewController.showGroups()
+                    animateCollapse()
+                } label: {
+                    if menuViewController.menuDisplay == .groups {
+                        HStack{
+                            Image(systemName: "person.3.sequence.fill")
+                            Text("Groups")
+                        }
+                        .padding(.all)
+                    } else {
+                        HStack{
+                            Image(systemName: "person.3.sequence")
+                            Text("Groups")
+                        }
+                        .padding(.all)
+                    }
                 }
+                Spacer()
             }
-            .padding(.all)
-            Spacer()
         }
     }
     
     // For animating the dissapearance of menu
     func animateCollapse() {
-        withAnimation {
-            self.ShowMenu = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            withAnimation {
+                self.ShowMenu = false
+            }
+        }
+    }
+    // Allows Opacity to be adjusted in this view
+    private func adjustOpacity() {
+        if ShowMenu {
+            opacity = 0.6
+        } else {
+            opacity = 1.0
         }
     }
 }

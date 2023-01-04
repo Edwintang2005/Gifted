@@ -130,14 +130,6 @@ final class SessionManager: ObservableObject {
                         self?.loginuser = ""
                         self?.loginpass = ""
                         self?.getCurrentAuthUser()
-                        Amplify.DataStore.start { result in
-                            switch result {
-                            case .success:
-                                print("DataStore started")
-                            case .failure(let error):
-                                print("Error starting DataStore: \(error)")
-                            }
-                        }
                     }
                 }
             case .failure(let error):
@@ -168,14 +160,6 @@ final class SessionManager: ObservableObject {
                 print("DataStore cleared")
             case .failure(let error):
                 print("Error clearing DataStore: \(error)")
-            }
-        }
-        Amplify.DataStore.stop { result in
-            switch result {
-            case .success:
-                print("DataStore stopped")
-            case .failure(let error):
-                print("Error stopping DataStore: \(error)")
             }
         }
     }

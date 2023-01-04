@@ -15,7 +15,7 @@ struct GroupDetailsView: View {
     
     @State var Title = String()
     @State var userIsInGroup = Bool()
-    @State var members = [User]()
+    @State var members = [UserProfile]()
     
     @State var GroupPassed : Group
     
@@ -84,7 +84,7 @@ struct GroupDetailsView: View {
     func joinGroup() {
         var addedToUser = false
         
-        Amplify.DataStore.query(User.self, byId: userID) { result in
+        Amplify.DataStore.query(UserProfile.self, byId: userID) { result in
             switch result {
             case .success(let user):
                 if var returnedUser = user {
@@ -157,7 +157,7 @@ struct GroupDetailsView: View {
             }
         }
         if removedFromGroup {
-            Amplify.DataStore.query(User.self, byId: userID) { result in
+            Amplify.DataStore.query(UserProfile.self, byId: userID) { result in
                 switch result {
                 case .success(let userQueried):
                     if var queriedUser = userQueried {
@@ -198,7 +198,7 @@ struct GroupDetailsView: View {
     
     func getMembers() {
         
-        var MemberList = [User]()
+        var MemberList = [UserProfile]()
         
         Amplify.DataStore.query(Group.self, byId: GroupPassed.id) {result in
             switch result {
@@ -206,7 +206,7 @@ struct GroupDetailsView: View {
                 if let singleGroup = group {
                     print(singleGroup.Members)
                     singleGroup.Members.forEach{friend in
-                        Amplify.DataStore.query(User.self, byId: friend) { result in
+                        Amplify.DataStore.query(UserProfile.self, byId: friend) { result in
                             switch result {
                             case .success(let Friend):
                                 if let appendingFriend = Friend {

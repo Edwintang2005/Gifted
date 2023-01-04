@@ -3,7 +3,7 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "hatchlb6a8c2b2",
+    "resourceNameTruncated": "hatchl0ec3fa0e",
     "userPoolName": "HatchlingTurtle",
     "autoVerifiedAttributes": [
       "email"
@@ -15,10 +15,14 @@
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Gifted Verification code:",
-    "emailVerificationMessage": "Hello {username}, \n\nYour Verification code is: {####}",
+    "emailVerificationMessage": "Welcome to Gifted, \nYour verification code is: {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
-    "passwordPolicyCharacters": [],
+    "passwordPolicyCharacters": [
+      "Requires Lowercase",
+      "Requires Numbers",
+      "Requires Uppercase"
+    ],
     "requiredAttributes": [
       "email",
       "name"
@@ -28,9 +32,9 @@
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "Hatchlb6a8c2b2_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "Hatchl0ec3fa0e_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "b6a8c2b2",
+    "sharedId": "0ec3fa0e",
     "resourceName": "HatchlingTurtle",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
@@ -41,21 +45,6 @@
     "thirdPartyAuth": false,
     "authProviders": [],
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true,
-    "authRoleArn": {
-      "Fn::GetAtt": [
-        "AuthRole",
-        "Arn"
-      ]
-    },
-    "unauthRoleArn": {
-      "Fn::GetAtt": [
-        "UnauthRole",
-        "Arn"
-      ]
-    },
-    "breakCircularDependency": true,
-    "dependsOn": [],
-    "hostedUI": false
+    "useEnabledMfas": true
   }
 }

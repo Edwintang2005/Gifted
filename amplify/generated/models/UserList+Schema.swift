@@ -9,7 +9,7 @@ extension UserList {
     case userID
     case Name
     case ListItems
-    case BackgroundImageKey
+    case ImageKey
     case createdAt
     case updatedAt
   }
@@ -35,7 +35,7 @@ extension UserList {
       .field(userList.userID, is: .required, ofType: .string),
       .field(userList.Name, is: .required, ofType: .string),
       .field(userList.ListItems, is: .required, ofType: .embeddedCollection(of: String.self)),
-      .field(userList.BackgroundImageKey, is: .optional, ofType: .string),
+      .field(userList.ImageKey, is: .optional, ofType: .string),
       .field(userList.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(userList.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

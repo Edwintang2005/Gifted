@@ -153,18 +153,18 @@ struct AddToFriends: View{
     
     func saveFriend() {
         
-        let UserObj = User.keys
+        let UserObj = UserProfile.keys
         print(username)
         
         
         
         // Fetching ID of Friend and adding to friend list
-        Amplify.DataStore.query(User.self, where: UserObj.Username == username) { result in
+        Amplify.DataStore.query(UserProfile.self, where: UserObj.Username == username) { result in
             switch result {
             case.success(let Friends):
                 if let Friend = Friends.first {
                     // Fetching own User Item
-                    Amplify.DataStore.query(User.self, where: UserObj.Username == selfUsername) { result in
+                    Amplify.DataStore.query(UserProfile.self, where: UserObj.Username == selfUsername) { result in
                         switch result {
                         case .success( let user):
                             if var userSelf = user.first {
@@ -326,7 +326,7 @@ struct CreateNewGroup: View{
         print(GroupObj.ShortID)
         // Replace with code to append group to user file
         
-        Amplify.DataStore.query(User.self, byId: userID) { result in
+        Amplify.DataStore.query(UserProfile.self, byId: userID) { result in
             switch result {
             case .success(let user):
                 if var returnedUser = user {
@@ -346,7 +346,6 @@ struct CreateNewGroup: View{
                 print("Could not get User - \(error)")
             }
         }
-        
     }
     
     func StoreImage(_ image: UIImage?) {

@@ -32,7 +32,11 @@
           "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_UPPERCASE"
+          ],
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
@@ -50,7 +54,7 @@
     }
   },
   "storage": {
-    "s3hatchlingturtlestoragec3f4068f": {
+    "s3hatchlingturtlestoragee8dbe39d": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"

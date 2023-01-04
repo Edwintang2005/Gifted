@@ -114,7 +114,7 @@ struct GroupsView: View {
         
         var GroupsList = [Group]()
         
-        Amplify.DataStore.query(User.self, byId: userID) {result in
+        Amplify.DataStore.query(UserProfile.self, byId: userID) {result in
             switch result {
             case .success(let user):
                 if let UserObject = user {
@@ -158,7 +158,7 @@ struct GroupsView: View {
                 switch result {
                 case .success:
                     print("No Members so Group Deleted")
-                    Amplify.DataStore.query(User.self, byId: userID) { result in
+                    Amplify.DataStore.query(UserProfile.self, byId: userID) { result in
                         switch result {
                         case .success(let userQueried):
                             if var queriedUser = userQueried {
@@ -187,7 +187,7 @@ struct GroupsView: View {
                 switch result {
                 case .success:
                     print("Group left!")
-                    Amplify.DataStore.query(User.self, byId: userID) { result in
+                    Amplify.DataStore.query(UserProfile.self, byId: userID) { result in
                         switch result {
                         case .success(let userQueried):
                             if var queriedUser = userQueried {

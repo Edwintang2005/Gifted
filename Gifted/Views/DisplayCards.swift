@@ -23,24 +23,22 @@ struct DisplayCards: View {
                 .shadow(radius: 4)
                 .frame(width: cardWidth, height: cardHeight)
                 .foregroundColor(.white)
-            if let key = listItem.ImageKey {
-                if let render = ImageCache[key] {
-                    VStack(alignment: .center) {
-                        Image(uiImage: render)
-                            .resizable()
-                            .padding(.top)
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: cardWidth, height: cardWidth)
-                            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                        Spacer()
-                        cardDetails
-                            .padding(.horizontal)
-                            .frame(width: cardWidth)
-                            .background(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                    }
-                    .frame(width: cardWidth, height: cardHeight)
+            if let key = listItem.ImageKey, let render = ImageCache[key] {
+                VStack(alignment: .center) {
+                    Image(uiImage: render)
+                        .resizable()
+                        .padding(.top)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: cardWidth, height: cardWidth)
+                        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                    Spacer()
+                    cardDetails
+                        .padding(.horizontal)
+                        .frame(width: cardWidth)
+                        .background(Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 }
+                .frame(width: cardWidth, height: cardHeight)
             } else {
                 
             }
