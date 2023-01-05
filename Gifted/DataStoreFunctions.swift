@@ -208,4 +208,50 @@ final class DataStore: ObservableObject {
             }
         }
     }
+    
+    // Friend related modifications
+    func fetchFriends(userID: String) -> [UserProfile] {
+        var returnValue = [UserProfile]()
+        let user = fetchUser(userID: userID)
+        user.Friends.forEach{ friendID in
+            Amplify.DataStore.query(UserProfile.self, byId: friendID) {
+                switch $0 {
+                case .success(let result):
+                    if let result = result {
+                        returnValue.append(result)
+                    }
+                case .failure(let error):
+                    print("Could not fetch friend - \(error.localizedDescription)")
+                }
+            }
+        }
+        return returnValue
+    }
+    
+    func changeFriends(action: Action, userID: String, change: UserProfile) {
+        switch action {
+        case .addTo:
+            var user = fetchUser(userID: userID)
+            user.Friends.append(change.id)
+            Amplify.DataStore.save(user) {
+                switch $0 {
+                case .success:
+                    print("Added Friend to Profile!")
+                case .failure(let error):
+                    print("Could not add friend - \(error.localizedDescription)")
+                }
+            }
+        case .removeFrom:
+            var user = fetchUser(userID: userID)
+            user.Friends = user.Friends.filter{ $0 != change.id}
+            Amplify.DataStore.save(user) {
+                switch $0 {
+                case .success:
+                    print("Removed Friend from Profile!")
+                case .failure(let error):
+                    print("Could not remove friend - \(error.localizedDescription)")
+                }
+            }
+        }
+    }
 }

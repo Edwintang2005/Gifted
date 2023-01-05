@@ -10,6 +10,10 @@
 		E81197B3295F945100B90D1C /* DataStoreFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81197B2295F945100B90D1C /* DataStoreFunctions.swift */; };
 		E81197CC295FFEF600B90D1C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81197CB295FFEF600B90D1C /* MainView.swift */; };
 		E81197CE29601B2900B90D1C /* DisplayCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81197CD29601B2900B90D1C /* DisplayCards.swift */; };
+		E812D0FC2966E5D50033BB23 /* AddToList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E812D0FB2966E5D50033BB23 /* AddToList.swift */; };
+		E812D0FE2966E6170033BB23 /* AddToFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = E812D0FD2966E6170033BB23 /* AddToFriends.swift */; };
+		E812D1002966E65D0033BB23 /* AddToGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = E812D0FF2966E65D0033BB23 /* AddToGroups.swift */; };
+		E812D1022966E6970033BB23 /* CreateNewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E812D1012966E6970033BB23 /* CreateNewGroup.swift */; };
 		E835DE282963F58B00FD36C4 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E835DE1D2963F58B00FD36C4 /* ListItem.swift */; };
 		E835DE292963F58B00FD36C4 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E835DE1E2963F58B00FD36C4 /* AmplifyModels.swift */; };
 		E835DE2A2963F58B00FD36C4 /* UserList+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E835DE1F2963F58B00FD36C4 /* UserList+Schema.swift */; };
@@ -29,7 +33,6 @@
 		E894FF9A293C165200095DD2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FF99293C165200095DD2 /* SignUpView.swift */; };
 		E894FF9C293C16FA00095DD2 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */; };
 		E894FFB1293C75DD00095DD2 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FFB0293C75DD00095DD2 /* ListView.swift */; };
-		E894FFB3293C767C00095DD2 /* FloatingElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */; };
 		E8957C592940095C00058AC2 /* AllStructureModifierExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */; };
 		E8B238E7294C83FB0045136B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B238E6294C83FB0045136B /* MenuViewController.swift */; };
 		E8CF112D29597F5F0055422F /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E8CF112C29597F5F0055422F /* AWSAPIPlugin */; };
@@ -82,6 +85,10 @@
 		E81197B2295F945100B90D1C /* DataStoreFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreFunctions.swift; sourceTree = "<group>"; };
 		E81197CB295FFEF600B90D1C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E81197CD29601B2900B90D1C /* DisplayCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayCards.swift; sourceTree = "<group>"; };
+		E812D0FB2966E5D50033BB23 /* AddToList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToList.swift; sourceTree = "<group>"; };
+		E812D0FD2966E6170033BB23 /* AddToFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToFriends.swift; sourceTree = "<group>"; };
+		E812D0FF2966E65D0033BB23 /* AddToGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToGroups.swift; sourceTree = "<group>"; };
+		E812D1012966E6970033BB23 /* CreateNewGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewGroup.swift; sourceTree = "<group>"; };
 		E835DE1D2963F58B00FD36C4 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		E835DE1E2963F58B00FD36C4 /* AmplifyModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmplifyModels.swift; sourceTree = "<group>"; };
 		E835DE1F2963F58B00FD36C4 /* UserList+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserList+Schema.swift"; sourceTree = "<group>"; };
@@ -102,9 +109,8 @@
 		E894FF99293C165200095DD2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		E894FFB0293C75DD00095DD2 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
-		E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingElementsView.swift; sourceTree = "<group>"; };
 		E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllStructureModifierExtensions.swift; sourceTree = "<group>"; };
-		E8B238E6294C83FB0045136B /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = Gifted/MenuViewController.swift; sourceTree = SOURCE_ROOT; };
+		E8B238E6294C83FB0045136B /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = "Gifted/View Controllers/MenuViewController.swift"; sourceTree = SOURCE_ROOT; };
 		E8F1602729455FF100FDD251 /* GroupDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsView.swift; sourceTree = "<group>"; };
 		E8F91B43293AF173003E23B5 /* Gifted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gifted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8F91B46293AF173003E23B5 /* GiftedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftedApp.swift; sourceTree = "<group>"; };
@@ -147,22 +153,66 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E81723BB294BF6180022A09E /* Views */ = {
+		E812D1042966E6CD0033BB23 /* List Related Views */ = {
 			isa = PBXGroup;
 			children = (
+				E812D0FB2966E5D50033BB23 /* AddToList.swift */,
 				E81197CD29601B2900B90D1C /* DisplayCards.swift */,
-				E894FF99293C165200095DD2 /* SignUpView.swift */,
-				E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */,
-				E8F91B56293AF234003E23B5 /* LoginView.swift */,
-				E8F91B48293AF173003E23B5 /* ContentView.swift */,
-				E81197CB295FFEF600B90D1C /* MainView.swift */,
 				E894FFB0293C75DD00095DD2 /* ListView.swift */,
 				E84B6DD3295584460030DD6B /* ItemSearchView.swift */,
 				E8F91B54293AF20D003E23B5 /* ItemDetailsView.swift */,
+			);
+			path = "List Related Views";
+			sourceTree = "<group>";
+		};
+		E812D1052966E6F30033BB23 /* Onboarding Flow Views */ = {
+			isa = PBXGroup;
+			children = (
+				E894FF99293C165200095DD2 /* SignUpView.swift */,
+				E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */,
+				E8F91B56293AF234003E23B5 /* LoginView.swift */,
+			);
+			path = "Onboarding Flow Views";
+			sourceTree = "<group>";
+		};
+		E812D1062966E70F0033BB23 /* Friends Related Views */ = {
+			isa = PBXGroup;
+			children = (
+				E812D0FD2966E6170033BB23 /* AddToFriends.swift */,
 				E8F91B58293AF264003E23B5 /* FriendsView.swift */,
+			);
+			path = "Friends Related Views";
+			sourceTree = "<group>";
+		};
+		E812D1072966E72E0033BB23 /* Group Related Views */ = {
+			isa = PBXGroup;
+			children = (
 				E8FC8933293CB62400645630 /* GroupsView.swift */,
 				E8F1602729455FF100FDD251 /* GroupDetailsView.swift */,
-				E894FFB2293C767C00095DD2 /* FloatingElementsView.swift */,
+				E812D0FF2966E65D0033BB23 /* AddToGroups.swift */,
+				E812D1012966E6970033BB23 /* CreateNewGroup.swift */,
+			);
+			path = "Group Related Views";
+			sourceTree = "<group>";
+		};
+		E812D1082966E7C80033BB23 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E8B238E6294C83FB0045136B /* MenuViewController.swift */,
+				E87BE3E3293B5C2A007DC233 /* SessionManager.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		E81723BB294BF6180022A09E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E812D1052966E6F30033BB23 /* Onboarding Flow Views */,
+				E8F91B48293AF173003E23B5 /* ContentView.swift */,
+				E81197CB295FFEF600B90D1C /* MainView.swift */,
+				E812D1042966E6CD0033BB23 /* List Related Views */,
+				E812D1062966E70F0033BB23 /* Friends Related Views */,
+				E812D1072966E72E0033BB23 /* Group Related Views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -220,12 +270,11 @@
 			children = (
 				E835DE1C2963F58B00FD36C4 /* models */,
 				E8F91B5A293AF9E8003E23B5 /* Info.plist */,
+				E812D1082966E7C80033BB23 /* View Controllers */,
 				E8F91B64293B1070003E23B5 /* Gifted.entitlements */,
-				E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */,
-				E87BE3E3293B5C2A007DC233 /* SessionManager.swift */,
-				E81197B2295F945100B90D1C /* DataStoreFunctions.swift */,
 				E8F91B46293AF173003E23B5 /* GiftedApp.swift */,
-				E8B238E6294C83FB0045136B /* MenuViewController.swift */,
+				E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */,
+				E81197B2295F945100B90D1C /* DataStoreFunctions.swift */,
 				E81723BB294BF6180022A09E /* Views */,
 				E8F91B4A293AF177003E23B5 /* Assets.xcassets */,
 				E8F91B66293B124B003E23B5 /* amplifyconfiguration.json */,
@@ -380,17 +429,20 @@
 				E835DE302963F58B00FD36C4 /* Group.swift in Sources */,
 				E835DE312963F58B00FD36C4 /* Group+Schema.swift in Sources */,
 				E835DE2A2963F58B00FD36C4 /* UserList+Schema.swift in Sources */,
+				E812D1022966E6970033BB23 /* CreateNewGroup.swift in Sources */,
 				E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */,
 				E8957C592940095C00058AC2 /* AllStructureModifierExtensions.swift in Sources */,
 				E894FF9A293C165200095DD2 /* SignUpView.swift in Sources */,
-				E894FFB3293C767C00095DD2 /* FloatingElementsView.swift in Sources */,
 				E8FC8934293CB62400645630 /* GroupsView.swift in Sources */,
 				E8F91B57293AF234003E23B5 /* LoginView.swift in Sources */,
 				E81197B3295F945100B90D1C /* DataStoreFunctions.swift in Sources */,
 				E81197CE29601B2900B90D1C /* DisplayCards.swift in Sources */,
+				E812D0FE2966E6170033BB23 /* AddToFriends.swift in Sources */,
 				E835DE2F2963F58B00FD36C4 /* Reservations.swift in Sources */,
 				E8F1602829455FF100FDD251 /* GroupDetailsView.swift in Sources */,
+				E812D1002966E65D0033BB23 /* AddToGroups.swift in Sources */,
 				E894FF9C293C16FA00095DD2 /* ConfirmationView.swift in Sources */,
+				E812D0FC2966E5D50033BB23 /* AddToList.swift in Sources */,
 				E8F91B47293AF173003E23B5 /* GiftedApp.swift in Sources */,
 				E87BE3E4293B5C2A007DC233 /* SessionManager.swift in Sources */,
 				E8B238E7294C83FB0045136B /* MenuViewController.swift in Sources */,

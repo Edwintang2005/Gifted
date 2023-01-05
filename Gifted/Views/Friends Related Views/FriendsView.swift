@@ -13,11 +13,13 @@ import SwiftUI
 // Page for friends lists, not yet built although buttons and structures are all done, just need backend functionality
 struct FriendsView: View {
     
+    @ObservedObject var dataStore = DataStore()
     @EnvironmentObject var sessionManager: SessionManager
+    
+    
     let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
-    @State var showAddToFriends = false
     @State var Friends = [UserProfile]()
     @State var FriendsLength = Int()
     
@@ -75,32 +77,7 @@ struct FriendsView: View {
     }
     
     func getFriends() {
-        
-        var FriendList = [UserProfile]()
-        
-        Amplify.DataStore.query(UserProfile.self, byId: userID) {result in
-            switch result {
-            case .success(let user):
-                if let singleUser = user {
-                    print(singleUser.Friends)
-                    singleUser.Friends.forEach{friend in
-                        Amplify.DataStore.query(UserProfile.self, byId: friend) { result in
-                            switch result {
-                            case .success(let Friend):
-                                if let appendingFriend = Friend {
-                                    FriendList.append(appendingFriend)
-                                }
-                            case .failure(let error):
-                                print("Could not fetch friend - \(error)")
-                            }
-                        }
-                    }
-                    self.Friends = FriendList
-                }
-            case .failure(let error):
-                print("Could not fetch User - \(error)")
-            }
-        }
+        Friends = dataStore.fetchFriends(userID: userID)
     }
     
     func deleteFriend(indexSet: IndexSet) {
@@ -108,33 +85,14 @@ struct FriendsView: View {
         
         var updatedList = Friends
         updatedList.remove(atOffsets: indexSet)
-        
+
         guard let item =
                 Set(updatedList)
             .symmetricDifference(Friends).first else
         {return}
         
         // Function to remove friend from list
-        Amplify.DataStore.query(UserProfile.self, byId: userID) { result in
-            switch result {
-            case.success(let user):
-                if var singleUser = user {
-                    var friends = singleUser.Friends
-                    friends = friends.filter { $0 != item.id }
-                    singleUser.Friends = friends
-                    Amplify.DataStore.save (singleUser) {result in
-                        switch result {
-                        case .success:
-                            print("Successfully deleted Friend")
-                        case .failure(let error):
-                            print("Could not delete Friend - \(error)")
-                        }
-                    }
-                }
-            case.failure(let error):
-                print("Could not fetch User - \(error)")
-            }
-        }
+        dataStore.changeFriends(action: .removeFrom, userID: userID, change: item)
         getFriends()
     }
 }
