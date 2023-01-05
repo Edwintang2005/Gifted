@@ -12,7 +12,6 @@ import Amplify
 struct MainView: View {
     
     @ObservedObject var dataStore = DataStore()
-    
     @EnvironmentObject var sessionManager: SessionManager
     
     @State private var userProfile = UserProfile(Username: "NULL", Name: String())
@@ -108,14 +107,7 @@ struct MainView: View {
     }
     
     func getListItem() {
-        Amplify.DataStore.query(ListItem.self) { result in
-            switch result {
-            case.success(let listitems):
-                self.listitems = listitems
-            case.failure(let error):
-                print(error)
-            }
-        }
+        listitems = dataStore.allItemsQuery()
     }
 }
 

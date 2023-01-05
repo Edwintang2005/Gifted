@@ -11,10 +11,12 @@ import Amplify
 
 struct CreateNewGroup: View{
     
+    @ObservedObject var dataStore = DataStore()
     @Environment(\.presentationMode) var presentationMode
-    @State var ShortID = String()
+    
+    let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
+    
     @State var Name = String()
-    @State var Members = [String]()
     
     @State var showingImagePicker = false
     @State var inputImage: UIImage?
@@ -60,34 +62,11 @@ struct CreateNewGroup: View{
     
     func saveGroup() {
         print(Name)
-        let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
-        
-        ShortID = UUID().uuidString
-        let small = ShortID.prefix(8)
-        ShortID = String(small)
-        let GroupNameandID = Name + ShortID
-        Members = [userID]
-        let Group = Group(id: UUID().uuidString,
-                          Name: Name,
-                          ShortID: ShortID,
-                          NameAndShortID: GroupNameandID,
-                          Members: Members,
-                          ImageKey: UserDefaults.standard.string(forKey: "ImageKey"))
-        Amplify.DataStore.save(Group) {result in
-            switch result {
-            case .success:
-                print("Saved Group!")
-                addGrouptoUser(GroupObj: Group)
-                presentationMode.wrappedValue.dismiss()
-            case .failure(let error):
-                print(error)
-            }
-        }
+        let createdGroup = dataStore.createGroup(Groupname: Name, userID: userID)
+        addGrouptoUser(GroupObj: createdGroup)
     }
     
     func addGrouptoUser(GroupObj: Group) {
-        let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
-        
         print(GroupObj.ShortID)
         // Replace with code to append group to user file
         

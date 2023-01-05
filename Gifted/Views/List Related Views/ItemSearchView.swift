@@ -10,6 +10,8 @@ import Amplify
 
 struct ItemSearchView: View {
     
+    @ObservedObject var dataStore = DataStore()
+    
     @State var listitems = [ListItem]()
     @Binding var ImageCache : [String: UIImage]
     @Binding var lists: [UserList]
@@ -88,14 +90,7 @@ struct ItemSearchView: View {
     
     // Function that queries database and retrieves all list items
     func getListItem() {
-        Amplify.DataStore.query(ListItem.self) { result in
-            switch result {
-            case.success(let listitems):
-                self.listitems = listitems
-            case.failure(let error):
-                print(error)
-            }
-        }
+        listitems = dataStore.allItemsQuery()
     }
     
     // Function that loads the images for the icons (Same as in ListView)

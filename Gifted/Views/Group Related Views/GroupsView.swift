@@ -11,10 +11,11 @@ import SwiftUI
 // Page for Groups, not built yet, however physical structures are all already built
 struct GroupsView: View {
     
+    @ObservedObject var dataStore = DataStore()
     @EnvironmentObject var sessionManager: SessionManager
+    
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
-    @State var showAddToGroups = false
     @State var Groups = [Group]()
     @State var GroupsLength = Int()
     @State var showFloatingMenu1 = false
@@ -109,34 +110,8 @@ struct GroupsView: View {
         ))
     }
     
-    
     func getGroups() {
-        
-        var GroupsList = [Group]()
-        
-        Amplify.DataStore.query(UserProfile.self, byId: userID) {result in
-            switch result {
-            case .success(let user):
-                if let UserObject = user {
-                    print(UserObject.Groups)
-                    UserObject.Groups.forEach{ groupID in
-                        Amplify.DataStore.query(Group.self, byId: groupID) { result in
-                            switch result {
-                            case .success(let individualGroup):
-                                if let group = individualGroup {
-                                    GroupsList.append(group)
-                                }
-                            case .failure(let error):
-                                print("Could not fetch group - \(error)")
-                            }
-                        }
-                    }
-                    self.Groups = GroupsList
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
+        Groups = dataStore.fetchGroups(userID: userID)
     }
     
     func deleteGroup(indexSet: IndexSet) {

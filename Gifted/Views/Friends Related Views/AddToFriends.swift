@@ -11,17 +11,22 @@ import SwiftUI
 //Page trigged by add button in Friends
 struct AddToFriends: View{
     
+    @ObservedObject var dataStore = DataStore()
     @Environment(\.presentationMode) var presentationMode
     
-    let selfUsername = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
+    let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
     @State var username = String()
-    
+    @State var validUsername = true
     
     var body: some View{
         VStack {
             Spacer()
-            TextField("Friend's Username", text: $username).pretty()
+            TextField("Friend's Username", text: $username)
+                .pretty()
+            Text("Noone with that username exists")
+                .verif()
+                .foregroundColor(validUsername ? .clear: .red)
             Spacer()
             Button{
                 saveFriend()
@@ -36,41 +41,14 @@ struct AddToFriends: View{
         
     
     func saveFriend() {
-        
-        let UserObj = UserProfile.keys
         print(username)
-        
         // Fetching ID of Friend and adding to friend list
-        Amplify.DataStore.query(UserProfile.self, where: UserObj.Username == username) { result in
-            switch result {
-            case.success(let Friends):
-                if let Friend = Friends.first {
-                    // Fetching own User Item
-                    Amplify.DataStore.query(UserProfile.self, where: UserObj.Username == selfUsername) { result in
-                        switch result {
-                        case .success( let user):
-                            if var userSelf = user.first {
-                                var friends = userSelf.Friends
-                                friends.append(Friend.id)
-                                userSelf.Friends = friends
-                                Amplify.DataStore.save(userSelf) {result in
-                                    switch result {
-                                    case .success:
-                                        print("Successfully added Friend")
-                                        presentationMode.wrappedValue.dismiss()
-                                    case .failure(let error):
-                                        print("Could not add Friend - \(error)")
-                                    }
-                                }
-                            }
-                        case .failure(let error):
-                            print("Could not fetch Self - \(error)")
-                        }
-                    }
-                }
-            case.failure(let error):
-                print("Could not fetch Friend - \(error)")
-            }
+        let friend = dataStore.verifUser(username: username)
+        if friend.Username != "NULL" {
+            dataStore.changeFriends(action: .addTo, userID: userID, change: friend)
+            presentationMode.wrappedValue.dismiss()
+        } else {
+            validUsername = false
         }
     }
 }

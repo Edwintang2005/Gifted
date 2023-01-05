@@ -52,7 +52,36 @@ final class DataStore: ObservableObject {
         return returnValue
     }
     
+    func verifUser(username: String) -> UserProfile {
+        var returnValue = UserProfile(Username: "NULL", Name: String())
+        let UserObj = UserProfile.keys
+        Amplify.DataStore.query(UserProfile.self, where: UserObj.Username == username) {
+            switch $0 {
+            case .success(let userList):
+                if let user = userList.first {
+                    returnValue = user
+                }
+            case .failure(let error):
+                print("Could not verify user -\(error.localizedDescription)")
+            }
+        }
+        return returnValue
+    }
+    
     // List related Modifications
+    func allItemsQuery() -> [ListItem] {
+        var returnValue = [ListItem]()
+        Amplify.DataStore.query(ListItem.self) { result in
+            switch result {
+            case.success(let listitems):
+                returnValue = listitems
+            case.failure(let error):
+                print(error)
+            }
+        }
+        return returnValue
+    }
+    
     func fetchLists(userID: String) -> [UserList] {
         var returnValue = [UserList]()
         let user = fetchUser(userID: userID)
@@ -253,5 +282,47 @@ final class DataStore: ObservableObject {
                 }
             }
         }
+    }
+    
+    // Group Related Modifications
+    func fetchGroups(userID: String) -> [Group] {
+        var returnValue = [Group]()
+        let user = fetchUser(userID: userID)
+        user.Groups.forEach{ groupID in
+            Amplify.DataStore.query(Group.self, byId: groupID) {
+                switch $0 {
+                case .success(let result):
+                    if let result = result {
+                        returnValue.append(result)
+                    }
+                case .failure(let error):
+                    print("Could not fetch Group - \(error.localizedDescription)")
+                }
+            }
+        }
+        return returnValue
+    }
+    
+    func createGroup(Groupname: String, userID: String) -> Group {
+        var ShortID = UUID().uuidString
+        let small = ShortID.prefix(8)
+        ShortID = String(small)
+        let GroupNameandID = Groupname + ShortID
+        let Members = [userID]
+        let GroupObj = Group(id: UUID().uuidString,
+                          Name: Groupname,
+                          ShortID: ShortID,
+                          NameAndShortID: GroupNameandID,
+                          Members: Members,
+                          ImageKey: UserDefaults.standard.string(forKey: "ImageKey"))
+        Amplify.DataStore.save(GroupObj) {
+            switch $0 {
+            case .success:
+                print("Created Group Successfully")
+            case .failure(let error):
+                print("Could not create Group - \(error.localizedDescription)")
+            }
+        }
+        return GroupObj
     }
 }
