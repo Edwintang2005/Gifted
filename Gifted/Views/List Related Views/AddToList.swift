@@ -75,7 +75,6 @@ struct AddToList: View{
     
     // Function that updates list items to the cloud
     func saveListItem() {
-        
         print(name)
         let item = ListItem(id: UUID().uuidString,
                             Name: name,
@@ -83,16 +82,9 @@ struct AddToList: View{
                             ShortDescription: description,
                             ImageKey: UserDefaults.standard.string(forKey: "ImageKey"),
                             Link: link)
-        Amplify.DataStore.save(item) { result in
-            switch result {
-            case .success:
-                print("Saved Item")
-                // Adding Item to User's list
-                dataStore.changeLists(action: .addTo, list: lists[listNumber], change: item)
-                presentationMode.wrappedValue.dismiss()
-            case .failure(let error):
-                print("Could not create Item - \(error)")
-            }
+        let completion = dataStore.createListItem(item: item, list: lists[listNumber])
+        if completion {
+            presentationMode.wrappedValue.dismiss()
         }
     }
     

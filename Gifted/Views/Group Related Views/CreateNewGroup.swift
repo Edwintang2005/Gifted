@@ -63,33 +63,7 @@ struct CreateNewGroup: View{
     func saveGroup() {
         print(Name)
         let createdGroup = dataStore.createGroup(Groupname: Name, userID: userID)
-        addGrouptoUser(GroupObj: createdGroup)
-    }
-    
-    func addGrouptoUser(GroupObj: Group) {
-        print(GroupObj.ShortID)
-        // Replace with code to append group to user file
-        
-        Amplify.DataStore.query(UserProfile.self, byId: userID) { result in
-            switch result {
-            case .success(let user):
-                if var returnedUser = user {
-                    var userGroups = returnedUser.Groups
-                    userGroups.append(GroupObj.id)
-                    returnedUser.Groups = userGroups
-                    Amplify.DataStore.save(returnedUser) { result in
-                        switch result {
-                        case .success:
-                            print("Added Group to User")
-                        case .failure(let error):
-                            print("Could not add Group to User - \(error)")
-                        }
-                    }
-                }
-            case .failure(let error):
-                print("Could not get User - \(error)")
-            }
-        }
+        dataStore.changeGroups(action: .addTo, userID: userID, change: createdGroup)
     }
     
     func StoreImage(_ image: UIImage?) {

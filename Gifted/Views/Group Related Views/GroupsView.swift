@@ -124,69 +124,9 @@ struct GroupsView: View {
             Set(updatedList)
             .symmetricDifference(Groups).first else
             {return}
-        var GroupPassed = item
-        var groupMembers = item.Members
-        groupMembers = groupMembers.filter { $0 != userID}
-        GroupPassed.Members = groupMembers
-        if groupMembers.count == 0 {
-            Amplify.DataStore.delete(item) { result in
-                switch result {
-                case .success:
-                    print("No Members so Group Deleted")
-                    Amplify.DataStore.query(UserProfile.self, byId: userID) { result in
-                        switch result {
-                        case .success(let userQueried):
-                            if var queriedUser = userQueried {
-                                var groupsList = queriedUser.Groups
-                                groupsList = groupsList.filter { $0 != GroupPassed.id}
-                                queriedUser.Groups = groupsList
-                                Amplify.DataStore.save(queriedUser) {result in
-                                    switch result {
-                                    case .success:
-                                        print("Removed Group from User")
-                                    case .failure(let error):
-                                        print("Could not remove group from user - \(error)")
-                                    }
-                                }
-                            }
-                        case .failure(let error):
-                            print("Could not get user to remove group - \(error)")
-                        }
-                    }
-                case .failure(let error):
-                    print("Could not leave group - \(error)")
-                }
-            }
-        } else {
-            Amplify.DataStore.save(GroupPassed) { result in
-                switch result {
-                case .success:
-                    print("Group left!")
-                    Amplify.DataStore.query(UserProfile.self, byId: userID) { result in
-                        switch result {
-                        case .success(let userQueried):
-                            if var queriedUser = userQueried {
-                                var groupsList = queriedUser.Groups
-                                groupsList = groupsList.filter { $0 != GroupPassed.id}
-                                queriedUser.Groups = groupsList
-                                Amplify.DataStore.save(queriedUser) {result in
-                                    switch result {
-                                    case .success:
-                                        print("Removed Group from User")
-                                    case .failure(let error):
-                                        print("Could not remove group from user - \(error)")
-                                    }
-                                }
-                            }
-                        case .failure(let error):
-                            print("Could not get user to remove group - \(error)")
-                        }
-                    }
-                case .failure(let error):
-                    print("Could not leave group - \(error)")
-                }
-            }
-        }
+        
+        dataStore.changeGroups(action: .removeFrom, userID: userID, change: item)
+        
         getGroups()
     }
 }
