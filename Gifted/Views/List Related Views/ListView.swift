@@ -33,135 +33,137 @@ struct ListView: View {
     
     
     var body: some View {
-        ZStack {
-            if ListLength == 0 {
-                VStack{
-                    if selfQuery == true {
-                        Spacer()
-                        Text("You have No List Items! 😢").large()
-                        Spacer()
-                        Text("Why don't we start by adding an item using the + button!").large()
-                        Spacer()
-                    } else {
-                        Spacer()
-                        Text("Your friend has no list items! 😢").large()
-                        Spacer()
-                    }
-                }
-            } else {
-                // Code that takes retrieved list and displays each item seperately
-                if selfQuery == true {
-                    List {
-                        ForEach(listitems) {
-                            Item in NavigationLink{
-                                if let key = Item.ImageKey {
-                                    ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
-                                } else {
-                                    ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userProfile.id)
-                                }
-                            } label: {
-                                HStack{
-                                    // Small Icon Image Rendering
-                                    if let key = Item.ImageKey {
-                                        if let Render = ImageCache[key] {
-                                            Image(uiImage: Render).Icon()
-                                        } else {
-                                            Image("ImageNotFound").Icon()
-                                        }
-                                    } else {
-                                        Image("ImageNotFound").Icon()
-                                    }
-                                    
-                                    VStack(alignment: .leading) {
-                                        Text(Item.Name).listtext()
-                                        Text("$ \(Item.Price ?? "NO PRICE ATTATCHED")").small()
-                                    }
-                                    .padding(.horizontal)
-                                    Spacer()
-                                }
-                                .onAppear{getImage(Imagekey: Item.ImageKey)}
-                            }
+        NavigationView{
+            ZStack {
+                if ListLength == 0 {
+                    VStack{
+                        if selfQuery == true {
+                            Spacer()
+                            Text("You have No List Items! 😢").large()
+                            Spacer()
+                            Text("Why don't we start by adding an item using the + button!").large()
+                            Spacer()
+                        } else {
+                            Spacer()
+                            Text("Your friend has no list items! 😢").large()
+                            Spacer()
                         }
-                        .onDelete(perform: deleteItem)
                     }
                 } else {
-                    List {
-                        ForEach(listitems) {
-                            Item in NavigationLink{
-                                if let key = Item.ImageKey {
-                                    ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
-                                } else {
-                                    ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userProfile.id)
-                                }
-                            } label: {
-                                HStack{
-                                    // Small Icon Image Rendering
+                    // Code that takes retrieved list and displays each item seperately
+                    if selfQuery == true {
+                        List {
+                            ForEach(listitems) {
+                                Item in NavigationLink{
                                     if let key = Item.ImageKey {
-                                        if let Render = ImageCache[key] {
-                                            Image(uiImage: Render).Icon()
+                                        ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
+                                    } else {
+                                        ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userProfile.id)
+                                    }
+                                } label: {
+                                    HStack{
+                                        // Small Icon Image Rendering
+                                        if let key = Item.ImageKey {
+                                            if let Render = ImageCache[key] {
+                                                Image(uiImage: Render).Icon()
+                                            } else {
+                                                Image("ImageNotFound").Icon()
+                                            }
                                         } else {
                                             Image("ImageNotFound").Icon()
                                         }
-                                    } else {
-                                        Image("ImageNotFound").Icon()
+                                        
+                                        VStack(alignment: .leading) {
+                                            Text(Item.Name).listtext()
+                                            Text("$ \(Item.Price ?? "NO PRICE ATTATCHED")").small()
+                                        }
+                                        .padding(.horizontal)
+                                        Spacer()
                                     }
-                                    VStack(alignment: .leading) {
-                                        Text(Item.Name).listtext()
-                                        Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
-                                    }
-                                    .padding(.horizontal)
-                                    Spacer()
+                                    .onAppear{getImage(Imagekey: Item.ImageKey)}
                                 }
-                                .onAppear{
-                                    getImage(Imagekey: Item.ImageKey)
+                            }
+                            .onDelete(perform: deleteItem)
+                        }
+                    } else {
+                        List {
+                            ForEach(listitems) {
+                                Item in NavigationLink{
+                                    if let key = Item.ImageKey {
+                                        ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
+                                    } else {
+                                        ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userProfile.id)
+                                    }
+                                } label: {
+                                    HStack{
+                                        // Small Icon Image Rendering
+                                        if let key = Item.ImageKey {
+                                            if let Render = ImageCache[key] {
+                                                Image(uiImage: Render).Icon()
+                                            } else {
+                                                Image("ImageNotFound").Icon()
+                                            }
+                                        } else {
+                                            Image("ImageNotFound").Icon()
+                                        }
+                                        VStack(alignment: .leading) {
+                                            Text(Item.Name).listtext()
+                                            Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
+                                        }
+                                        .padding(.horizontal)
+                                        Spacer()
+                                    }
+                                    .onAppear{
+                                        getImage(Imagekey: Item.ImageKey)
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            // Structure that holds + button and pushes it to bottom right corner
-            if selfQuery == true {
-                VStack{
-                    Spacer()
-                    HStack{
+                // Structure that holds + button and pushes it to bottom right corner
+                if selfQuery == true {
+                    VStack{
                         Spacer()
-                        NavigationLink{
-                            ItemSearchView(ImageCache: $ImageCache, lists: $lists, listNumber: $listNumber)
-                        } label: {
-                            Image(systemName: "plus.circle.fill").floaty()
+                        HStack{
+                            Spacer()
+                            NavigationLink{
+                                ItemSearchView(ImageCache: $ImageCache, lists: $lists, listNumber: $listNumber)
+                            } label: {
+                                Image(systemName: "plus.circle.fill").floaty()
+                            }
                         }
                     }
+                } else {
+                    Spacer()
                 }
-            } else {
-                Spacer()
             }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear{
-            checkUserIsSelf()
-            getList()
-            ListLength = listitems.count
-        }
-        .navigationBarTitle("\(userProfile.Username)'s List")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: (
-            HStack {
-                Button(action: {
-                    getList()
-                    ListLength = listitems.count
-                }) {
-                    Image(systemName: "arrow.clockwise")
-                        .imageScale(.large)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onAppear{
+                checkUserIsSelf()
+                getList()
+                ListLength = listitems.count
+            }
+            .navigationBarTitle("\(userProfile.Username)'s List")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: (
+                HStack {
+                    Button(action: {
+                        getList()
+                        ListLength = listitems.count
+                    }) {
+                        Image(systemName: "arrow.clockwise")
+                            .imageScale(.large)
+                    }
+    //                Button(action: {
+    //                    createList()
+    //                }) {
+    //                    Image(systemName: "text.badge.plus")
+    //                        .imageScale(.large)
+    //                }
                 }
-//                Button(action: {
-//                    createList()
-//                }) {
-//                    Image(systemName: "text.badge.plus")
-//                        .imageScale(.large)
-//                }
-            }
-        ))
+            ))
+        }
     }
     
     func checkUserIsSelf() {

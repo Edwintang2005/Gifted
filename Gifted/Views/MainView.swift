@@ -27,36 +27,38 @@ struct MainView: View {
     @AppStorage("UserID") var UserID: String = ""
     
     var body: some View{
-        VStack(alignment: .leading) {
-            HStack {
-                // Text that displays the User's name
-                Text("Hello, \(NameOfUser)!").homepagename()
-                    .padding(.horizontal)
-                Spacer()
-            }
-            // replace below with Roger's design of Homescreen
-            Text("Top Items:")
-                .font(.title2)
-                .padding([.top, .leading, .trailing])
-            ScrollView(.horizontal, showsIndicators: false){
-                HStack{
-                    ForEach(listitems) { item in
-                        DisplayCards(listItem: item).padding(6)
+        NavigationView {
+                VStack(alignment: .leading) {
+                    HStack {
+                        // Text that displays the User's name
+                        Text("Hello, \(NameOfUser)!").homepagename()
+                            .padding(.horizontal)
+                        Spacer()
                     }
+                    // replace below with Roger's design of Homescreen
+                    Text("Top Items:")
+                        .font(.title2)
+                        .padding([.top, .leading, .trailing])
+                    ScrollView(.horizontal, showsIndicators: false){
+                        HStack{
+                            ForEach(listitems) { item in
+                                DisplayCards(listItem: item).padding(6)
+                            }
+                        }
+                    }
+                    .padding(.leading)
+                    Spacer()
                 }
-            }
-            .padding(.leading)
-            Spacer()
-        }
-        .padding(.vertical)
-        .navigationBarTitle("Home")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: (
-            Button("Sign Out", action: sessionManager.signOut)
-        ))
-        .onAppear{
-            fetchUserInfo()
-            getListItem()
+                .padding(.vertical)
+                .navigationBarTitle("Home")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(trailing: (
+                    Button("Sign Out", action: sessionManager.signOut)
+                ))
+                .onAppear{
+                    fetchUserInfo()
+                    getListItem()
+                }
         }
     }
     
