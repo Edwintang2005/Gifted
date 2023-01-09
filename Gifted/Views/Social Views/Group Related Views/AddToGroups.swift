@@ -5,7 +5,7 @@
 //  Created by Edwin Tang on 5/1/2023.
 //
 
-import Amplify
+
 import SwiftUI
 
 //Page trigged by add button in Groups
@@ -47,14 +47,6 @@ struct AddToGroups: View{
     }
     
     func getGroups() {
-        Amplify.DataStore.query(Group.self) {result in
-            switch result {
-            case .success(let Group):
-                self.GroupList = Group
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 }
 

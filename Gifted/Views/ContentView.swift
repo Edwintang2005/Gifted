@@ -6,9 +6,6 @@
 //
 
 import SwiftUI
-import Amplify
-import AWSPluginsCore
-import AWSCognitoIdentityProvider
 
 
 
@@ -17,7 +14,6 @@ import AWSCognitoIdentityProvider
 struct ContentView: View {
     
     @EnvironmentObject var menuViewController: MenuViewController
-    @EnvironmentObject var sessionManager: SessionManager
     
     
     @State var opacity = 1.0

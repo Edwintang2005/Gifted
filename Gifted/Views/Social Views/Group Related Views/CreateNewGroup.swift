@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplify
+
 
 
 struct CreateNewGroup: View{
@@ -72,14 +72,7 @@ struct CreateNewGroup: View{
         print(key)
         @AppStorage("ImageKey") var ImageKey: String = ""
         ImageKey = key
-        _ = Amplify.Storage.uploadData(key: key, data: ImageData) { result in
-            switch result {
-            case .success:
-                print("Uploaded to DB!")
-            case .failure(let error):
-                print("Could not Upload - \(error)")
-            }
-        }
+        
     }
     
     func loadImage() {

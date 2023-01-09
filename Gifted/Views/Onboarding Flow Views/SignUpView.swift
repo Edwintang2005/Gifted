@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    @EnvironmentObject var sessionManager: SessionManager
     
     
     // Variables taken for each input field available
@@ -58,12 +57,7 @@ struct SignUpView: View {
             }
             .padding(.all)
             Button {
-                sessionManager.signUp(
-                    username: username,
-                    email: email,
-                    name: name,
-                    password: password
-                )
+                print("Signed ip")
             } label: {
                 Text("Sign up!")
                     .frame(maxWidth: .infinity)
@@ -73,7 +67,12 @@ struct SignUpView: View {
             Spacer()
             HStack {
                 Spacer()
-                Button("Already have an account? Log in.", action: sessionManager.showLogin)
+                Button {
+                    print("show login")
+                } label: {
+                    Text("Already have an account? Log in.")
+                        .frame(maxWidth: .infinity)
+                }
                 Spacer()
             }
         }

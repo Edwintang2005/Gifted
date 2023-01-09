@@ -5,7 +5,6 @@
 //  Created by Edwin Tang on 3/12/2022.
 //
 
-import Amplify
 import SwiftUI
 
 
@@ -177,19 +176,6 @@ struct ItemDetailsView: View {
     // Function for fetching image to display
     func getImage(Imagekey: String?) {
         guard let Key = Imagekey else {return}
-        Amplify.Storage.downloadData(key: Key) { result in
-            switch result {
-            case .success(let ImageData):
-                print("Fetched ImageData")
-                let image = UIImage(data: ImageData)
-                DispatchQueue.main.async{
-                    ImageRender = image
-                }
-                return
-            case .failure(let error):
-                print("Could not get Image URL - \(error)")
-            }
-        }
     }
     
     func reserveItem() {

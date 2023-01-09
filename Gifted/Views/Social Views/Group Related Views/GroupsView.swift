@@ -5,14 +5,12 @@
 //  Created by Edwin Tang on 4/12/2022.
 //
 
-import Amplify
 import SwiftUI
 
 // Page for Groups, not built yet, however physical structures are all already built
 struct GroupsView: View {
     
     @ObservedObject var dataStore = DataStore()
-    @EnvironmentObject var sessionManager: SessionManager
     
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     

@@ -28,8 +28,12 @@ final class DataStore: ObservableObject {
     }
     
     func fetchUser(userID: String) -> UserProfile {
-        var returnValue = UserProfile(Username: "NULL", Name: String())
-        
+        var returnValue = UserProfile(
+            Username: "NULL",
+            Name: String(),
+            Lists:["00001"],
+            Friends: [String](),
+            Groups: [String]())
         return returnValue
     }
     
@@ -46,6 +50,8 @@ final class DataStore: ObservableObject {
     
     func fetchLists(userID: String) -> [UserList] {
         var returnValue = [UserList]()
+        let tempList = UserList(id: UUID().uuidString, userID: String(), Name: "TempList",ListItems: [String]())
+        returnValue.append(tempList)
         return returnValue
     }
     

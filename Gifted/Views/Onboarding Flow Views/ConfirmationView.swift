@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ConfirmationView: View {
     
-    @EnvironmentObject var sessionManager: SessionManager
+
     
     @State var confirmationCode = ""
     
@@ -27,10 +27,7 @@ struct ConfirmationView: View {
                 .keyboardType(.numberPad)
             Text("Check your email for a code").medium()
             Button {
-                sessionManager.confirm(
-                    username: username,
-                    code: confirmationCode
-                )
+                print("Confirm")
             } label: {
                 Text("Confirm")
                     .frame(maxWidth: .infinity)

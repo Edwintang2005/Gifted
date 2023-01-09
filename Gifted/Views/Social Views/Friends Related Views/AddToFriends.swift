@@ -5,7 +5,6 @@
 //  Created by Edwin Tang on 5/1/2023.
 //
 
-import Amplify
 import SwiftUI
 
 //Page trigged by add button in Friends

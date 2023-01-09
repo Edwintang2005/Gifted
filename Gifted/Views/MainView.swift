@@ -51,7 +51,9 @@ struct MainView: View {
                 .navigationBarTitle("Home")
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: (
-                    Button("Sign Out", action: print("Sign out clicked"))
+                    Button{print("Sign out clicked")} label: {
+                        Text("Sign Out")
+                    }
                 ))
                 .onAppear{
                     fetchUserInfo()

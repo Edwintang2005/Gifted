@@ -5,7 +5,6 @@
 //  Created by Edwin Tang on 31/12/2022.
 //
 
-import Amplify
 import SwiftUI
 
 
@@ -71,21 +70,7 @@ struct DisplayCards: View {
         guard let Key = Imagekey else {return}
         if ImageCache.keys.contains(Key) {
             return
-        } else {
-            Amplify.Storage.downloadData(key: Key) { result in
-                switch result {
-                case .success(let ImageData):
-                    print("Fetched ImageData")
-                    let image = UIImage(data: ImageData)
-                    DispatchQueue.main.async{
-                        ImageCache[Key] = image
-                    }
-                    return
-                case .failure(let error):
-                    print("Could not get Image URL - \(error)")
-                }
-            }
-        }
+        } 
     }
 }
 

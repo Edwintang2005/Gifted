@@ -6,7 +6,6 @@
 //
 
 
-import Amplify
 import Combine
 import SwiftUI
 
@@ -14,7 +13,6 @@ import SwiftUI
 struct FriendsView: View {
     
     @ObservedObject var dataStore = DataStore()
-    @EnvironmentObject var sessionManager: SessionManager
     
     
     let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"

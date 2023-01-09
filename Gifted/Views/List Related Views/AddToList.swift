@@ -5,7 +5,6 @@
 //  Created by Edwin Tang on 5/1/2023.
 //
 
-import Amplify
 import SwiftUI
 
 //Page view used in lists to allow users to add to their list
@@ -99,14 +98,7 @@ struct AddToList: View{
         print(key)
         @AppStorage("ImageKey") var ImageKey: String = ""
         ImageKey = key
-        _ = Amplify.Storage.uploadData(key: key, data: ImageData) { result in
-            switch result {
-            case .success:
-                print("Uploaded to DB!")
-            case .failure(let error):
-                print("Could not Upload - \(error)")
-            }
-        }
+        
     }
     
     

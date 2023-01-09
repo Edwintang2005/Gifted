@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @EnvironmentObject var sessionManager: SessionManager
     
     // Variables for the input fields to satisfy login functionality
     @State var username = ""
@@ -26,10 +25,7 @@ struct LoginView: View {
                 TextField("Username", text: $username).pretty()
                 SecureField("Password", text: $password).pretty()
                 Button {
-                    sessionManager.login(
-                        username: username,
-                        password: password
-                    )
+                    
                     print("logged in")
                 } label: {
                     Text("Login")
@@ -44,9 +40,7 @@ struct LoginView: View {
             VStack(spacing: 8) {
                 HStack{
                     // Button for Gmail Signin
-                    Button{ action:do {
-                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
-                    }
+                    Button{ print("LMAO")
                     } label: {
                         HStack{
                             Image(systemName: "envelope.fill")
@@ -58,7 +52,7 @@ struct LoginView: View {
                     }.google()
                     // Button for Facebook signin
                     Button {
-                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
+                        print("LMAO")
                     } label: {
                         HStack{
                             Image(systemName: "f.cursive")
@@ -70,7 +64,7 @@ struct LoginView: View {
                     }.facebook()
                 }
                 Spacer()
-                Button("Don't have an account? Sign up.", action: sessionManager.showSignUp)
+                Button{print("Show SIgnuop")} label: {Text("Don't have an account? Sign up.")}
                 Spacer()
                 Text("Brought to you with ❤️ from Edwin Tang and Roger Yao").small()
             }
@@ -82,8 +76,7 @@ struct LoginView: View {
 
 // Display view (temporary) for unavailable views
 struct TempUnavailable: View {
-    
-    @EnvironmentObject var sessionManager: SessionManager
+
     
     var body: some View{
         VStack{
@@ -94,7 +87,7 @@ struct TempUnavailable: View {
             Spacer()
             Link("Donate Here!", destination: URL(string:"https://www.youtube.com/watch?v=dQw4w9WgXcQ")!).pretty()
             Button{
-                sessionManager.showLogin()
+                print("Show Login")
             } label: {
                 Text("Back to Login")
             }

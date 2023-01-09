@@ -5,7 +5,6 @@
 //  Created by Edwin Tang on 4/12/2022.
 //
 
-import Amplify
 import Combine
 import SwiftUI
 
@@ -13,7 +12,6 @@ import SwiftUI
 struct ListView: View {
     
     @ObservedObject var dataStore = DataStore()
-    @EnvironmentObject var sessionManager: SessionManager
     
     
     @State var QueryID: String
@@ -200,14 +198,6 @@ struct ListView: View {
     // Function that deletes the image from the database alongside the deletion of the item
     func deleteImage( Imagekey: String?) {
         guard let Key = Imagekey else {return}
-        Amplify.Storage.remove(key: Key) {result in
-            switch result {
-            case .success:
-                print("Deleted Image")
-            case .failure(let error):
-                print("could not delete Image - \(error)")
-            }
-        }
     }
     
     // Function that loads the images for the icons (Same as in ItemSearchView)
@@ -215,20 +205,6 @@ struct ListView: View {
         guard let Key = Imagekey else {return}
         if ImageCache.keys.contains(Key) {
             return
-        } else {
-            Amplify.Storage.downloadData(key: Key) { result in
-                switch result {
-                case .success(let ImageData):
-                    print("Fetched ImageData")
-                    let image = UIImage(data: ImageData)
-                    DispatchQueue.main.async{
-                        ImageCache[Key] = image
-                    }
-                    return
-                case .failure(let error):
-                    print("Could not get Image URL - \(error)")
-                }
-            }
         }
     }
     
