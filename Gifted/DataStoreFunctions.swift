@@ -5,7 +5,7 @@
 //  Created by Edwin Tang on 31/12/2022.
 //
 
-import Amplify
+
 import Foundation
 
 // Class for modifying any Backend elements
@@ -25,119 +25,37 @@ final class DataStore: ObservableObject {
             Friends: [String](),
             Groups: [String]()
         )
-        Amplify.DataStore.save(user) {
-            switch $0 {
-            case .success:
-                print("User Record Created!")
-                self.createFirstList(userID: userID, name: "\(nameofUser)'s List")
-            case .failure(let error):
-                print("Error creating record - \(error.localizedDescription)")
-            }
-        }
     }
     
     func fetchUser(userID: String) -> UserProfile {
         var returnValue = UserProfile(Username: "NULL", Name: String())
-        Amplify.DataStore.query(UserProfile.self, byId: userID) {
-            switch $0 {
-            case .success(let result):
-                print("Fetched User")
-                if let unwrapped = result {
-                    returnValue = unwrapped
-                }
-            case .failure(let error):
-                print("Error fetching user - \(error.localizedDescription)")
-            }
-        }
+        
         return returnValue
     }
     
     func verifUser(username: String) -> UserProfile {
         var returnValue = UserProfile(Username: "NULL", Name: String())
-        let UserObj = UserProfile.keys
-        Amplify.DataStore.query(UserProfile.self, where: UserObj.Username == username) {
-            switch $0 {
-            case .success(let userList):
-                if let user = userList.first {
-                    returnValue = user
-                }
-            case .failure(let error):
-                print("Could not verify user -\(error.localizedDescription)")
-            }
-        }
         return returnValue
     }
     
     // List related Modifications
     func allItemsQuery() -> [ListItem] {
         var returnValue = [ListItem]()
-        Amplify.DataStore.query(ListItem.self) { result in
-            switch result {
-            case.success(let listitems):
-                returnValue = listitems
-            case.failure(let error):
-                print(error)
-            }
-        }
         return returnValue
     }
     
     func fetchLists(userID: String) -> [UserList] {
         var returnValue = [UserList]()
-        let user = fetchUser(userID: userID)
-        user.Lists.forEach{ listid in
-            Amplify.DataStore.query(UserList.self, byId: listid) {
-                switch $0 {
-                case .success(let result):
-                    if let result = result {
-                        returnValue.append(result)
-                    }
-                case .failure(let error):
-                    print("Could not fetch List - \(error.localizedDescription)")
-                }
-            }
-        }
         return returnValue
     }
     
     func refreshList(listID: String) -> UserList {
         var returnValue = UserList(userID: String(), Name: String())
-        Amplify.DataStore.query(UserList.self, byId: listID) {
-            switch $0 {
-            case .success(let update):
-                if let update = update {
-                    returnValue = update
-                }
-            case .failure(let error):
-                print("Could Not refresh List - \(error.localizedDescription)")
-            }
-        }
         return returnValue
     }
     
     func fetchListItems(listid: String) -> [ListItem] {
         var returnValue = [ListItem]()
-        Amplify.DataStore.query(UserList.self, byId: listid) {
-            switch $0 {
-            case .success(let list):
-                if let list = list {
-                    list.ListItems.forEach{ id in
-                        Amplify.DataStore.query(ListItem.self, byId: id) {
-                            switch $0 {
-                            case .success(let result):
-                                if let unwrapped = result {
-                                    returnValue.append(unwrapped)
-                                }
-                            case .failure(let error):
-                                print("Could not fetch List Item - \(error.localizedDescription)")
-                            }
-                        }
-                    }
-                }
-            case .failure(let error):
-                print("Could not fetch List - \(error.localizedDescription)")
-            }
-        }
         return returnValue
     }
     
@@ -146,25 +64,10 @@ final class DataStore: ObservableObject {
         case .addTo:
             var tempList = list
             tempList.ListItems.append(change.id)
-            Amplify.DataStore.save(tempList) {
-                switch $0{
-                case .success:
-                    print("Added Item to List")
-                case .failure(let error):
-                    print("Could not add item - \(error.localizedDescription)")
-                }
-            }
+            
         case .removeFrom:
             var tempList = list
             tempList.ListItems = tempList.ListItems.filter { $0 != change.id}
-            Amplify.DataStore.save(tempList) {
-                switch $0 {
-                case .success:
-                    print("Removed Item from List")
-                case .failure(let error):
-                    print("Could not remove item - \(error.localizedDescription)")
-                }
-            }
         }
     }
     
@@ -172,25 +75,6 @@ final class DataStore: ObservableObject {
         var user = fetchUser(userID: userID)
         var removed = false
         user.Lists = user.Lists.filter { $0 != list.id}
-        Amplify.DataStore.save(user) {
-            switch $0{
-            case .success:
-                print("Removed List from User")
-                removed = true
-            case .failure(let error):
-                print("Could not remove List - \(error.localizedDescription)")
-            }
-        }
-        if removed {
-            Amplify.DataStore.delete(list) {
-                switch $0 {
-                case .success:
-                    print("Deleted List")
-                case .failure(let error):
-                    print("Could not delete List - \(error.localizedDescription)")
-                }
-            }
-        }
     }
     
     func createFirstList(userID: String, name: String) {
@@ -200,27 +84,6 @@ final class DataStore: ObservableObject {
             userID: userID,
             Name: name,
             ListItems: [String]())
-        Amplify.DataStore.save(newList) {
-            switch $0 {
-            case .success:
-                print("List Created")
-                created = true
-            case .failure(let error):
-                print("Could not create List - \(error.localizedDescription)")
-            }
-        }
-        if created {
-            var user = fetchUser(userID: userID)
-            user.Lists.append(newList.id)
-            Amplify.DataStore.save(user) {
-                switch $0 {
-                case .success:
-                    print("List added to profile")
-                case .failure(let error):
-                    print("Could not add List to user - \(error.localizedDescription)")
-                }
-            }
-        }
     }
     
     func createList(userID: String, name: String) {
@@ -230,41 +93,10 @@ final class DataStore: ObservableObject {
             userID: userID,
             Name: name,
             ListItems: [String]())
-        Amplify.DataStore.save(newList) {
-            switch $0 {
-            case .success:
-                print("List Created")
-                created = true
-            case .failure(let error):
-                print("Could not create List - \(error.localizedDescription)")
-            }
-        }
-        if created {
-            var user = fetchUser(userID: userID)
-            user.Lists.append(newList.id)
-            Amplify.DataStore.save(user) {
-                switch $0 {
-                case .success:
-                    print("List added to profile")
-                case .failure(let error):
-                    print("Could not add List to user - \(error.localizedDescription)")
-                }
-            }
-        }
     }
     
     func createListItem(item: ListItem, list: UserList) -> Bool {
         var returnValue = false
-        Amplify.DataStore.save(item) {
-            switch $0 {
-            case .success:
-                print("Created List Item")
-                self.changeLists(action: .addTo, list: list, change: item)
-                returnValue = true
-            case .failure(let error):
-                print("Could not create List Item - \(error.localizedDescription)")
-            }
-        }
         return returnValue
     }
     
@@ -273,16 +105,6 @@ final class DataStore: ObservableObject {
         var returnValue = [UserProfile]()
         let user = fetchUser(userID: userID)
         user.Friends.forEach{ friendID in
-            Amplify.DataStore.query(UserProfile.self, byId: friendID) {
-                switch $0 {
-                case .success(let result):
-                    if let result = result {
-                        returnValue.append(result)
-                    }
-                case .failure(let error):
-                    print("Could not fetch friend - \(error.localizedDescription)")
-                }
-            }
         }
         return returnValue
     }
@@ -292,25 +114,9 @@ final class DataStore: ObservableObject {
         case .addTo:
             var user = fetchUser(userID: userID)
             user.Friends.append(change.id)
-            Amplify.DataStore.save(user) {
-                switch $0 {
-                case .success:
-                    print("Added Friend to Profile!")
-                case .failure(let error):
-                    print("Could not add friend - \(error.localizedDescription)")
-                }
-            }
         case .removeFrom:
             var user = fetchUser(userID: userID)
             user.Friends = user.Friends.filter{ $0 != change.id}
-            Amplify.DataStore.save(user) {
-                switch $0 {
-                case .success:
-                    print("Removed Friend from Profile!")
-                case .failure(let error):
-                    print("Could not remove friend - \(error.localizedDescription)")
-                }
-            }
         }
     }
     
@@ -319,16 +125,6 @@ final class DataStore: ObservableObject {
         var returnValue = [Group]()
         let user = fetchUser(userID: userID)
         user.Groups.forEach{ groupID in
-            Amplify.DataStore.query(Group.self, byId: groupID) {
-                switch $0 {
-                case .success(let result):
-                    if let result = result {
-                        returnValue.append(result)
-                    }
-                case .failure(let error):
-                    print("Could not fetch Group - \(error.localizedDescription)")
-                }
-            }
         }
         return returnValue
     }
@@ -337,32 +133,14 @@ final class DataStore: ObservableObject {
         var returnValue = [UserProfile]()
         let group = refreshGroup(groupID: groupID)
         group.Members.forEach{ memberID in
-            Amplify.DataStore.query(UserProfile.self, byId: memberID) {
-                switch $0 {
-                case .success(let result):
-                    if let result = result {
-                        returnValue.append(result)
-                    }
-                case .failure(let error):
-                    print("Could not fetch friend - \(error.localizedDescription)")
-                }
-            }
+
         }
         return returnValue
     }
     
     func refreshGroup(groupID: String) -> Group {
         var returnValue = Group(Name: String(), ShortID: String(), NameAndShortID: String())
-        Amplify.DataStore.query(Group.self, byId: groupID) {
-            switch $0 {
-            case .success(let group):
-                if let nonOptional = group {
-                    returnValue = nonOptional
-                }
-            case .failure(let error):
-                print("Could not refresh group -\(error.localizedDescription)")
-            }
-        }
+
         return returnValue
     }
     
@@ -373,19 +151,12 @@ final class DataStore: ObservableObject {
         let GroupNameandID = Groupname + ShortID
         let Members = [String]()
         let GroupObj = Group(id: UUID().uuidString,
-                          Name: Groupname,
-                          ShortID: ShortID,
-                          NameAndShortID: GroupNameandID,
-                          Members: Members,
-                          ImageKey: UserDefaults.standard.string(forKey: "ImageKey"))
-        Amplify.DataStore.save(GroupObj) {
-            switch $0 {
-            case .success:
-                print("Created Group Successfully")
-            case .failure(let error):
-                print("Could not create Group - \(error.localizedDescription)")
-            }
-        }
+                             Name: Groupname,
+                             ShortID: ShortID,
+                             NameAndShortID: GroupNameandID,
+                             Members: Members,
+                             ImageKey: UserDefaults.standard.string(forKey: "ImageKey"))
+
         return GroupObj
     }
     
@@ -396,43 +167,11 @@ final class DataStore: ObservableObject {
             var newGroup = change
             newGroup.Members.append(userID)
             user.Groups.append(change.id)
-            Amplify.DataStore.save(newGroup) {
-                switch $0 {
-                case .success:
-                    print("Member added to Group")
-                    Amplify.DataStore.save(user) {
-                        switch $0 {
-                        case .success:
-                            print("Group added to user")
-                        case .failure(let error):
-                            print("Could not add group to user - \(error.localizedDescription)")
-                        }
-                    }
-                case .failure(let error):
-                    print("Could not add member to Group - \(error.localizedDescription)")
-                }
-            }
         case .removeFrom:
             var user = fetchUser(userID: userID)
             var newGroup = change
             newGroup.Members = newGroup.Members.filter{ $0 != userID}
             user.Groups = user.Groups.filter{ $0 != change.id}
-            Amplify.DataStore.save(newGroup) {
-                switch $0 {
-                case .success:
-                    print("Member removed from Group")
-                    Amplify.DataStore.save(user) {
-                        switch $0 {
-                        case .success:
-                            print("Group removed from user")
-                        case .failure(let error):
-                            print("Could not remove group from user - \(error.localizedDescription)")
-                        }
-                    }
-                case .failure(let error):
-                    print("Could not remove member from Group - \(error.localizedDescription)")
-                }
-            }
         }
     }
 }

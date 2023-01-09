@@ -29,7 +29,6 @@ struct ContentView: View {
     
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
-    let user: AuthUser
     
     var body: some View {
         TabView {
