@@ -18,6 +18,38 @@ extension Text{
             .multilineTextAlignment(.center)
             .padding(.all)
     }
+    
+    func buttonDesign() -> some View{
+        self.font(.system(size: 20, weight: .medium, design: .default))
+            .padding()
+            .foregroundColor(Color(.sRGB, red: 76/255, green: 159/255, blue: 148/255))
+            .background(Color(.sRGB, red: 85/255, green: 181/255, blue: 167/255).opacity(0.25))
+            .cornerRadius(20)
+        
+    }
+    
+    func colourGradient() -> some View{
+        self.multilineTextAlignment(.leading)
+            .foregroundStyle(
+                LinearGradient(
+                    colors: [.init(red: 0.196, green: 0.4, blue: 0.38), .init(red: 0.329, green: 0.698, blue: 0.643), .init(red: 0.701, green: 0.8509803922, blue: 0.466666667)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+    }
+    
+    func subtitle() -> some View{
+        self.font(.system(size: 24, weight: .medium, design: .default))
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+    }
+    
+    func title() -> some View{
+        self.font(.system(size: 36, weight: .bold, design: .default))
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+
+    }
+    
     func listtext() -> some View{
         self.font(.subheadline)
             .multilineTextAlignment(.leading)
@@ -25,17 +57,19 @@ extension Text{
     
     func small() -> some View{
         self.font(.caption)
-            .foregroundColor(Color.gray)
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
             .multilineTextAlignment(.center)
     }
     func medium() -> some View{
         self.font(.footnote)
-            .foregroundColor(Color.gray)
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
             .multilineTextAlignment(.center)
     }
     func large() -> some View{
         self.font(.callout)
             .multilineTextAlignment(.center)
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+
     }
     func homepagename() -> some View{
         self.font(.headline)

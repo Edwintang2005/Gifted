@@ -18,7 +18,9 @@ struct MainView: View {
     var listitemsLength = Int()
     @State var ImageCache = [String: UIImage]()
     
-    @AppStorage("NameOfUser") var NameOfUser: String = ""
+    @AppStorage("NameOfUser") var NameOfUser: String = "Michelle"
+    //Make sure to change back "Michelle" to nothing
+    
     
     // Variable for storing the User's username for use throughout the app
     @AppStorage("Username") var Username: String = ""
@@ -26,55 +28,100 @@ struct MainView: View {
     
     var body: some View{
         NavigationView {
-                VStack(alignment: .leading) {
-                    HStack {
-                        // Text that displays the User's name
-                        Text("Hello, \(NameOfUser)!").homepagename()
-                            .padding(.horizontal)
-                        Spacer()
-                    }
-                    // replace below with Roger's design of Homescreen
-                    Text("Top Items:")
-                        .font(.title2)
+            VStack(alignment: .leading) {
+                HStack {
+                    // Text that displays the User's name
+                    Text("Welcome back, \n\(NameOfUser)!").colourGradient()
+                        .padding(.horizontal)
+                        .font(.system(size: 36, weight: .bold, design: .default))
+                    Spacer()
+                }
+                
+                ScrollView {
+                    Text("Your Wishlist")
+                        .subtitle()
                         .padding([.top, .leading, .trailing])
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack{
-                            ForEach(listitems) { item in
-                                DisplayCards(listItem: item).padding(6)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 20) {
+                            Spacer().frame(width: 10)
+                            ForEach(1..<4) {
+                                Text("\($0) Gift")
+                                    .font(.system(size: 15, weight: .medium, design: .default))
+                                    .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+                                    .frame(width: 200, height: 200)
+                                    .background(Color(red: 0.92, green: 0.94, blue: 0.945))
+                            
                             }
                         }
                     }
-                    .padding(.leading)
-                    Spacer()
-                }
-                .padding(.vertical)
-                .navigationBarTitle("Home")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(trailing: (
-                    Button{print("Sign out clicked")} label: {
-                        Text("Sign Out")
+                    
+                    Text("Upcoming Events")
+                        .subtitle()
+                        .padding([.top, .leading, .trailing])
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 20) {
+                            Spacer().frame(width: 10)
+                            ForEach(1..<3) {
+                                Text("\($0) Days until Lucy's Birthday")
+                                    .font(.system(size: 15, weight: .medium, design: .default))
+                                    .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+                                    .frame(width: 200, height: 71)
+                                    .background(Color(red: 0.92, green: 0.94, blue: 0.945))
+                            }
+                        }
                     }
-                ))
-                .onAppear{
-                    fetchUserInfo()
-                    getListItem()
+                                
+                                Text("Trending Gifts")
+                                    .subtitle()
+                                    .padding([.top, .leading, .trailing])
+                                
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 20) {
+                            Spacer().frame(width: 10)
+                            ForEach(1..<3) {
+                                Text("\($0)")
+                                    .font(.system(size: 15, weight: .medium, design: .default))
+                                    .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+                                    .frame(width: 113, height: 113)
+                                    .background(Color(red: 0.92, green: 0.94, blue: 0.945))
+                            }
+                        }
+                    }
                 }
-        }
-    }
-    
-    func getImage(Imagekey: String?) {
-        guard let Key = Imagekey else {return}
-    }
-    
-    
-    func fetchUserInfo() {
-        //Get Username and create/check for user object - need to resolve occassional query return empty issue
-    }
-    
-    func getListItem() {
-        listitems = dataStore.allItemsQuery()
-    }
-}
+                
+                
+                            
+                            
+//                            ScrollView(.horizontal, showsIndicators: false){
+//                                HStack{
+//                                    ForEach(listitems) { item in
+//                                        DisplayCards(listItem: item).padding(6)
+
+                            .padding(.leading)
+                            Spacer()
+                        }
+ //                       .onAppear{
+ //                           fetchUserInfo()
+ //                           getListItem()
+ //                       }
+                    }
+                }
+                
+                func getImage(Imagekey: String?) {
+                    guard let Key = Imagekey else {return}
+                }
+                
+                
+                func fetchUserInfo() {
+                    //Get Username and create/check for user object - need to resolve occassional query return empty issue
+                }
+                
+                func getListItem() {
+                    listitems = dataStore.allItemsQuery()
+                }
+            }
 
 
 
@@ -84,3 +131,14 @@ struct MainView: View {
 //        MainView()
 //    }
 //}
+
+
+//code that roger deleted which might be important
+//.padding(.vertical)
+//    .navigationBarTitle("Home")
+//    .navigationBarTitleDisplayMode(.inline)
+//    .navigationBarItems(trailing: (
+//        Button{print("Sign out clicked")} label: {
+//            Text("Sign Out")
+//        }
+//    ))

@@ -34,11 +34,11 @@ struct ContentView: View {
                 }
             ListView(QueryID: userID)
                 .tabItem{
-                    Label("Lists", systemImage: "list.bullet.clipboard")
+                    Label("Wishlist", systemImage: "list.bullet.clipboard")
                 }
             SocialView()
                 .tabItem{
-                    Label("Social", systemImage: "person.3.sequence")
+                    Label("Socials", systemImage: "person.3.sequence")
                 }
         }
     }

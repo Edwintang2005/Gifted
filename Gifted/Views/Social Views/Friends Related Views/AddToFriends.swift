@@ -8,7 +8,7 @@
 import SwiftUI
 
 //Page trigged by add button in Friends
-struct AddToFriends: View{
+struct AddToFriends: View {
     
     @ObservedObject var dataStore = DataStore()
     @Environment(\.presentationMode) var presentationMode

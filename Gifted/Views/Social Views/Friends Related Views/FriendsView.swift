@@ -25,9 +25,9 @@ struct FriendsView: View {
     var body: some View {
         ZStack {
             VStack {
-                if FriendsLength == 0 {
+                if FriendsLength == 1 {
                     Spacer()
-                    Text("You have No Friends yet! 😢").large()
+                    Text("You have no friends yet! 😢").large()
                     Spacer()
                     Text("Why don't we start by adding an item using the + button!").large()
                     Spacer()
@@ -45,15 +45,11 @@ struct FriendsView: View {
                 }
             }
             VStack{
-                Spacer()
-                HStack{
-                    Spacer()
                     NavigationLink{
                         AddToFriends()
                     } label: {
-                        Image(systemName: "plus.circle.fill").floaty()
+                        Text("Add Friend").buttonDesign()
                     }
-                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -61,17 +57,6 @@ struct FriendsView: View {
             getFriends()
             FriendsLength = Friends.count
         }
-        .navigationBarTitle("Friends")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: (
-            Button(action: {
-                getFriends()
-                FriendsLength = Friends.count
-            }) {
-                Image(systemName: "arrow.clockwise")
-                    .imageScale(.large)
-            }
-        ))
     }
     
     func getFriends() {

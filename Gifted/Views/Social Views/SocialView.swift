@@ -19,7 +19,12 @@ struct SocialView: View {
     
     var body: some View {
         NavigationView{
-            VStack{
+            VStack(alignment: .leading){
+                    Text("  Social")
+                        .colourGradient()
+                        .font(.system(size: 36, weight: .bold, design: .default))
+                        .padding(.horizontal)
+                
                 HStack{
                     Button {
                         selectedTab = .Friends
@@ -28,16 +33,17 @@ struct SocialView: View {
                             Spacer()
                             if selectedTab == .Friends {
                                 Text("Friends")
-                                    .underline()
+                                    .subtitle()
                                     .padding(.all)
                             } else {
                                 Text("Friends")
+                                    .subtitle()
                                     .padding(.all)
                             }
                             Spacer()
                         }
                     }
-                    Divider()
+                    
                     Button {
                         selectedTab = .Groups
                     } label: {
@@ -45,10 +51,11 @@ struct SocialView: View {
                             Spacer()
                             if selectedTab == .Groups {
                                 Text("Groups")
-                                    .underline()
+                                    .subtitle()
                                     .padding(.all)
                             } else {
                                 Text("Groups")
+                                    .subtitle()
                                     .padding(.all)
                             }
                             Spacer()
