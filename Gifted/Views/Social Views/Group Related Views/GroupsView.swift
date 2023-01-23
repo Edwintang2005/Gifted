@@ -8,11 +8,13 @@
 import SwiftUI
 
 // Page for Groups, not built yet, however physical structures are all already built
+
 struct GroupsView: View {
     
     @ObservedObject var dataStore = DataStore()
     
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
+
     
     @State var Groups = [Group]()
     @State var GroupsLength = Int()
@@ -20,73 +22,51 @@ struct GroupsView: View {
     @State var showFloatingMenu2 = false
     
     
+    
     var body: some View {
-        ZStack {
-            VStack {
-                if GroupsLength == 0 {
-                    Spacer()
-                    Text("You have No saved Groups yet! 😢").large()
-                    Spacer()
-                    Text("Why don't we start by adding an item using the + button!").large()
-                    Spacer()
-                } else {
-                    List {
-                        ForEach(Groups) {
-                            Group in NavigationLink{
-                                GroupDetailsView(GroupPassed: Group)
-                            } label: {
-                                Text(Group.Name)
-                            }
-                        }
-                        .onDelete(perform: deleteGroup)
-                    }
-                }
-            }
-            VStack{
+        VStack {
+            
+            if GroupsLength == 1 {
                 Spacer()
-                if showFloatingMenu2 == false {
+                Text("It's quite empty in here... \n Add or join your first group!")
+                Spacer()
+            } else {
+                
+                ScrollView{
+                    ForEach(Groups) {
+                        group in NavigationLink(destination: GroupDetailsView(GroupPassed: group)) {
+                                                GroupCardView(group: group)
+                    }
+                        
+//                        The code above is supposed to load up the display card for each group but it does not work
+                        
+              }
                     
-                } else {
-                    VStack(alignment: .trailing) {
-                        NavigationLink{
-                            AddToGroups()
-                        } label: {
-                            
-                            HStack{
-                                Spacer()
-                                Text("Join a Group")
-                                    .padding(.all)
-                            }
-                        }
-                    }
-                }
-                if showFloatingMenu1 == false {
-                    
-                } else {
-                    VStack(alignment: .trailing) {
-                        NavigationLink{
-                            CreateNewGroup()
-                        } label: {
-                            HStack{
-                                Spacer()
-                                Text("Create a Group")
-                                    .padding(.all)
-                            }
-                        }
-                    }
-                }
-                HStack{
-                    Spacer()
-                    Button{
-                        showFloatingMenu1.toggle()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                            self.showFloatingMenu2.toggle()
-                        })
-                    } label: {
-                        Image(systemName: "plus.circle.fill").floaty()
-                    }
-                }
+                }.frame(width: 369, height: 521)
+
             }
+            
+            //The Code Below is for Buttons
+            
+            HStack {
+                
+                NavigationLink{
+                    CreateNewGroup()
+                } label: {
+                    Text("Create").createGroupButton()
+                        .padding(.all)
+                }
+              
+                NavigationLink{
+                    AddToGroups()
+                    
+                } label: {
+                    Text("Join").joinGroupButton()
+                        .padding(.all)
+                }
+                
+            }
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear{
@@ -95,18 +75,11 @@ struct GroupsView: View {
             showFloatingMenu1 = false
             showFloatingMenu2 = false
         }
-        .navigationBarTitle("Groups")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: (
-            Button(action: {
-                getGroups()
-                GroupsLength = Groups.count
-            }) {
-                Image(systemName: "arrow.clockwise")
-                    .imageScale(.large)
-            }
-        ))
     }
+    
+    
+    //Below this are all the functions Edwin has defined
+    
     
     func getGroups() {
         Groups = dataStore.fetchGroups(userID: userID)

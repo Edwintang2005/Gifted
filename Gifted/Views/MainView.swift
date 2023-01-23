@@ -26,70 +26,40 @@ struct MainView: View {
     @AppStorage("Username") var Username: String = ""
     @AppStorage("UserID") var UserID: String = ""
     
+    private let adaptiveColumns = [
+        GridItem(.adaptive(minimum: 170))
+    ]
+    
+    
     var body: some View{
         NavigationView {
             VStack(alignment: .leading) {
                 HStack {
                     // Text that displays the User's name
                     Text("Welcome back, \n\(NameOfUser)!").colourGradient()
-                        .padding(.horizontal)
+                        .padding([.all])
                         .font(.system(size: 36, weight: .bold, design: .default))
                     Spacer()
                 }
                 
-                ScrollView {
                     Text("Your Wishlist")
                         .subtitle()
-                        .padding([.top, .leading, .trailing])
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 20) {
-                            Spacer().frame(width: 10)
-                            ForEach(1..<4) {
-                                Text("\($0) Gift")
-                                    .font(.system(size: 15, weight: .medium, design: .default))
-                                    .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
-                                    .frame(width: 200, height: 200)
-                                    .background(Color(red: 0.92, green: 0.94, blue: 0.945))
+                        .padding([.leading, .trailing])
+                
+
+                
+                    ScrollView(showsIndicators: true) {
+                        LazyVGrid(columns: adaptiveColumns, spacing: 20) {
                             
+                            ForEach(listitems) {
+                                item in DisplayCards(listItem: item)
+                            
+                                
+                                
                             }
                         }
                     }
                     
-                    Text("Upcoming Events")
-                        .subtitle()
-                        .padding([.top, .leading, .trailing])
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 20) {
-                            Spacer().frame(width: 10)
-                            ForEach(1..<3) {
-                                Text("\($0) Days until Lucy's Birthday")
-                                    .font(.system(size: 15, weight: .medium, design: .default))
-                                    .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
-                                    .frame(width: 200, height: 71)
-                                    .background(Color(red: 0.92, green: 0.94, blue: 0.945))
-                            }
-                        }
-                    }
-                                
-                                Text("Trending Gifts")
-                                    .subtitle()
-                                    .padding([.top, .leading, .trailing])
-                                
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 20) {
-                            Spacer().frame(width: 10)
-                            ForEach(1..<3) {
-                                Text("\($0)")
-                                    .font(.system(size: 15, weight: .medium, design: .default))
-                                    .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
-                                    .frame(width: 113, height: 113)
-                                    .background(Color(red: 0.92, green: 0.94, blue: 0.945))
-                            }
-                        }
-                    }
-                }
                 
                 
                             
@@ -101,12 +71,16 @@ struct MainView: View {
 
                             .padding(.leading)
                             Spacer()
-                        }
+            }
+            
+            
+            
+            
  //                       .onAppear{
  //                           fetchUserInfo()
  //                           getListItem()
  //                       }
-                    }
+        }
                 }
                 
                 func getImage(Imagekey: String?) {
@@ -142,3 +116,12 @@ struct MainView: View {
 //            Text("Sign Out")
 //        }
 //    ))
+
+//                            ForEach(1..<4) {
+//Text("\($0) Gift")
+//    .font(.system(size: 15, weight: .medium, design: .default))
+//    .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+//    .frame(width: 182, height: 230)
+//    .background(Color(red: 0.92, green: 0.94, blue: 0.945))
+//
+//}

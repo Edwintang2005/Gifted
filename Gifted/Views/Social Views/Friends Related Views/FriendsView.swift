@@ -23,34 +23,41 @@ struct FriendsView: View {
     
     
     var body: some View {
-        ZStack {
-            VStack {
-                if FriendsLength == 1 {
-                    Spacer()
-                    Text("You have no friends yet! 😢").large()
-                    Spacer()
-                    Text("Why don't we start by adding an item using the + button!").large()
-                    Spacer()
-                } else {
-                    List {
-                        ForEach(Friends) {
-                            Friend in NavigationLink{
-                                ListView(QueryID: Friend.id)
-                            } label: {
-                                Text(Friend.Username)
-                            }
-                        }
-                        .onDelete(perform: deleteFriend)
-                    }
-                }
+        
+        VStack {
+            HStack {
+                Text("CONTACTS").boldText()
+                    .padding([.top, .leading, .trailing])
+                Spacer()
+                NavigationLink{
+                    AddToFriends()
+                } label: {
+                    Image("􀜕")
+                }.padding([.top, .leading, .trailing])
             }
-            VStack{
-                    NavigationLink{
-                        AddToFriends()
-                    } label: {
-                        Text("Add Friend").buttonDesign()
-                    }
+     
+            if FriendsLength == 0 {
+                Spacer()
+                Text("Hopefully it's not normally like this... \nAdd some friends!")
+                    .multilineTextAlignment(.center)
+                Spacer()
+                
+            } else {
+                
+                ScrollView {
+                    
+                    //Code here Displays all friends
+                    //ForEach()
+                
+                    
+                }.frame(width: 369, height: 500)
+                
+                
             }
+            
+
+            
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear{
@@ -58,6 +65,7 @@ struct FriendsView: View {
             FriendsLength = Friends.count
         }
     }
+
     
     func getFriends() {
         Friends = dataStore.fetchFriends(userID: userID)

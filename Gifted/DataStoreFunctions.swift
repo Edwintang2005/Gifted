@@ -61,7 +61,11 @@ final class DataStore: ObservableObject {
     }
     
     func fetchListItems(listid: String) -> [ListItem] {
+        let macbookAir = ListItem(Name: "Macbook Air")
+        let watch = ListItem(Name: "Watch")
         var returnValue = [ListItem]()
+        returnValue.append(macbookAir)
+        returnValue.append(watch)
         return returnValue
     }
     

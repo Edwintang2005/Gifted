@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B812C62297E42BC00914017 /* GroupCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B812C61297E42BC00914017 /* GroupCardView.swift */; };
+		9B869AC9297E5E5100ABA9E7 /* FriendDisplayCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B869AC8297E5E5100ABA9E7 /* FriendDisplayCard.swift */; };
 		9BD6B566296BB09500034DB5 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 9BD6B565296BB09500034DB5 /* AWSAPIPlugin */; };
 		9BD6B568296BB09500034DB5 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 9BD6B567296BB09500034DB5 /* AWSCognitoAuthPlugin */; };
 		9BD6B56A296BB09500034DB5 /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 9BD6B569296BB09500034DB5 /* AWSDataStorePlugin */; };
@@ -73,6 +75,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9B812C61297E42BC00914017 /* GroupCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCardView.swift; sourceTree = "<group>"; };
+		9B869AC8297E5E5100ABA9E7 /* FriendDisplayCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDisplayCard.swift; sourceTree = "<group>"; };
 		E80372F92966464900F2A54B /* Gifted-ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Gifted-ShareExtension.entitlements"; sourceTree = "<group>"; };
 		E81197B2295F945100B90D1C /* DataStoreFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreFunctions.swift; sourceTree = "<group>"; };
 		E81197CB295FFEF600B90D1C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -137,11 +141,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B869ACA297E6FE000ABA9E7 /* DisplayCards */ = {
+			isa = PBXGroup;
+			children = (
+				E81197CD29601B2900B90D1C /* DisplayCards.swift */,
+				9B869AC8297E5E5100ABA9E7 /* FriendDisplayCard.swift */,
+				9B812C61297E42BC00914017 /* GroupCardView.swift */,
+			);
+			path = DisplayCards;
+			sourceTree = "<group>";
+		};
 		E812D1042966E6CD0033BB23 /* List Related Views */ = {
 			isa = PBXGroup;
 			children = (
 				E812D0FB2966E5D50033BB23 /* AddToList.swift */,
-				E81197CD29601B2900B90D1C /* DisplayCards.swift */,
 				E894FFB0293C75DD00095DD2 /* ListView.swift */,
 				E84B6DD3295584460030DD6B /* ItemSearchView.swift */,
 				E8F91B54293AF20D003E23B5 /* ItemDetailsView.swift */,
@@ -261,6 +274,7 @@
 				E8F91B46293AF173003E23B5 /* GiftedApp.swift */,
 				E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */,
 				E81197B2295F945100B90D1C /* DataStoreFunctions.swift */,
+				9B869ACA297E6FE000ABA9E7 /* DisplayCards */,
 				E81723BB294BF6180022A09E /* Views */,
 				E8F91B4A293AF177003E23B5 /* Assets.xcassets */,
 				E8F91B4C293AF177003E23B5 /* Preview Content */,
@@ -398,7 +412,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B812C62297E42BC00914017 /* GroupCardView.swift in Sources */,
 				E8F91B59293AF264003E23B5 /* FriendsView.swift in Sources */,
+				9B869AC9297E5E5100ABA9E7 /* FriendDisplayCard.swift in Sources */,
 				E81197CC295FFEF600B90D1C /* MainView.swift in Sources */,
 				E8F91B55293AF20D003E23B5 /* ItemDetailsView.swift in Sources */,
 				E894FFB1293C75DD00095DD2 /* ListView.swift in Sources */,

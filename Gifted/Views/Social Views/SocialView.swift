@@ -20,10 +20,10 @@ struct SocialView: View {
     var body: some View {
         NavigationView{
             VStack(alignment: .leading){
-                    Text("  Social")
+                Text("Social")
                         .colourGradient()
                         .font(.system(size: 36, weight: .bold, design: .default))
-                        .padding(.horizontal)
+                        .padding(.all)
                 
                 HStack{
                     Button {

@@ -19,14 +19,42 @@ extension Text{
             .padding(.all)
     }
     
-    func buttonDesign() -> some View{
-        self.font(.system(size: 20, weight: .medium, design: .default))
-            .padding()
-            .foregroundColor(Color(.sRGB, red: 76/255, green: 159/255, blue: 148/255))
-            .background(Color(.sRGB, red: 85/255, green: 181/255, blue: 167/255).opacity(0.25))
-            .cornerRadius(20)
-        
+    func addFriendButton() -> some View{
+        RoundedRectangle(cornerRadius: 20)
+            .fill(Color(.sRGB, red: 85/255, green: 181/255, blue: 167/255).opacity(0.25))
+            .frame(width: 145, height: 46)
+            .overlay(
+                Text("Add Friend")
+                    .font(.system(size: 20, weight: .medium, design: .default))
+                    .padding()
+                    .foregroundColor(Color(.sRGB, red: 76/255, green: 159/255, blue: 148/255))
+            )
     }
+    
+    func joinGroupButton() -> some View{
+        RoundedRectangle(cornerRadius: 20)
+            .fill(Color(.sRGB, red: 85/255, green: 181/255, blue: 167/255).opacity(0.25))
+            .frame(width: 145, height: 46)
+            .overlay(
+                Text("Join")
+                    .font(.system(size: 20, weight: .medium, design: .default))
+                    .padding()
+                    .foregroundColor(Color(.sRGB, red: 76/255, green: 159/255, blue: 148/255))
+            )
+    }
+    
+    func createGroupButton() -> some View{
+        RoundedRectangle(cornerRadius: 20)
+            .fill(Color(.sRGB, red: 237/255, green: 240/255, blue: 241/255).opacity(100))
+            .frame(width: 145, height: 46)
+            .overlay(
+                Text("Create")
+                    .font(.system(size: 20, weight: .medium, design: .default))
+                    .padding()
+                    .foregroundColor(Color(.sRGB, red: 158/255, green: 159/255, blue: 161/255))
+            )
+    }
+    
     
     func colourGradient() -> some View{
         self.multilineTextAlignment(.leading)
@@ -38,6 +66,13 @@ extension Text{
                 )
             )
     }
+    
+    func boldText() -> some View {
+        self.font(.system(size: 15, weight: .bold, design: .default))
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+    
+    }
+    
     
     func subtitle() -> some View{
         self.font(.system(size: 24, weight: .medium, design: .default))

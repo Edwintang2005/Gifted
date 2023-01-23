@@ -8,8 +8,6 @@
 import SwiftUI
 
 
-
-
 struct DisplayCards: View {
     let cardWidth = UIScreen.main.bounds.size.width * 5/9
     let cardHeight = UIScreen.main.bounds.size.width * 5/6
