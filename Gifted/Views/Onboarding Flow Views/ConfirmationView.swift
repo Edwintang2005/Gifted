@@ -16,9 +16,13 @@ struct ConfirmationView: View {
     let username: String
     
     var body: some View {
-        VStack {
-            Text("Verification for").pretty()
-            Text(username).pretty()
+        VStack(alignment: .center) {
+            Spacer()
+            Text("Verify your identity")
+                .colourGradient()
+                .font(.largeTitle)
+            Text("Enter the 6-digit code sent to your email")
+                .boldText()
             Image("VerificationStock")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -36,7 +40,7 @@ struct ConfirmationView: View {
                     .frame(maxWidth: .infinity)
             }.pretty()
             Spacer()
-            Text("Brought to you with ❤️ from Edwin Tang and Roger Yao").small()
+            Text("Brought to you with ❤️ from Edwin, Roger and Michelle").small()
         }
         .padding()
     }

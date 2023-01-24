@@ -34,6 +34,10 @@ extension Text{
             .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
         
     }
+    func itemText() -> some View{
+        self.font(.system(size: 17, weight: .medium, design: .default))
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+    }
     
     func subtitle() -> some View{
         self.font(.system(size: 24, weight: .medium, design: .default))
@@ -72,6 +76,7 @@ extension Text{
     func verif() -> some View{
         self.font(.headline)
     }
+    
 }
 
 extension HStack {
@@ -109,10 +114,10 @@ extension Button {
         self.font(.headline)
             .padding(.all)
             .frame(maxWidth: .infinity)
-            .foregroundColor(Color(.systemBackground))
-            .background(Color.primary)
-            .cornerRadius(50)
-            .shadow(color: Color.black.opacity(0.2), radius: 30, x: 2, y: 2)
+            .foregroundColor(Color(.white))
+            .background(Color(.sRGB, red: 76/255, green: 159/255, blue: 148/255))
+            .cornerRadius(10)
+            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 2, y: 2)
             .padding(.all)
     }
     func floaty() -> some View {

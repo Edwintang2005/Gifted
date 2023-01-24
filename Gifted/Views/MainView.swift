@@ -27,45 +27,50 @@ struct MainView: View {
     @AppStorage("UserID") var UserID: String = ""
     
     private let adaptiveColumns = [
-            GridItem(.adaptive(minimum: 170))
-        ]
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
     
     var body: some View{
         NavigationView {
-                VStack(alignment: .leading) {
-                    HStack {
-                        // Text that displays the User's name
-                        Text("Welcome back, \n\(NameOfUser)!")
-                            .colourGradient()
-                            .font(.largeTitle)
-                            .padding(.all)
-                        Spacer()
-                    }
-                    // replace below with Roger's design of Homescreen
+            VStack{
+                HStack (alignment: .top) {
+                    // Text that displays the User's name
+                    Text("Welcome back, \n\(NameOfUser)!")
+                        .colourGradient()
+                        .font(.largeTitle)
+                    Spacer()
+                }
+                .padding(.bottom)
+                HStack{
                     Text("Your Wishlist:")
                         .subtitle()
                         .padding(.horizontal)
-                    ScrollView(showsIndicators: true) {
-                        LazyVGrid(columns: adaptiveColumns) {
+                    Spacer()
+                    NavigationLink {
+                        ListView(QueryID: UserID)
+                    } label: {
+                        Text("See All")
+                            .small()
+                    }
+                }
+                VStack{
+                    ScrollView(showsIndicators: false) {
+                        LazyVGrid(columns: adaptiveColumns, spacing: 20) {
                             ForEach(listitems) { item in
-                                DisplayCards(listItem: item).padding(6)
+                                DisplayCards(listItem: item)
+                                    .padding(.all)
                             }
                         }
-                        .padding(.horizontal)
                     }
-                    .padding(.leading)
-                    Spacer()
                 }
-                .padding(.vertical)
-                .navigationBarTitle("Home")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(trailing: (
-                    Button("Sign Out", action: sessionManager.signOut)
-                ))
-                .onAppear{
-                    fetchUserInfo()
-                    getListItem()
-                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.all)
+            .onAppear{
+                fetchUserInfo()
+                getListItem()
+            }
         }
     }
     

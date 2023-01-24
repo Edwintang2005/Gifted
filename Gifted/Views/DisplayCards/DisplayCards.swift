@@ -10,9 +10,9 @@ import SwiftUI
 
 
 struct DisplayCards: View {
-    let cardWidth = UIScreen.main.bounds.size.width * 5/9
-    let cardHeight = UIScreen.main.bounds.size.width * 5/6
-    let cornerRadius = 15.0
+    let cardWidth = UIScreen.main.bounds.size.width * 43/100
+    let cardHeight = UIScreen.main.bounds.size.height * 1/4
+    let cornerRadius = 7.0
     
     @State var listItem: ListItem
     @State var ImageCache = [String: UIImage]()
@@ -20,16 +20,15 @@ struct DisplayCards: View {
     var body: some View {
         ZStack{
             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                .shadow(radius: 4)
                 .frame(width: cardWidth, height: cardHeight)
                 .foregroundColor(.white)
             if let key = listItem.ImageKey, let render = ImageCache[key] {
-                VStack(alignment: .center) {
+                VStack(alignment: .leading) {
                     Image(uiImage: render)
                         .resizable()
-                        .padding(.top)
+                        .padding(.all)
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: cardWidth, height: cardWidth)
+                        .frame(width: cardWidth, height: cardHeight*9/10)
                         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                     Spacer()
                     cardDetails
@@ -38,12 +37,16 @@ struct DisplayCards: View {
                         .background(Color.white)
                         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 }
+                .border(.gray)
+                .padding(.all)
                 .frame(width: cardWidth, height: cardHeight)
             } else {
-                
+                Text(listItem.Name)
+                    .padding(.all)
             }
             
         }
+        .padding(.top)
         .onAppear{
             getImage(Imagekey: listItem.ImageKey)
         }
@@ -52,9 +55,7 @@ struct DisplayCards: View {
     var cardDetails: some View{
         VStack(alignment: .leading) {
             Text(listItem.Name)
-                .font(.headline)
-                .foregroundColor(.black)
-                .padding(.top)
+                .itemText()
                 .fixedSize(horizontal: false, vertical: true)
                 .lineLimit(2)
             HStack(spacing: 0.4) {

@@ -16,6 +16,7 @@
 		E812D1022966E6970033BB23 /* CreateNewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E812D1012966E6970033BB23 /* CreateNewGroup.swift */; };
 		E8161AB3297FA83500E94D04 /* FriendDisplayCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8161AB2297FA83500E94D04 /* FriendDisplayCards.swift */; };
 		E8161AB5297FA89000E94D04 /* GroupDisplayCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8161AB4297FA89000E94D04 /* GroupDisplayCards.swift */; };
+		E8161AB7297FFADC00E94D04 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8161AB6297FFADC00E94D04 /* SettingsView.swift */; };
 		E835DE282963F58B00FD36C4 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E835DE1D2963F58B00FD36C4 /* ListItem.swift */; };
 		E835DE292963F58B00FD36C4 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E835DE1E2963F58B00FD36C4 /* AmplifyModels.swift */; };
 		E835DE2A2963F58B00FD36C4 /* UserList+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E835DE1F2963F58B00FD36C4 /* UserList+Schema.swift */; };
@@ -94,6 +95,7 @@
 		E812D1012966E6970033BB23 /* CreateNewGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewGroup.swift; sourceTree = "<group>"; };
 		E8161AB2297FA83500E94D04 /* FriendDisplayCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDisplayCards.swift; sourceTree = "<group>"; };
 		E8161AB4297FA89000E94D04 /* GroupDisplayCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDisplayCards.swift; sourceTree = "<group>"; };
+		E8161AB6297FFADC00E94D04 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E835DE1D2963F58B00FD36C4 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		E835DE1E2963F58B00FD36C4 /* AmplifyModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmplifyModels.swift; sourceTree = "<group>"; };
 		E835DE1F2963F58B00FD36C4 /* UserList+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserList+Schema.swift"; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				E8161AB1297FA45400E94D04 /* DisplayCards */,
 				E812D1042966E6CD0033BB23 /* List Related Views */,
 				E8BC30BF29679CAF000D35AD /* Social Views */,
+				E8161AB6297FFADC00E94D04 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				E8957C592940095C00058AC2 /* AllStructureModifierExtensions.swift in Sources */,
 				E894FF9A293C165200095DD2 /* SignUpView.swift in Sources */,
 				E8FC8934293CB62400645630 /* GroupsView.swift in Sources */,
+				E8161AB7297FFADC00E94D04 /* SettingsView.swift in Sources */,
 				E8F91B57293AF234003E23B5 /* LoginView.swift in Sources */,
 				E81197B3295F945100B90D1C /* DataStoreFunctions.swift in Sources */,
 				E81197CE29601B2900B90D1C /* DisplayCards.swift in Sources */,

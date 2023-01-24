@@ -138,7 +138,6 @@ struct ListView: View {
                     Spacer()
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .onAppear{
                 checkUserIsSelf()
                 getList()
@@ -155,12 +154,6 @@ struct ListView: View {
                         Image(systemName: "arrow.clockwise")
                             .imageScale(.large)
                     }
-    //                Button(action: {
-    //                    createList()
-    //                }) {
-    //                    Image(systemName: "text.badge.plus")
-    //                        .imageScale(.large)
-    //                }
                 }
             ))
         }
@@ -197,36 +190,16 @@ struct ListView: View {
         getList()
     }
     
-    // Function that deletes the image from the database alongside the deletion of the item
-    func deleteImage( Imagekey: String?) {
-        guard let Key = Imagekey else {return}
-        Amplify.Storage.remove(key: Key) {result in
-            switch result {
-            case .success:
-                print("Deleted Image")
-            case .failure(let error):
-                print("could not delete Image - \(error)")
-            }
-        }
-    }
-    
     // Function that loads the images for the icons (Same as in ItemSearchView)
     func getImage(Imagekey: String?) {
         guard let Key = Imagekey else {return}
         if ImageCache.keys.contains(Key) {
             return
         } else {
-            Amplify.Storage.downloadData(key: Key) { result in
-                switch result {
-                case .success(let ImageData):
-                    print("Fetched ImageData")
-                    let image = UIImage(data: ImageData)
-                    DispatchQueue.main.async{
-                        ImageCache[Key] = image
-                    }
-                    return
-                case .failure(let error):
-                    print("Could not get Image URL - \(error)")
+            let fetchedImage = dataStore.getImage(ImageKey: Key)
+            if fetchedImage != UIImage() {
+                DispatchQueue.main.async{
+                    ImageCache[Key] = fetchedImage
                 }
             }
         }

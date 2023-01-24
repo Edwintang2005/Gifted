@@ -24,13 +24,13 @@ struct ContentView: View {
                 .tabItem{
                     Label("Home", systemImage: "house")
                 }
-            ListView(QueryID: userID)
-                .tabItem{
-                    Label("Wishlist", systemImage: "list.bullet.clipboard")
-                }
             SocialView()
                 .tabItem{
-                    Label("Socials", systemImage: "person.3.sequence")
+                    Label("Socials", systemImage: "person.2")
+                }
+            SettingsView()
+                .tabItem{
+                    Label("Settings", systemImage: "gearshape")
                 }
         }
     }

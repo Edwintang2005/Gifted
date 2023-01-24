@@ -451,4 +451,15 @@ final class DataStore: ObservableObject {
         }
         return returnValue
     }
+    
+    func deleteImage(ImageKey: String) {
+        Amplify.Storage.remove(key: ImageKey) {
+            switch $0 {
+            case .success:
+                print("Deleted Image")
+            case .failure(let error):
+                print("Could not delete image - \(error.localizedDescription)")
+            }
+        }
+    }
 }

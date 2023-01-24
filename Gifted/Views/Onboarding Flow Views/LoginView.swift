@@ -20,8 +20,9 @@ struct LoginView: View {
             // Username signin functionality
             VStack {
                 Spacer()
-                Text("Welcome to \n Gifted!")
-                    .pretty()
+                Text("Welcome back! \n Enter your details")
+                    .colourGradient()
+                    .font(.largeTitle)
                 Spacer()
                 TextField("Username", text: $username).pretty()
                 SecureField("Password", text: $password).pretty()
@@ -70,9 +71,11 @@ struct LoginView: View {
                     }.facebook()
                 }
                 Spacer()
-                Button("Don't have an account? Sign up.", action: sessionManager.showSignUp)
+                Text("Don't have an account?")
+                    .padding(.bottom)
+                Button("Sign up", action: sessionManager.showSignUp)
                 Spacer()
-                Text("Brought to you with ❤️ from Edwin Tang and Roger Yao").small()
+                Text("Brought to you with ❤️ from Edwin, Roger and Michelle").small()
             }
             .padding(.horizontal)
         }

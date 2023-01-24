@@ -71,13 +71,18 @@ struct SignUpView: View {
             .pretty()
             .padding(.top)
             Spacer()
-            HStack {
+            HStack{
                 Spacer()
-                Button("Already have an account? Log in.", action: sessionManager.showLogin)
+                VStack (alignment: .center) {
+                    Text("Already have an account?")
+                        .padding(.bottom)
+                    Button("Log in", action: sessionManager.showLogin)
+                }
                 Spacer()
             }
+            Spacer()
         }
-        .padding()
+        .padding(.all)
     }
     
     func isValidEmailAddress(emailAddressString: String) -> Bool {
