@@ -26,7 +26,7 @@ struct GroupsView: View {
     var body: some View {
         VStack {
             
-            if GroupsLength == 1 {
+            if GroupsLength == 0 {
                 Spacer()
                 Text("It's quite empty in here... \n Add or join your first group!")
                 Spacer()

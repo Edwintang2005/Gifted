@@ -42,60 +42,50 @@ struct MainView: View {
                     Spacer()
                 }
                 
-                    Text("Your Wishlist")
-                        .subtitle()
-                        .padding([.leading, .trailing])
+                Text("Your Wishlist")
+                    .subtitle()
+                    .padding([.leading, .trailing])
                 
-
                 
-                    ScrollView(showsIndicators: true) {
-                        LazyVGrid(columns: adaptiveColumns, spacing: 20) {
+                ScrollView(showsIndicators: true) {
+                    LazyVGrid(columns: adaptiveColumns, spacing: 20) {
+                        
+                        ForEach(listitems) {
+                            item in DisplayCards(listItem: item)
                             
-                            ForEach(listitems) {
-                                item in DisplayCards(listItem: item)
                             
-                                
-                                
-                            }
+                            
                         }
                     }
-                    
+                }
+                //                            ScrollView(.horizontal, showsIndicators: false){
+                //                                HStack{
+                //                                    ForEach(listitems) { item in
+                //                                        DisplayCards(listItem: item).padding(6)
                 
-                
-                            
-                            
-//                            ScrollView(.horizontal, showsIndicators: false){
-//                                HStack{
-//                                    ForEach(listitems) { item in
-//                                        DisplayCards(listItem: item).padding(6)
-
-                            .padding(.leading)
-                            Spacer()
+                .padding(.leading)
+                Spacer()
             }
-            
-            
-            
-            
- //                       .onAppear{
- //                           fetchUserInfo()
- //                           getListItem()
- //                       }
+            .onAppear{
+                fetchUserInfo()
+                getListItem()
+            }
         }
-                }
-                
-                func getImage(Imagekey: String?) {
-                    guard let Key = Imagekey else {return}
-                }
-                
-                
-                func fetchUserInfo() {
-                    //Get Username and create/check for user object - need to resolve occassional query return empty issue
-                }
-                
-                func getListItem() {
-                    listitems = dataStore.allItemsQuery()
-                }
-            }
+    }
+    
+    func getImage(Imagekey: String?) {
+        guard let Key = Imagekey else {return}
+    }
+    
+    
+    func fetchUserInfo() {
+        //Get Username and create/check for user object - need to resolve occassional query return empty issue
+    }
+    
+    func getListItem() {
+        listitems = dataStore.fetchListItems(listid: "arbitrary string")
+    }
+}
 
 
 

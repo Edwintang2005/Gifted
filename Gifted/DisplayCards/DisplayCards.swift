@@ -22,9 +22,9 @@ struct DisplayCards: View {
                 .shadow(radius: 4)
                 .frame(width: cardWidth, height: cardHeight)
                 .foregroundColor(.white)
-            if let key = listItem.ImageKey, let render = ImageCache[key] {
+            if let key = listItem.ImageKey{
                 VStack(alignment: .center) {
-                    Image(uiImage: render)
+                    Image(key)
                         .resizable()
                         .padding(.top)
                         .aspectRatio(contentMode: .fill)
@@ -39,7 +39,7 @@ struct DisplayCards: View {
                 }
                 .frame(width: cardWidth, height: cardHeight)
             } else {
-                
+                Text(listItem.Name)
             }
             
         }

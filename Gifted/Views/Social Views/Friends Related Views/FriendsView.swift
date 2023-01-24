@@ -32,7 +32,7 @@ struct FriendsView: View {
                 NavigationLink{
                     AddToFriends()
                 } label: {
-                    Image("􀜕")
+                    Image("AddFriend")
                 }.padding([.top, .leading, .trailing])
             }
      

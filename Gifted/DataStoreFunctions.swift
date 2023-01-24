@@ -61,7 +61,7 @@ final class DataStore: ObservableObject {
     }
     
     func fetchListItems(listid: String) -> [ListItem] {
-        let macbookAir = ListItem(Name: "Macbook Air")
+        let macbookAir = ListItem(Name: "Macbook Air", ImageKey: "ItemDetailsViewStock1")
         let watch = ListItem(Name: "Watch")
         var returnValue = [ListItem]()
         returnValue.append(macbookAir)
@@ -134,8 +134,8 @@ final class DataStore: ObservableObject {
     func fetchGroups(userID: String) -> [Group] {
         var returnValue = [Group]()
         let user = fetchUser(userID: userID)
-        user.Groups.forEach{ groupID in
-        }
+        let tempGrooup1 = Group(Name: "NoKizzy", ShortID: "123456", NameAndShortID: "NoKizzy123456", Members: [String]())
+        returnValue.append(tempGrooup1)
         return returnValue
     }
     
