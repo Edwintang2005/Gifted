@@ -7,6 +7,7 @@
 
 import Amplify
 import Foundation
+import SwiftUI
 
 // Class for modifying any Backend elements
 final class DataStore: ObservableObject {
@@ -434,5 +435,20 @@ final class DataStore: ObservableObject {
                 }
             }
         }
+    }
+    
+    // Image Related Functions
+    func getImage(ImageKey: String) -> UIImage {
+        var returnValue = UIImage()
+        Amplify.Storage.downloadData(key: ImageKey) {
+            switch $0 {
+            case .success(let ImageData):
+                print("Fetched ImageData")
+                returnValue = UIImage(data: ImageData) ?? UIImage()
+            case .failure(let error):
+                print("Could not get image data - \(error.localizedDescription)")
+            }
+        }
+        return returnValue
     }
 }

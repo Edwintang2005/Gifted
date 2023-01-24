@@ -27,11 +27,25 @@ struct FriendsView: View {
     var body: some View {
         ZStack {
             VStack {
+                HStack {
+                    Text("CONTACTS").boldText()
+                        .padding(.horizontal)
+                    Spacer()
+                    NavigationLink {
+                        AddToFriends()
+                    } label: {
+                        Image(systemName:"person.badge.plus")
+                            .scaledToFit()
+                            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+                        
+                    }
+                }
+                .padding(.all)
+                
                 if FriendsLength == 0 {
                     Spacer()
-                    Text("You have No Friends yet! 😢").large()
-                    Spacer()
-                    Text("Why don't we start by adding an item using the + button!").large()
+                    Text("Hopefully it's not normally like this... \n Add some friends!")
+                        .multilineTextAlignment(.center)
                     Spacer()
                 } else {
                     List {
@@ -63,17 +77,6 @@ struct FriendsView: View {
             getFriends()
             FriendsLength = Friends.count
         }
-        .navigationBarTitle("Friends")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: (
-            Button(action: {
-                getFriends()
-                FriendsLength = Friends.count
-            }) {
-                Image(systemName: "arrow.clockwise")
-                    .imageScale(.large)
-            }
-        ))
     }
     
     func getFriends() {

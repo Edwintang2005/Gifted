@@ -25,11 +25,24 @@ struct GroupsView: View {
     var body: some View {
         ZStack {
             VStack {
+                HStack {
+                    Text("GROUPS").boldText()
+                        .padding(.horizontal)
+                    Spacer()
+                    NavigationLink {
+                        AddToGroups()
+                    } label: {
+                        Image(systemName:"plus.rectangle")
+                            .scaledToFit()
+                            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+                        
+                    }
+                }
+                .padding(.all)
+                
                 if GroupsLength == 0 {
                     Spacer()
-                    Text("You have No saved Groups yet! 😢").large()
-                    Spacer()
-                    Text("Why don't we start by adding an item using the + button!").large()
+                    Text("It's quite empty in here... \n Add or join your first group!")
                     Spacer()
                 } else {
                     List {
@@ -97,17 +110,6 @@ struct GroupsView: View {
             showFloatingMenu1 = false
             showFloatingMenu2 = false
         }
-        .navigationBarTitle("Groups")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: (
-            Button(action: {
-                getGroups()
-                GroupsLength = Groups.count
-            }) {
-                Image(systemName: "arrow.clockwise")
-                    .imageScale(.large)
-            }
-        ))
     }
     
     func getGroups() {

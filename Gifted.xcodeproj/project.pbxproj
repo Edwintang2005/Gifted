@@ -14,6 +14,8 @@
 		E812D0FE2966E6170033BB23 /* AddToFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = E812D0FD2966E6170033BB23 /* AddToFriends.swift */; };
 		E812D1002966E65D0033BB23 /* AddToGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = E812D0FF2966E65D0033BB23 /* AddToGroups.swift */; };
 		E812D1022966E6970033BB23 /* CreateNewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E812D1012966E6970033BB23 /* CreateNewGroup.swift */; };
+		E8161AB3297FA83500E94D04 /* FriendDisplayCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8161AB2297FA83500E94D04 /* FriendDisplayCards.swift */; };
+		E8161AB5297FA89000E94D04 /* GroupDisplayCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8161AB4297FA89000E94D04 /* GroupDisplayCards.swift */; };
 		E835DE282963F58B00FD36C4 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E835DE1D2963F58B00FD36C4 /* ListItem.swift */; };
 		E835DE292963F58B00FD36C4 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E835DE1E2963F58B00FD36C4 /* AmplifyModels.swift */; };
 		E835DE2A2963F58B00FD36C4 /* UserList+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E835DE1F2963F58B00FD36C4 /* UserList+Schema.swift */; };
@@ -90,6 +92,8 @@
 		E812D0FD2966E6170033BB23 /* AddToFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToFriends.swift; sourceTree = "<group>"; };
 		E812D0FF2966E65D0033BB23 /* AddToGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToGroups.swift; sourceTree = "<group>"; };
 		E812D1012966E6970033BB23 /* CreateNewGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewGroup.swift; sourceTree = "<group>"; };
+		E8161AB2297FA83500E94D04 /* FriendDisplayCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDisplayCards.swift; sourceTree = "<group>"; };
+		E8161AB4297FA89000E94D04 /* GroupDisplayCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDisplayCards.swift; sourceTree = "<group>"; };
 		E835DE1D2963F58B00FD36C4 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		E835DE1E2963F58B00FD36C4 /* AmplifyModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmplifyModels.swift; sourceTree = "<group>"; };
 		E835DE1F2963F58B00FD36C4 /* UserList+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserList+Schema.swift"; sourceTree = "<group>"; };
@@ -159,7 +163,6 @@
 			isa = PBXGroup;
 			children = (
 				E812D0FB2966E5D50033BB23 /* AddToList.swift */,
-				E81197CD29601B2900B90D1C /* DisplayCards.swift */,
 				E894FFB0293C75DD00095DD2 /* ListView.swift */,
 				E84B6DD3295584460030DD6B /* ItemSearchView.swift */,
 				E8F91B54293AF20D003E23B5 /* ItemDetailsView.swift */,
@@ -206,12 +209,23 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
+		E8161AB1297FA45400E94D04 /* DisplayCards */ = {
+			isa = PBXGroup;
+			children = (
+				E81197CD29601B2900B90D1C /* DisplayCards.swift */,
+				E8161AB2297FA83500E94D04 /* FriendDisplayCards.swift */,
+				E8161AB4297FA89000E94D04 /* GroupDisplayCards.swift */,
+			);
+			path = DisplayCards;
+			sourceTree = "<group>";
+		};
 		E81723BB294BF6180022A09E /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				E812D1052966E6F30033BB23 /* Onboarding Flow Views */,
 				E8F91B48293AF173003E23B5 /* ContentView.swift */,
 				E81197CB295FFEF600B90D1C /* MainView.swift */,
+				E8161AB1297FA45400E94D04 /* DisplayCards */,
 				E812D1042966E6CD0033BB23 /* List Related Views */,
 				E8BC30BF29679CAF000D35AD /* Social Views */,
 			);
@@ -427,8 +441,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8161AB5297FA89000E94D04 /* GroupDisplayCards.swift in Sources */,
 				E835DE2E2963F58B00FD36C4 /* Reservations+Schema.swift in Sources */,
 				E835DE292963F58B00FD36C4 /* AmplifyModels.swift in Sources */,
+				E8161AB3297FA83500E94D04 /* FriendDisplayCards.swift in Sources */,
 				E8F91B59293AF264003E23B5 /* FriendsView.swift in Sources */,
 				E81197CC295FFEF600B90D1C /* MainView.swift in Sources */,
 				E8F91B55293AF20D003E23B5 /* ItemDetailsView.swift in Sources */,

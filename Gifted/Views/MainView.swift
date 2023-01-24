@@ -26,25 +26,32 @@ struct MainView: View {
     @AppStorage("Username") var Username: String = ""
     @AppStorage("UserID") var UserID: String = ""
     
+    private let adaptiveColumns = [
+            GridItem(.adaptive(minimum: 170))
+        ]
+    
     var body: some View{
         NavigationView {
                 VStack(alignment: .leading) {
                     HStack {
                         // Text that displays the User's name
-                        Text("Hello, \(NameOfUser)!").homepagename()
-                            .padding(.horizontal)
+                        Text("Welcome back, \n\(NameOfUser)!")
+                            .colourGradient()
+                            .font(.largeTitle)
+                            .padding(.all)
                         Spacer()
                     }
                     // replace below with Roger's design of Homescreen
-                    Text("Top Items:")
-                        .font(.title2)
-                        .padding([.top, .leading, .trailing])
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack{
+                    Text("Your Wishlist:")
+                        .subtitle()
+                        .padding(.horizontal)
+                    ScrollView(showsIndicators: true) {
+                        LazyVGrid(columns: adaptiveColumns) {
                             ForEach(listitems) { item in
                                 DisplayCards(listItem: item).padding(6)
                             }
                         }
+                        .padding(.horizontal)
                     }
                     .padding(.leading)
                     Spacer()
@@ -64,17 +71,10 @@ struct MainView: View {
     
     func getImage(Imagekey: String?) {
         guard let Key = Imagekey else {return}
-        Amplify.Storage.downloadData(key: Key) { result in
-            switch result {
-            case .success(let ImageData):
-                print("Fetched ImageData")
-                let image = UIImage(data: ImageData)
-                DispatchQueue.main.async{
-                    ImageCache[Key] = image
-                }
-                return
-            case .failure(let error):
-                print("Could not get Image URL - \(error)")
+        let fetchedImage = dataStore.getImage(ImageKey: Key)
+        if fetchedImage != UIImage() {
+            DispatchQueue.main.async{
+                ImageCache[Key] = fetchedImage
             }
         }
     }

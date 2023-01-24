@@ -19,7 +19,7 @@ struct AddToFriends: View{
     @State var username = String()
     @State var validUsername = true
     
-    var body: some View{
+    var body: some View {
         VStack {
             Spacer()
             TextField("Friend's Username", text: $username)

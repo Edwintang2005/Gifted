@@ -14,51 +14,61 @@ enum tabPage {
 
 struct SocialView: View {
     
-    let tabHeight = UIScreen.main.bounds.size.height * 1/22
+    let tabHeight = UIScreen.main.bounds.size.height * 1/30
     @State private var selectedTab: tabPage = .Friends
     
     var body: some View {
         NavigationView{
-            VStack{
+            VStack(alignment: .leading) {
+                Text("Social")
+                    .colourGradient()
+                    .font(.largeTitle)
+                    .padding(.horizontal)
                 HStack{
+                    // Selection tab
                     Button {
                         selectedTab = .Friends
                     } label: {
-                        HStack(alignment: .center) {
-                            Spacer()
-                            if selectedTab == .Friends {
+                        if selectedTab == .Friends {
+                            HStack(alignment: .center) {
+                                Spacer()
                                 Text("Friends")
-                                    .underline()
-                                    .padding(.all)
-                            } else {
-                                Text("Friends")
-                                    .padding(.all)
+                                Spacer()
                             }
-                            Spacer()
+                            .selected()
+                        } else {
+                            HStack(alignment: .center) {
+                                Spacer()
+                                Text("Friends")
+                                Spacer()
+                            }
+                            .unSelected()
                         }
                     }
-                    Divider()
                     Button {
                         selectedTab = .Groups
                     } label: {
-                        HStack(alignment: .center) {
-                            Spacer()
-                            if selectedTab == .Groups {
+                        if selectedTab == .Groups {
+                            HStack(alignment: .center) {
+                                Spacer()
                                 Text("Groups")
-                                    .underline()
-                                    .padding(.all)
-                            } else {
-                                Text("Groups")
-                                    .padding(.all)
+                                Spacer()
                             }
-                            Spacer()
+                            .selected()
+                        } else {
+                            HStack(alignment: .center) {
+                                Spacer()
+                                Text("Groups")
+                                Spacer()
+                            }
+                            .unSelected()
                         }
-                       
                     }
                 }
                 .frame(maxHeight: tabHeight)
-                .foregroundColor(.primary)
-                Divider()
+                .background(Color(.sRGB, red: 237/255, green: 240/255, blue: 241/255))
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .padding(.horizontal)
                 if selectedTab == .Friends {
                     FriendsView()
                 } else {

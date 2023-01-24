@@ -18,6 +18,33 @@ extension Text{
             .multilineTextAlignment(.center)
             .padding(.all)
     }
+    
+    func colourGradient() -> some View{
+        self.multilineTextAlignment(.leading)
+            .foregroundStyle(
+                LinearGradient(
+                    colors: [.init(red: 0.196, green: 0.4, blue: 0.38), .init(red: 0.329, green: 0.698, blue: 0.643), .init(red: 0.701, green: 0.8509803922, blue: 0.466666667)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+    }
+    func boldText() -> some View {
+        self.font(.system(size: 15, weight: .bold, design: .default))
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+        
+    }
+    
+    func subtitle() -> some View{
+        self.font(.system(size: 24, weight: .medium, design: .default))
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+    }
+    
+    func title() -> some View{
+        self.font(.system(size: 36, weight: .bold, design: .default))
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+    }
+    
     func listtext() -> some View{
         self.font(.subheadline)
             .multilineTextAlignment(.leading)
@@ -25,17 +52,18 @@ extension Text{
     
     func small() -> some View{
         self.font(.caption)
-            .foregroundColor(Color.gray)
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
             .multilineTextAlignment(.center)
     }
     func medium() -> some View{
         self.font(.footnote)
-            .foregroundColor(Color.gray)
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
             .multilineTextAlignment(.center)
     }
     func large() -> some View{
         self.font(.callout)
             .multilineTextAlignment(.center)
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
     }
     func homepagename() -> some View{
         self.font(.headline)
@@ -43,6 +71,20 @@ extension Text{
     }
     func verif() -> some View{
         self.font(.headline)
+    }
+}
+
+extension HStack {
+    func selected() -> some View{
+        self.foregroundColor(Color(.sRGB, red: 37/255, green: 75/255, blue: 72/255))
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .background(.white)
+            .padding(.horizontal)
+    }
+    
+    func unSelected() -> some View{
+        self.foregroundColor(Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255))
+            .padding(.horizontal)
     }
 }
 
@@ -75,7 +117,7 @@ extension Button {
     }
     func floaty() -> some View {
         self.font(.system(size:60))
-            .shadow(color: Color.gray.opacity(0.5), radius: 0.2, x: 2, y: 2)
+            .foregroundColor(Color(.sRGB, red: 76/255, green: 159/255, blue: 148/255))
             .padding(.all)
     }
     func google() -> some View{
@@ -126,7 +168,7 @@ extension Link{
 extension Image{
     func floaty() -> some View{
         self.font(.system(size:60))
-            .shadow(color: Color.gray.opacity(0.5), radius: 0.2, x: 2, y: 2)
+            .foregroundColor(Color(.sRGB, red: 76/255, green: 159/255, blue: 148/255))
             .padding(.all)
     }
     func Icon() -> some View{
