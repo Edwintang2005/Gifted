@@ -53,8 +53,6 @@ struct MainView: View {
                         ForEach(listitems) {
                             item in DisplayCards(listItem: item)
                             
-                            
-                            
                         }
                     }
                 }

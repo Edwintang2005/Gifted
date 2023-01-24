@@ -73,6 +73,10 @@ extension Text{
     
     }
     
+    func itemText() -> some View{
+        self.font(.system(size: 17, weight: .medium, design: .default))
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+    }
     
     func subtitle() -> some View{
         self.font(.system(size: 24, weight: .medium, design: .default))
