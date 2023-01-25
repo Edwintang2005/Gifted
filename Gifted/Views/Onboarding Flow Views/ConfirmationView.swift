@@ -20,7 +20,6 @@ struct ConfirmationView: View {
             Spacer()
             Text("Verify your identity")
                 .colourGradient()
-                .font(.largeTitle)
             Text("Enter the 6-digit code sent to your email")
                 .boldText()
             Image("VerificationStock")

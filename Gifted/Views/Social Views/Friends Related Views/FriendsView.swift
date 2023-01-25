@@ -16,6 +16,7 @@ struct FriendsView: View {
     @ObservedObject var dataStore = DataStore()
     @EnvironmentObject var sessionManager: SessionManager
     
+    @Binding var ImageCache: [String: UIImage]
     
     let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"

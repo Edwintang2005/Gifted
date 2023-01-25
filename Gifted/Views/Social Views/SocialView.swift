@@ -14,9 +14,9 @@ enum tabPage {
 
 struct SocialView: View {
     
-    let tabHeight = UIScreen.main.bounds.size.height * 1/30
-    @State private var selectedTab: tabPage = .Friends
+    @Binding var ImageCache: [String: UIImage]
     
+    @State private var selectedTab: tabPage = .Friends
     @State private var selection = 0
     
     var body: some View {
@@ -24,7 +24,6 @@ struct SocialView: View {
             VStack(alignment: .leading) {
                 Text("Social")
                     .colourGradient()
-                    .font(.largeTitle)
                     .padding(.horizontal)
                 Picker("", selection: $selection) {
                     Text("Friends")
@@ -35,17 +34,17 @@ struct SocialView: View {
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
                 if selection == 0 {
-                    FriendsView()
+                    FriendsView(ImageCache: $ImageCache)
                 } else {
-                    GroupsView()
+                    GroupsView(ImageCache: $ImageCache)
                 }
             }
         }
     }
 }
 
-struct SocialView_Previews: PreviewProvider {
-    static var previews: some View {
-        SocialView()
-    }
-}
+//struct SocialView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SocialView()
+//    }
+//}

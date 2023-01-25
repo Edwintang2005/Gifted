@@ -10,8 +10,8 @@ import SwiftUI
 
 
 struct DisplayCards: View {
-    let cardWidth = UIScreen.main.bounds.size.width * 43/100
-    let cardHeight = UIScreen.main.bounds.size.height * 1/4
+    let cardWidth = UIScreen.main.bounds.size.width * 42/100
+    let cardHeight = UIScreen.main.bounds.size.height * 3/10
     let cornerRadius = 7.0
     
     @State var listItem: ListItem
@@ -20,24 +20,22 @@ struct DisplayCards: View {
     var body: some View {
         ZStack{
             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .cardBackgroundandShadow(cornerRadius: cornerRadius)
                 .frame(width: cardWidth, height: cardHeight)
-                .foregroundColor(.white)
             if let key = listItem.ImageKey, let render = ImageCache[key] {
-                VStack(alignment: .leading) {
+                VStack(alignment: .center) {
                     Image(uiImage: render)
                         .resizable()
-                        .padding(.all)
+                        .padding([.top,.leading, .trailing])
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: cardWidth, height: cardHeight*9/10)
-                        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                    Spacer()
+                        .frame(width: cardWidth, height: cardHeight*5/6)
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                     cardDetails
-                        .padding(.horizontal)
-                        .frame(width: cardWidth)
+                        .frame(width: cardWidth, height: cardHeight*1/6)
                         .background(Color.white)
                         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 }
-                .border(.gray)
                 .padding(.all)
                 .frame(width: cardWidth, height: cardHeight)
             } else {
@@ -57,14 +55,11 @@ struct DisplayCards: View {
             Text(listItem.Name)
                 .itemText()
                 .fixedSize(horizontal: false, vertical: true)
-                .lineLimit(2)
-            HStack(spacing: 0.4) {
-                if let price = listItem.Price {
-                    Text("$\(price)")
-                        .foregroundColor(.gray)
-                }
+                .lineLimit(1)
+            if let price = listItem.Price {
+                Text("$\(price)")
+                    .itemText()
             }
-            .padding(.bottom)
         }
     }
     
@@ -92,8 +87,8 @@ struct DisplayCards: View {
 }
 
 struct HorizontalDisplayCards: View {
-    let cardWidth = UIScreen.main.bounds.size.width * 80/100
-    let cardHeight = UIScreen.main.bounds.size.height * 1/6
+    let cardWidth = UIScreen.main.bounds.size.width * 18/20
+    let cardHeight = UIScreen.main.bounds.size.height * 3/20
     let cornerRadius = 7.0
     
     @State var listItem: ListItem
@@ -102,8 +97,8 @@ struct HorizontalDisplayCards: View {
     var body: some View {
         ZStack{
             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .cardBackgroundandShadow(cornerRadius: cornerRadius)
                 .frame(width: cardWidth, height: cardHeight)
-                .foregroundColor(.white)
             if let key = listItem.ImageKey, let render = ImageCache[key] {
                 HStack{
                     // Small Icon Image Rendering
@@ -111,17 +106,13 @@ struct HorizontalDisplayCards: View {
                         .resizable()
                         .padding(.all)
                         .aspectRatio(contentMode: .fill)
-                    VStack(alignment: .leading) {
-                        Text(listItem.Name).itemText()
-                        if let price = listItem.Price {
-                            Text("$\(price)")
-                                .foregroundColor(.gray)
-                        }
-                    }
+                        .frame(width: cardHeight, height: cardHeight)
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                    cardDetails
                     .padding(.horizontal)
                     Spacer()
                 }
-                .border(.gray)
                 .frame(width: cardWidth, height: cardHeight)
             } else {
                 Text(listItem.Name)
@@ -140,13 +131,18 @@ struct HorizontalDisplayCards: View {
                 .itemText()
                 .fixedSize(horizontal: false, vertical: true)
                 .lineLimit(2)
-            HStack(spacing: 0.4) {
+            Spacer()
+            HStack {
                 if let price = listItem.Price {
                     Text("$\(price)")
+                        .itemText()
                 }
-            }.foregroundColor(.gray)
-                .padding(.bottom)
+                Spacer()
+                Image(systemName: "chevron.right")
+            }
+            
         }
+        .padding(.vertical)
     }
     
     

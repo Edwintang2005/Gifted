@@ -22,7 +22,6 @@ struct LoginView: View {
                 Spacer()
                 Text("Welcome back! \n Enter your details")
                     .colourGradient()
-                    .font(.largeTitle)
                 Spacer()
                 TextField("Username", text: $username).pretty()
                 SecureField("Password", text: $password).pretty()

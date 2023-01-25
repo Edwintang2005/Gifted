@@ -21,6 +21,9 @@ extension Text{
     
     func colourGradient() -> some View{
         self.multilineTextAlignment(.leading)
+            .font(.largeTitle
+                .weight(.bold))
+            .padding(.top)
             .foregroundStyle(
                 LinearGradient(
                     colors: [.init(red: 0.196, green: 0.4, blue: 0.38), .init(red: 0.329, green: 0.698, blue: 0.643), .init(red: 0.701, green: 0.8509803922, blue: 0.466666667)],
@@ -37,6 +40,7 @@ extension Text{
     func itemText() -> some View{
         self.font(.system(size: 17, weight: .medium, design: .default))
             .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+            .multilineTextAlignment(.leading)
     }
     
     func subtitle() -> some View{
@@ -181,6 +185,13 @@ extension Image{
             .aspectRatio(contentMode: .fill)
             .frame(width: 60, height: 50)
             .mask { RoundedRectangle(cornerRadius: 4, style: .continuous) }
+    }
+}
+
+extension RoundedRectangle {
+    func cardBackgroundandShadow(cornerRadius: Double) -> some View {
+        self.foregroundColor(.white)
+            .shadow(color: Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255), radius: cornerRadius)
     }
 }
 

@@ -31,61 +31,49 @@ struct ItemSearchView: View {
     }
     
     var body: some View {
-        VStack {
-            List{
-                ForEach(listitemsFiltered) {
-                    Item in NavigationLink{
-                        if let key = Item.ImageKey {
-                            ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userID)
-                        } else {
-                            ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userID)
-                        }
-                    } label: {
-                        HStack{
-                            // Small Icon Image Rendering
-                            if let key = Item.ImageKey {
-                                if let Render = ImageCache[key] {
-                                    Image(uiImage: Render).Icon()
-                                } else {
-                                    Image("ImageNotFound").Icon()
-                                }
-                            } else {
-                                Image("ImageNotFound").Icon()
-                            }
-                            
-                            VStack(alignment: .leading) {
-                                Text(Item.Name).listtext()
-                                Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
-                            }
+        NavigationView{
+            VStack(alignment: .leading) {
+                ScrollView(showsIndicators: false) {
+                    HStack{
+                        Text("Discover")
+                            .colourGradient()
                             .padding(.horizontal)
-                            Spacer()
-                        }.onAppear{getImage(Imagekey: Item.ImageKey)}
+                        Spacer()
+                    }
+                    ForEach(listitemsFiltered) {
+                        Item in NavigationLink{
+                            if let key = Item.ImageKey {
+                                ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userID)
+                            } else {
+                                ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userID)
+                            }
+                        } label: {
+                            HorizontalDisplayCards(listItem: Item, ImageCache: $ImageCache)
+                        }
                     }
                 }
             }
-            
-        }
-        .onAppear{
-            getListItem()
-        }
-        .navigationBarTitle("Find Items to Add")
-        .searchable(text: $searchedText)
-        .navigationBarItems(trailing: (
-            HStack{
-                Button(action: {
-                    getListItem()
-                }) {
-                    Image(systemName: "arrow.clockwise")
-                        .imageScale(.large)
-                }
-                NavigationLink{
-                    AddToList(lists: $lists, listNumber: $listNumber)
-                } label: {
-                    Image(systemName: "plus")
-                        .imageScale(.large)
-                }
+            .onAppear{
+                getListItem()
             }
-        ))
+            .searchable(text: $searchedText)
+            .navigationBarItems(trailing: (
+                HStack{
+                    Button(action: {
+                        getListItem()
+                    }) {
+                        Image(systemName: "arrow.clockwise")
+                            .imageScale(.large)
+                    }
+                    NavigationLink{
+                        AddToList(lists: $lists, listNumber: $listNumber)
+                    } label: {
+                        Image(systemName: "plus.square")
+                            .imageScale(.large)
+                    }
+                }
+            ))
+        }
     }
     
     // Function that queries database and retrieves all list items
@@ -99,17 +87,10 @@ struct ItemSearchView: View {
         if ImageCache.keys.contains(Key) {
             return
         } else {
-            Amplify.Storage.downloadData(key: Key) { result in
-                switch result {
-                case .success(let ImageData):
-                    print("Fetched ImageData")
-                    let image = UIImage(data: ImageData)
-                    DispatchQueue.main.async{
-                        ImageCache[Key] = image
-                    }
-                    return
-                case .failure(let error):
-                    print("Could not get Image URL - \(error)")
+            let fetchedImage = dataStore.getImage(ImageKey: Key)
+            if fetchedImage != UIImage() {
+                DispatchQueue.main.async{
+                    ImageCache[Key] = fetchedImage
                 }
             }
         }

@@ -9,14 +9,16 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @ObservedObject var dataStore = DataStore()
     @EnvironmentObject var sessionManager: SessionManager
+    
+    @Binding var ImageCache: [String: UIImage]
     
     var body: some View {
         VStack(alignment: .leading){
             Text("Settings")
                 .colourGradient()
-                .font(.largeTitle)
-                .padding(.horizontal)
+                .padding(.bottom)
             List{
                 Text("Edit Name")
                 Text("Change Image")
@@ -31,11 +33,13 @@ struct SettingsView: View {
             }
             .padding(.vertical)
         }
+        .padding(.horizontal)
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-    }
-}
+//struct SettingsView_Previews: PreviewProvider {
+//    @State var testCache = [String: UIImage]()
+//    static var previews: some View {
+//        SettingsView(ImageCache: $testCache)
+//    }
+//}

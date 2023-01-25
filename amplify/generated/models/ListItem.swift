@@ -6,7 +6,6 @@ public struct ListItem: Model {
   public let id: String
   public var Name: String
   public var Price: String?
-  public var ShortDescription: String?
   public var ImageKey: String?
   public var Link: String?
   public var createdAt: Temporal.DateTime?
@@ -15,13 +14,11 @@ public struct ListItem: Model {
   public init(id: String = UUID().uuidString,
       Name: String,
       Price: String? = nil,
-      ShortDescription: String? = nil,
       ImageKey: String? = nil,
       Link: String? = nil) {
     self.init(id: id,
       Name: Name,
       Price: Price,
-      ShortDescription: ShortDescription,
       ImageKey: ImageKey,
       Link: Link,
       createdAt: nil,
@@ -30,7 +27,6 @@ public struct ListItem: Model {
   internal init(id: String = UUID().uuidString,
       Name: String,
       Price: String? = nil,
-      ShortDescription: String? = nil,
       ImageKey: String? = nil,
       Link: String? = nil,
       createdAt: Temporal.DateTime? = nil,
@@ -38,7 +34,6 @@ public struct ListItem: Model {
       self.id = id
       self.Name = Name
       self.Price = Price
-      self.ShortDescription = ShortDescription
       self.ImageKey = ImageKey
       self.Link = Link
       self.createdAt = createdAt

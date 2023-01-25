@@ -22,7 +22,6 @@ struct AddToList: View{
     @State var name = String()
     @State var link = String()
     @State var price = String()
-    @State var description = String()
     
     
     //Variables for getting image input
@@ -39,7 +38,6 @@ struct AddToList: View{
                 .keyboardType(.URL)
             TextField("Price", text: $price).pretty()
                 .keyboardType(.decimalPad) // enforces number input for prices
-            TextField("Short Description", text: $description).pretty()
             Text("Select an image for this Item:").small()
             ZStack(alignment: .center){
                 if (image == nil) {
@@ -79,7 +77,6 @@ struct AddToList: View{
         let item = ListItem(id: UUID().uuidString,
                             Name: name,
                             Price: price,
-                            ShortDescription: description,
                             ImageKey: UserDefaults.standard.string(forKey: "ImageKey"),
                             Link: link)
         let completion = dataStore.createListItem(item: item, list: lists[listNumber])

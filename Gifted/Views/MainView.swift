@@ -14,17 +14,17 @@ struct MainView: View {
     @ObservedObject var dataStore = DataStore()
     @EnvironmentObject var sessionManager: SessionManager
     
-    @State private var userProfile = UserProfile(Username: "NULL", Name: String())
     
     @State var listitems = [ListItem]()
+    @State var lists = [UserList]()
     var listitemsLength = Int()
-    @State var ImageCache = [String: UIImage]()
+    @State var listNumber = 0
+    @Binding var ImageCache: [String: UIImage]
     
-    @AppStorage("NameOfUser") var NameOfUser: String = ""
     
-    // Variable for storing the User's username for use throughout the app
-    @AppStorage("Username") var Username: String = ""
-    @AppStorage("UserID") var UserID: String = ""
+    // Variable for User credentials for use throughout the app
+    let UserID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
+    let NameOfUser = UserDefaults.standard.string(forKey: "NameOfUser") ?? ""
     
     private let adaptiveColumns = [
         GridItem(.flexible()),
@@ -43,7 +43,6 @@ struct MainView: View {
                         // Text that displays the User's name
                         Text("Welcome back, \n\(NameOfUser)!")
                             .colourGradient()
-                            .font(.largeTitle)
                         Spacer()
                     }
                     .padding(.bottom)
@@ -56,41 +55,75 @@ struct MainView: View {
                     HStack {
                         Text("Wishlist")
                             .colourGradient()
-                            .font(.largeTitle)
                         Spacer()
+                        NavigationLink{
+                            SettingsView(ImageCache: $ImageCache)
+                        } label: {
+                            Image(systemName: "person.circle")
+                                .imageScale(.large)
+                        }
                     }
                 }
                 
                 HStack {
-                    Spacer()
-                    Text("Sort By: ")
-                    Picker("Sort by", selection: $sortOption) {
-                        Text("Name").tag(0)
-                        Text("Time").tag(1)
-                        Text("Price").tag(2)
-                    }
                     Picker("Display format", selection: $ViewSelection) {
                         Image(systemName: "square.grid.2x2")
                             .tag(0)
                         Image(systemName: "rectangle.grid.1x2")
                             .tag(1)
                     }
+                    .labelsHidden()
                     .pickerStyle(.segmented)
+                    Spacer()
+                    Image(systemName: "arrow.up.arrow.down")
+                    Picker("Sort by", selection: $sortOption) {
+                        Text("Name").tag(0)
+                        Text("Time").tag(1)
+                        Text("Price").tag(2)
+                    }
+                    .labelsHidden()
+                    
+                    NavigationLink{
+                        ItemSearchView(ImageCache: $ImageCache, lists: $lists, listNumber: $listNumber)
+                    } label: {
+                        Image(systemName: "plus")
+                            .imageScale(.large)
+                    }
                 }
-                ScrollView(showsIndicators: false) {
-                    if ViewSelection == 0 {
-                        LazyVGrid(columns: adaptiveColumns) {
+                
+                if lists.count == 0 {
+                    Text("An error occurred, please restart the app")
+                } else {
+                    ScrollView(showsIndicators: false) {
+                        if ViewSelection == 0 {
+                            LazyVGrid(columns: adaptiveColumns) {
+                                ForEach(listitems) { item in
+                                    NavigationLink{
+                                        if let key = item.ImageKey {
+                                            ItemDetailsView(list: $lists[listNumber], listItem: item, ImageRender: ImageCache[key], QueryID: UserID)
+                                        } else {
+                                            ItemDetailsView(list: $lists[listNumber], listItem: item, QueryID: UserID)
+                                        }
+                                    } label: {
+                                        DisplayCards(listItem: item, ImageCache: $ImageCache)
+                                    }
+                                }
+                            }
+                        } else {
                             ForEach(listitems) { item in
-                                DisplayCards(listItem: item, ImageCache: $ImageCache)
-                                    .padding(.all)
+                                NavigationLink{
+                                    if let key = item.ImageKey {
+                                        ItemDetailsView(list: $lists[listNumber], listItem: item, ImageRender: ImageCache[key], QueryID: UserID)
+                                    } else {
+                                        ItemDetailsView(list: $lists[listNumber], listItem: item, QueryID: UserID)
+                                    }
+                                } label: {
+                                    HorizontalDisplayCards(listItem: item, ImageCache: $ImageCache)
+                                }
                             }
                         }
-                    } else {
-                        ForEach(listitems) { item in
-                            HorizontalDisplayCards(listItem: item, ImageCache: $ImageCache)
-                                .padding(.all)
-                        }
                     }
+                    .padding(.top)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -109,41 +142,22 @@ struct MainView: View {
     
     func getImage(Imagekey: String?) {
         guard let Key = Imagekey else {return}
-        let fetchedImage = dataStore.getImage(ImageKey: Key)
-        if fetchedImage != UIImage() {
-            DispatchQueue.main.async{
-                ImageCache[Key] = fetchedImage
+        if ImageCache.keys.contains(Key) {
+            return
+        } else {
+            let fetchedImage = dataStore.getImage(ImageKey: Key)
+            if fetchedImage != UIImage() {
+                DispatchQueue.main.async{
+                    ImageCache[Key] = fetchedImage
+                }
             }
         }
     }
     
     
-    func fetchUserInfo() {
-        Amplify.Auth.fetchUserAttributes() { result in
-            switch result {
-            case .success(let attributes):
-                let name = attributes.filter {$0.key == .name}
-                NameOfUser = name.first?.value ?? ""
-            case .failure(let error):
-                print("Fetching user attributes failed with error \(error)")
-            }
-        }
-        
-        //Get Username and create/check for user object - need to resolve occassional query return empty issue
-        
-        if let user = Amplify.Auth.getCurrentUser() {
-            Username = user.username
-            UserID = user.userId
-            print(Username)
-            
-            let userObject = dataStore.fetchUser(userID: UserID)
-            if userObject.Username == "NULL" {
-                dataStore.createUser(userID: UserID, username: Username, nameofUser: NameOfUser)
-            } else {
-                print(userObject)
-                userProfile = userObject
-            }
-        }
+    func fetchUserInfo() {        
+        // Gets user Lists
+        lists = dataStore.fetchLists(userID: UserID)
     }
     
     func getListItem() {

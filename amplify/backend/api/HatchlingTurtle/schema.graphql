@@ -20,7 +20,6 @@ type ListItem @model @auth(rules: [{allow: public}]) {
   id: ID!
   Name: String!
   Price: String
-  ShortDescription: String
   ImageKey: String
   Link: String
 }

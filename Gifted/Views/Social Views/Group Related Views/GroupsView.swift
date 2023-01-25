@@ -14,6 +14,8 @@ struct GroupsView: View {
     @ObservedObject var dataStore = DataStore()
     @EnvironmentObject var sessionManager: SessionManager
     
+    @Binding var ImageCache: [String: UIImage]
+    
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
     @State var Groups = [Group]()
@@ -35,7 +37,6 @@ struct GroupsView: View {
                         Image(systemName:"plus.rectangle")
                             .scaledToFit()
                             .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
-                        
                     }
                 }
                 .padding(.all)

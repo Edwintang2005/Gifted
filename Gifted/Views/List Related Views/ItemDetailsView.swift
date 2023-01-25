@@ -59,9 +59,6 @@ struct ItemDetailsView: View {
                         .font(.subheadline.weight(.medium))
                         .foregroundColor(Color.primary)
                     } // Item link as inputted by user
-                    Text(listItem.ShortDescription ?? " ") // Item Description as inputted by user
-                        .font(.headline.weight(.medium))
-                        .foregroundColor(.secondary)
                     Spacer()
                 }
                 Spacer()
@@ -177,17 +174,10 @@ struct ItemDetailsView: View {
     // Function for fetching image to display
     func getImage(Imagekey: String?) {
         guard let Key = Imagekey else {return}
-        Amplify.Storage.downloadData(key: Key) { result in
-            switch result {
-            case .success(let ImageData):
-                print("Fetched ImageData")
-                let image = UIImage(data: ImageData)
-                DispatchQueue.main.async{
-                    ImageRender = image
-                }
-                return
-            case .failure(let error):
-                print("Could not get Image URL - \(error)")
+        let fetchedImage = dataStore.getImage(ImageKey: Key)
+        if fetchedImage != UIImage() {
+            DispatchQueue.main.async{
+                ImageRender = fetchedImage
             }
         }
     }
