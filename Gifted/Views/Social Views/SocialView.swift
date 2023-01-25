@@ -17,6 +17,8 @@ struct SocialView: View {
     let tabHeight = UIScreen.main.bounds.size.height * 1/30
     @State private var selectedTab: tabPage = .Friends
     
+    @State private var selection = 0
+    
     var body: some View {
         NavigationView{
             VStack(alignment: .leading) {
@@ -24,52 +26,15 @@ struct SocialView: View {
                     .colourGradient()
                     .font(.largeTitle)
                     .padding(.horizontal)
-                HStack{
-                    // Selection tab
-                    Button {
-                        selectedTab = .Friends
-                    } label: {
-                        if selectedTab == .Friends {
-                            HStack(alignment: .center) {
-                                Spacer()
-                                Text("Friends")
-                                Spacer()
-                            }
-                            .selected()
-                        } else {
-                            HStack(alignment: .center) {
-                                Spacer()
-                                Text("Friends")
-                                Spacer()
-                            }
-                            .unSelected()
-                        }
-                    }
-                    Button {
-                        selectedTab = .Groups
-                    } label: {
-                        if selectedTab == .Groups {
-                            HStack(alignment: .center) {
-                                Spacer()
-                                Text("Groups")
-                                Spacer()
-                            }
-                            .selected()
-                        } else {
-                            HStack(alignment: .center) {
-                                Spacer()
-                                Text("Groups")
-                                Spacer()
-                            }
-                            .unSelected()
-                        }
-                    }
+                Picker("", selection: $selection) {
+                    Text("Friends")
+                        .tag(0)
+                    Text("Groups")
+                        .tag(1)
                 }
-                .frame(maxHeight: tabHeight)
-                .background(Color(.sRGB, red: 237/255, green: 240/255, blue: 241/255))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .pickerStyle(.segmented)
                 .padding(.horizontal)
-                if selectedTab == .Friends {
+                if selection == 0 {
                     FriendsView()
                 } else {
                     GroupsView()

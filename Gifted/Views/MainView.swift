@@ -31,45 +31,78 @@ struct MainView: View {
         GridItem(.flexible())
     ]
     
+    @State private var DisplayWelcome = true
+    @State private var sortOption = 0
+    @State private var ViewSelection = 0
+    
     var body: some View{
         NavigationView {
             VStack{
-                HStack (alignment: .top) {
-                    // Text that displays the User's name
-                    Text("Welcome back, \n\(NameOfUser)!")
-                        .colourGradient()
-                        .font(.largeTitle)
-                    Spacer()
-                }
-                .padding(.bottom)
-                HStack{
-                    Text("Your Wishlist:")
-                        .subtitle()
-                        .padding(.horizontal)
-                    Spacer()
-                    NavigationLink {
-                        ListView(QueryID: UserID)
-                    } label: {
-                        Text("See All")
-                            .small()
+                if DisplayWelcome {
+                    HStack (alignment: .top) {
+                        // Text that displays the User's name
+                        Text("Welcome back, \n\(NameOfUser)!")
+                            .colourGradient()
+                            .font(.largeTitle)
+                        Spacer()
+                    }
+                    .padding(.bottom)
+                    HStack {
+                        Text("Wishlist")
+                            .subtitle()
+                        Spacer()
+                    }
+                } else {
+                    HStack {
+                        Text("Wishlist")
+                            .colourGradient()
+                            .font(.largeTitle)
+                        Spacer()
                     }
                 }
-                VStack{
-                    ScrollView(showsIndicators: false) {
-                        LazyVGrid(columns: adaptiveColumns, spacing: 20) {
+                
+                HStack {
+                    Spacer()
+                    Text("Sort By: ")
+                    Picker("Sort by", selection: $sortOption) {
+                        Text("Name").tag(0)
+                        Text("Time").tag(1)
+                        Text("Price").tag(2)
+                    }
+                    Picker("Display format", selection: $ViewSelection) {
+                        Image(systemName: "square.grid.2x2")
+                            .tag(0)
+                        Image(systemName: "rectangle.grid.1x2")
+                            .tag(1)
+                    }
+                    .pickerStyle(.segmented)
+                }
+                ScrollView(showsIndicators: false) {
+                    if ViewSelection == 0 {
+                        LazyVGrid(columns: adaptiveColumns) {
                             ForEach(listitems) { item in
-                                DisplayCards(listItem: item)
+                                DisplayCards(listItem: item, ImageCache: $ImageCache)
                                     .padding(.all)
                             }
+                        }
+                    } else {
+                        ForEach(listitems) { item in
+                            HorizontalDisplayCards(listItem: item, ImageCache: $ImageCache)
+                                .padding(.all)
                         }
                     }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.all)
+            .padding(.horizontal)
             .onAppear{
                 fetchUserInfo()
                 getListItem()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 7.5) {
+                    withAnimation{
+                        DisplayWelcome = false
+                    }
+                }
             }
         }
     }

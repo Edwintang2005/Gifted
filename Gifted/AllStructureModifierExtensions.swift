@@ -76,7 +76,6 @@ extension Text{
     func verif() -> some View{
         self.font(.headline)
     }
-    
 }
 
 extension HStack {

@@ -164,8 +164,8 @@
 		E812D1042966E6CD0033BB23 /* List Related Views */ = {
 			isa = PBXGroup;
 			children = (
-				E812D0FB2966E5D50033BB23 /* AddToList.swift */,
 				E894FFB0293C75DD00095DD2 /* ListView.swift */,
+				E812D0FB2966E5D50033BB23 /* AddToList.swift */,
 				E84B6DD3295584460030DD6B /* ItemSearchView.swift */,
 				E8F91B54293AF20D003E23B5 /* ItemDetailsView.swift */,
 			);

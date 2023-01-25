@@ -25,50 +25,37 @@ struct FriendsView: View {
     
     
     var body: some View {
-        ZStack {
-            VStack {
-                HStack {
-                    Text("CONTACTS").boldText()
-                        .padding(.horizontal)
-                    Spacer()
-                    NavigationLink {
-                        AddToFriends()
-                    } label: {
-                        Image(systemName:"person.badge.plus")
-                            .scaledToFit()
-                            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
-                        
-                    }
-                }
-                .padding(.all)
-                
-                if FriendsLength == 0 {
-                    Spacer()
-                    Text("Hopefully it's not normally like this... \n Add some friends!")
-                        .multilineTextAlignment(.center)
-                    Spacer()
-                } else {
-                    List {
-                        ForEach(Friends) {
-                            Friend in NavigationLink{
-                                ListView(QueryID: Friend.id)
-                            } label: {
-                                Text(Friend.Username)
-                            }
-                        }
-                        .onDelete(perform: deleteFriend)
-                    }
+        VStack {
+            HStack {
+                Text("CONTACTS").boldText()
+                    .padding(.horizontal)
+                Spacer()
+                NavigationLink {
+                    AddToFriends()
+                } label: {
+                    Image(systemName:"person.badge.plus")
+                        .scaledToFit()
+                        .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+                    
                 }
             }
-            VStack{
+            .padding(.all)
+            
+            if FriendsLength == 0 {
                 Spacer()
-                HStack{
-                    Spacer()
-                    NavigationLink{
-                        AddToFriends()
-                    } label: {
-                        Image(systemName: "plus.circle.fill").floaty()
+                Text("Hopefully it's not normally like this... \n Add some friends!")
+                    .multilineTextAlignment(.center)
+                Spacer()
+            } else {
+                List {
+                    ForEach(Friends) {
+                        Friend in NavigationLink{
+                            ListView(QueryID: Friend.id)
+                        } label: {
+                            Text(Friend.Username)
+                        }
                     }
+                    .onDelete(perform: deleteFriend)
                 }
             }
         }
