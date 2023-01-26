@@ -14,6 +14,7 @@ struct DisplayCards: View {
     let cardHeight = UIScreen.main.bounds.size.height * 3/10
     let cornerRadius = 7.0
     
+    @ObservedObject var dataStore = DataStore()
     @State var listItem: ListItem
     @Binding var ImageCache: [String: UIImage]
     
@@ -42,7 +43,6 @@ struct DisplayCards: View {
                 Text(listItem.Name)
                     .padding(.all)
             }
-            
         }
         .padding(.top)
         .onAppear{
@@ -91,6 +91,7 @@ struct HorizontalDisplayCards: View {
     let cardHeight = UIScreen.main.bounds.size.height * 3/20
     let cornerRadius = 7.0
     
+    @ObservedObject var dataStore = DataStore()
     @State var listItem: ListItem
     @Binding var ImageCache: [String: UIImage]
     
@@ -115,7 +116,8 @@ struct HorizontalDisplayCards: View {
                 }
                 .frame(width: cardWidth, height: cardHeight)
             } else {
-                Text(listItem.Name)
+                cardDetails
+                    .padding(.all)
             }
             
         }

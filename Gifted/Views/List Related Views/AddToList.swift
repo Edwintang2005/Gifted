@@ -38,7 +38,7 @@ struct AddToList: View{
                 .keyboardType(.URL)
             TextField("Price", text: $price).pretty()
                 .keyboardType(.decimalPad) // enforces number input for prices
-            Text("Select an image for this Item:").small()
+            Text("Select an image for this Item:")
             ZStack(alignment: .center){
                 if (image == nil) {
                     Rectangle()

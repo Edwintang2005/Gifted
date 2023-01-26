@@ -29,7 +29,7 @@ struct CreateNewGroup: View{
             Spacer()
             TextField("Group Name", text: $Name).pretty()
             Spacer()
-            Text("Select an image for this Item:").small()
+            Text("Select an image for this Item:")
             ZStack(alignment: .center){
                 if (image == nil) {
                     Rectangle()

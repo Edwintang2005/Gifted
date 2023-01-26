@@ -53,7 +53,7 @@ struct FriendsView: View {
                         Friend in NavigationLink{
                             ListView(QueryID: Friend.id)
                         } label: {
-                            Text(Friend.Username)
+                            FriendDisplayCards(friend: Friend, ImageCache: $ImageCache)
                         }
                     }
                     .onDelete(perform: deleteFriend)

@@ -29,20 +29,39 @@ struct SignUpView: View {
     }
     
     var body: some View {
-        
-        VStack(alignment: .leading) {
-            TextField("Username", text: $username).pretty()
-            TextField("Name (First and last)", text: $name).pretty()
-                .keyboardType(.namePhonePad)
-            TextField("Email", text: $email).pretty()
-                .keyboardType(.emailAddress)
-            Text("•  Valid Email Address")
-                .verif()
-                .foregroundColor(self.requirements[1] ? .green: .red)
-                .padding(.horizontal)
-            SecureField("Password", text: $password).pretty()
+        VStack {
+            VStack(alignment: .center) {
+                Text("Get Started!")
+                    .title()
+                    .padding(.top)
+                Text("Enter your details").boldText()
+                VStack{
+                    TextField("Username", text: $username).pretty()
+                    TextField("Name (First and last)", text: $name).pretty()
+                        .keyboardType(.namePhonePad)
+                    TextField("Email", text: $email).pretty()
+                        .keyboardType(.emailAddress)
+                    SecureField("Password", text: $password).pretty()
+                    Button {
+                        sessionManager.signUp(
+                            username: username,
+                            email: email,
+                            name: name,
+                            password: password
+                        )
+                    } label: {
+                        Text("Sign up")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .pretty()
+                    .padding(.top)
+                }
+            }
             VStack(alignment: .leading) {
-                Text("Password Requirements:").homepagename()
+                Text("Signup Requirements:").homepagename()
+                Text("•  Valid Email Address")
+                    .verif()
+                    .foregroundColor(self.requirements[1] ? .green: .red)
                 Text("•  Password longer than 8 characters")
                     .verif()
                     .foregroundColor(self.requirements[0] ? .green : .red)
@@ -55,34 +74,26 @@ struct SignUpView: View {
                 Text("•  Password contains a number")
                     .verif()
                     .foregroundColor(self.requirements[4] ? .green : .red)
+                Spacer()
+                HStack{
+                    Spacer()
+                    VStack (alignment: .center) {
+                        Text("Already have an account?")
+                        Button("Log in", action: sessionManager.showLogin)
+                            .tint(Color(.sRGB, red: 37/255, green: 75/255, blue: 72/255))
+                    }
+                    Spacer()
+                }
             }
             .padding(.all)
-            Button {
-                sessionManager.signUp(
-                    username: username,
-                    email: email,
-                    name: name,
-                    password: password
-                )
-            } label: {
-                Text("Sign up!")
-                    .frame(maxWidth: .infinity)
-            }
-            .pretty()
-            .padding(.top)
-            Spacer()
-            HStack{
-                Spacer()
-                VStack (alignment: .center) {
-                    Text("Already have an account?")
-                        .padding(.bottom)
-                    Button("Log in", action: sessionManager.showLogin)
-                }
-                Spacer()
-            }
-            Spacer()
         }
-        .padding(.all)
+        .loadingFrame()
+        .background {
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+            .fill(Color(.displayP3, red: 239/255, green: 245/255, blue: 227/255))
+        }
+        Spacer()
+        signoff()
     }
     
     func isValidEmailAddress(emailAddressString: String) -> Bool {

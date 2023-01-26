@@ -16,13 +16,14 @@ struct LoginView: View {
     @State var password = ""
     
     var body: some View {
+        Spacer()
         VStack {
             // Username signin functionality
             VStack {
-                Spacer()
-                Text("Welcome back! \n Enter your details")
-                    .colourGradient()
-                Spacer()
+                VStack(alignment: .center){
+                    Text("Welcome back!").title()
+                    Text("Enter your details").boldText()
+                }
                 TextField("Username", text: $username).pretty()
                 SecureField("Password", text: $password).pretty()
                 Button {
@@ -37,48 +38,51 @@ struct LoginView: View {
                         .frame(maxWidth: .infinity)
                 }.pretty()
             }
-            .padding(.horizontal)
+            .padding(.all)
+            
+            
             // The Big line with an or in the middle, for appearances
-            LabelledDivider(label: "OR")
+            // LabelledDivider(label: "OR")
+            
+            
             // vertical stack created for easier button placement
-            VStack(spacing: 8) {
-                HStack{
-                    // Button for Gmail Signin
-                    Button{ action:do {
-                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
-                    }
-                    } label: {
-                        HStack{
-                            Image(systemName: "envelope.fill")
-                                .imageScale(.medium)
-                            Text(" Gmail")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal)
-                    }.google()
-                    // Button for Facebook signin
-                    Button {
-                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
-                    } label: {
-                        HStack{
-                            Image(systemName: "f.cursive")
-                                .imageScale(.medium)
-                            Text(" Facebook")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal)
-                    }.facebook()
-                }
-                Spacer()
+            VStack {
+//                HStack{
+//                    // Button for Gmail Signin
+//                    Button{ action:do {
+//                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
+//                    }
+//                    } label: {
+//                        HStack{
+//                            Image(systemName: "envelope.fill")
+//                                .imageScale(.medium)
+//                            Text(" Gmail")
+//                        }
+//                        .frame(maxWidth: .infinity)
+//                        .padding(.horizontal)
+//                    }.google()
+//                    // Button for Facebook signin
+//                    Button {
+//                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
+//                    } label: {
+//                        HStack{
+//                            Image(systemName: "f.cursive")
+//                                .imageScale(.medium)
+//                            Text(" Facebook")
+//                        }
+//                        .frame(maxWidth: .infinity)
+//                        .padding(.horizontal)
+//                    }.facebook()
+//                }
                 Text("Don't have an account?")
-                    .padding(.bottom)
                 Button("Sign up", action: sessionManager.showSignUp)
-                Spacer()
-                Text("Brought to you with ❤️ from Edwin, Roger and Michelle").small()
+                    .tint(Color(.sRGB, red: 37/255, green: 75/255, blue: 72/255))
             }
-            .padding(.horizontal)
+            .padding(.all)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .loadingFrame()
+        Spacer()
+        signoff()
     }
 }
 
@@ -92,7 +96,7 @@ struct TempUnavailable: View {
             Spacer()
             Text("Unfortunately This feature isn't yet Available 😩 \n \n Perhaps in the next Update??").pretty()
             Spacer()
-            Text("Or you could just donate to us devs to speed things along, button below!").small()
+            Text("Or you could just donate to us devs to speed things along, button below!")
             Spacer()
             Link("Donate Here!", destination: URL(string:"https://www.youtube.com/watch?v=dQw4w9WgXcQ")!).pretty()
             Button{

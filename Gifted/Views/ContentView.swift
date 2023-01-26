@@ -37,6 +37,7 @@ struct ContentView: View {
                 .tabItem{
                     Label("Explore", systemImage: "magnifyingglass")
                 }
+            
             SocialView(ImageCache: $ImageCache)
                 .tabItem{
                     Label("Socials", systemImage: "person.2")
@@ -50,6 +51,16 @@ struct ContentView: View {
     }
     
     func getAttributes() {
+        Amplify.Auth.fetchUserAttributes() { result in
+            switch result {
+            case .success(let attributes):
+                let name = attributes.filter {$0.key == .name}
+                NameOfUser = name.first?.value ?? ""
+            case .failure(let error):
+                print("Fetching user attributes failed with error \(error)")
+            }
+        }
+        
         if let user = Amplify.Auth.getCurrentUser() {
             Username = user.username
             UserID = user.userId

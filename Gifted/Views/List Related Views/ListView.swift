@@ -75,7 +75,7 @@ struct ListView: View {
                                         
                                         VStack(alignment: .leading) {
                                             Text(Item.Name).listtext()
-                                            Text("$ \(Item.Price ?? "NO PRICE ATTATCHED")").small()
+                                            Text("$ \(Item.Price ?? "NO PRICE ATTATCHED")")
                                         }
                                         .padding(.horizontal)
                                         Spacer()
@@ -108,7 +108,7 @@ struct ListView: View {
                                         }
                                         VStack(alignment: .leading) {
                                             Text(Item.Name).listtext()
-                                            Text("$ \(Item.Price ?? "No PRICE ATTATCHED")").small()
+                                            Text("$ \(Item.Price ?? "No PRICE ATTATCHED")")
                                         }
                                         .padding(.horizontal)
                                         Spacer()

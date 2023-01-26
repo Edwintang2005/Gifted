@@ -93,6 +93,7 @@ struct MainView: View {
                 
                 if lists.count == 0 {
                     Text("An error occurred, please restart the app")
+                    
                 } else {
                     ScrollView(showsIndicators: false) {
                         if ViewSelection == 0 {
@@ -135,6 +136,9 @@ struct MainView: View {
                     withAnimation{
                         DisplayWelcome = false
                     }
+                }
+                if lists.count == 0 {
+                    dataStore.createFirstList(userID: UserID, name: NameOfUser)
                 }
             }
         }

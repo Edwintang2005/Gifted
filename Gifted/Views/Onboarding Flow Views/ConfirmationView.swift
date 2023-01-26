@@ -16,32 +16,41 @@ struct ConfirmationView: View {
     let username: String
     
     var body: some View {
+        Spacer()
         VStack(alignment: .center) {
-            Spacer()
-            Text("Verify your identity")
-                .colourGradient()
-            Text("Enter the 6-digit code sent to your email")
-                .boldText()
-            Image("VerificationStock")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            VStack {
+                Text("Verify your identity")
+                    .title()
+                Text("Enter the 6-digit code sent to your email")
+                    .boldText()
+            }
+            .padding(.vertical)
             TextField("Confirmation Code", text: $confirmationCode)
                 .pretty()
                 .keyboardType(.numberPad)
-            Text("Check your email for a code").medium()
-            Button {
-                sessionManager.confirm(
-                    username: username,
-                    code: confirmationCode
-                )
-            } label: {
-                Text("Confirm")
-                    .frame(maxWidth: .infinity)
-            }.pretty()
-            Spacer()
-            Text("Brought to you with ❤️ from Edwin, Roger and Michelle").small()
+            HStack {
+                Button {
+                    sessionManager.resendcode(username: username)
+                } label: {
+                    Text("Resend code")
+                        .frame(maxWidth: .infinity)
+                }
+                .secondary()
+                Button {
+                    sessionManager.confirm(
+                        username: username,
+                        code: confirmationCode
+                    )
+                } label: {
+                    Text("Confirm")
+                        .frame(maxWidth: .infinity)
+                }.pretty()
+            }
         }
-        .padding()
+        .loadingFrame()
+        .padding(.all)
+        Spacer()
+        signoff()
     }
 }
 

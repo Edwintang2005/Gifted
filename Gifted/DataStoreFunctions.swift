@@ -445,6 +445,7 @@ final class DataStore: ObservableObject {
             case .success(let ImageData):
                 print("Fetched ImageData")
                 returnValue = UIImage(data: ImageData) ?? UIImage()
+                print(returnValue)
             case .failure(let error):
                 print("Could not get image data - \(error.localizedDescription)")
             }

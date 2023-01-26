@@ -115,6 +115,18 @@ final class SessionManager: ObservableObject {
         }
     }
     
+    func resendcode(username: String) {
+        Amplify.Auth.resendSignUpCode(for: username) {
+            switch $0 {
+            case .success(let deliveryDetails):
+                print("Successfully resent code - \(deliveryDetails)")
+            case .failure(let error):
+                print("Could not resend code - \(error.localizedDescription)")
+            }
+        }
+        
+    }
+    
     // Function to allow users to login
     func login(username: String, password: String) {
         _ = Amplify.Auth.signIn(

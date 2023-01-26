@@ -58,11 +58,6 @@ extension Text{
             .multilineTextAlignment(.leading)
     }
     
-    func small() -> some View{
-        self.font(.caption)
-            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
-            .multilineTextAlignment(.center)
-    }
     func medium() -> some View{
         self.font(.footnote)
             .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
@@ -99,16 +94,24 @@ extension HStack {
 extension TextField {
     func pretty() -> some View {
         self.padding()
-            .border(Color.gray)
-            .cornerRadius(3)
+            .frame(width: UIScreen.main.bounds.size.width*3/4, height: UIScreen.main.bounds.size.height*1/20)
+            .background {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .stroke(Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255), lineWidth: 1)
+                .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.white))
+            }
     }
 }
 
 extension SecureField {
     func pretty() -> some View {
         self.padding()
-            .border(Color.gray)
-            .cornerRadius(3)
+            .frame(width: UIScreen.main.bounds.size.width*3/4, height: UIScreen.main.bounds.size.height*1/20)
+            .background {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .stroke(Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255), lineWidth: 1)
+                .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.white))
+            }
     }
 }
 
@@ -116,13 +119,25 @@ extension Button {
     func pretty() -> some View {
         self.font(.headline)
             .padding(.all)
-            .frame(maxWidth: .infinity)
+            .frame(width: UIScreen.main.bounds.size.width * 7/20, height: UIScreen.main.bounds.size.height * 1/25)
             .foregroundColor(Color(.white))
             .background(Color(.sRGB, red: 76/255, green: 159/255, blue: 148/255))
             .cornerRadius(10)
             .shadow(color: Color.black.opacity(0.2), radius: 10, x: 2, y: 2)
             .padding(.all)
     }
+    
+    func secondary() -> some View {
+        self.font(.headline)
+            .padding(.all)
+            .frame(width: UIScreen.main.bounds.size.width * 7/20, height: UIScreen.main.bounds.size.height * 1/25)
+            .foregroundColor(Color(.sRGB, red: 158/255, green: 159/255, blue: 161/255))
+            .background(Color(.sRGB, red: 237/255, green: 240/255, blue: 241/255))
+            .cornerRadius(10)
+            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 2, y: 2)
+            .padding(.all)
+    }
+    
     func floaty() -> some View {
         self.font(.system(size:60))
             .foregroundColor(Color(.sRGB, red: 76/255, green: 159/255, blue: 148/255))
@@ -195,6 +210,16 @@ extension RoundedRectangle {
     }
 }
 
+extension VStack {
+    func loadingFrame() -> some View {
+        self.frame(maxWidth: UIScreen.main.bounds.size.width * 9/10)
+            .background {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color(.displayP3, red: 239/255, green: 245/255, blue: 227/255))
+            }
+    }
+}
+
 // Attempted extension for overlay code of who has reserved, not working
 //extension VStack{
 //    func ImageOverlay(selfQuery: Bool) -> some View{
@@ -240,6 +265,17 @@ struct LabelledDivider: View {
     var line: some View {
         VStack { Divider().background(color) }.padding(horizontalPadding)
     }
+}
+
+struct signoff: View {
+    
+    var body: some View {
+        Text("Brought to you with ❤️ from Edwin, Roger and Michelle")
+            .font(.caption)
+            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+            .multilineTextAlignment(.center)
+    }
+    
 }
 
 //Code for Image Picker
