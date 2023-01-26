@@ -17,6 +17,7 @@ final class DataStore: ObservableObject {
         case removeFrom
     }
     
+    
     func createUser(userID: String, username: String, nameofUser: String) {
         let user = UserProfile(
             id: userID,
@@ -67,6 +68,31 @@ final class DataStore: ObservableObject {
             }
         }
         return returnValue
+    }
+    
+    
+    
+    func deleteUser(userID: String) {
+        let ProfileDelete = fetchUser(userID: userID)
+        Amplify.DataStore.delete(ProfileDelete) {
+            switch $0 {
+            case .success():
+                print("Profile Deleted")
+            case .failure(let error):
+                print("Could not delete profile -\(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func refreshDataStore() {
+        Amplify.DataStore.start{
+            switch $0 {
+            case .success():
+                print("Syncing datastore")
+            case .failure(let error):
+                print("Error initiating datastore sync - \(error.localizedDescription)")
+            }
+        }
     }
     
     // List related Modifications

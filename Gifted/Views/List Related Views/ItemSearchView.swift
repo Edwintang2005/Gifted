@@ -32,20 +32,27 @@ struct ItemSearchView: View {
     
     var body: some View {
         NavigationView{
-            VStack(alignment: .leading) {
-                ScrollView(showsIndicators: false) {
-                    HStack{
-                        Text("Discover")
-                            .colourGradient()
-                            .padding(.horizontal)
-                        Spacer()
+            VStack(alignment: .center) {
+                HStack{
+                    Text("Explore")
+                        .colourGradient()
+                        .padding(.horizontal)
+                    Spacer()
+                    NavigationLink{
+                        AddToList(lists: $lists, listNumber: $listNumber)
+                    } label: {
+                        Image(systemName: "plus")
+                            .imageScale(.large)
                     }
+                    .padding(.all)
+                }
+                ScrollView(showsIndicators: false) {
                     ForEach(listitemsFiltered) {
                         Item in NavigationLink{
                             if let key = Item.ImageKey {
-                                ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userID)
+                                ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key])
                             } else {
-                                ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userID)
+                                ItemDetailsView(list: $lists[listNumber], listItem: Item)
                             }
                         } label: {
                             HorizontalDisplayCards(listItem: Item, ImageCache: $ImageCache)
@@ -57,22 +64,6 @@ struct ItemSearchView: View {
                 getListItem()
             }
             .searchable(text: $searchedText)
-            .navigationBarItems(trailing: (
-                HStack{
-                    Button(action: {
-                        getListItem()
-                    }) {
-                        Image(systemName: "arrow.clockwise")
-                            .imageScale(.large)
-                    }
-                    NavigationLink{
-                        AddToList(lists: $lists, listNumber: $listNumber)
-                    } label: {
-                        Image(systemName: "plus.square")
-                            .imageScale(.large)
-                    }
-                }
-            ))
         }
     }
     

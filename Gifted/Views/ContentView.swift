@@ -29,7 +29,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            MainView(ImageCache: $ImageCache)
+            MainView(ImageCache: $ImageCache, lists: $lists)
                 .tabItem{
                     Label("Lists", systemImage: "list.bullet.rectangle.portrait")
                 }
@@ -47,6 +47,9 @@ struct ContentView: View {
         .onAppear{
             getAttributes()
             getLists()
+            if lists.count == 0 {
+                dataStore.createFirstList(userID: UserID, name: NameOfUser)
+            }
         }
     }
     

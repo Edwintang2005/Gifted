@@ -14,12 +14,14 @@ struct MainView: View {
     @ObservedObject var dataStore = DataStore()
     @EnvironmentObject var sessionManager: SessionManager
     
-    
-    @State var listitems = [ListItem]()
-    @State var lists = [UserList]()
-    var listitemsLength = Int()
-    @State var listNumber = 0
     @Binding var ImageCache: [String: UIImage]
+    @Binding var lists: [UserList]
+    @State var listitems = [ListItem]()
+    
+    var listitemsLength = Int()
+    
+    @State var listNumber = 0
+   
     
     
     // Variable for User credentials for use throughout the app
@@ -41,8 +43,12 @@ struct MainView: View {
                 if DisplayWelcome {
                     HStack (alignment: .top) {
                         // Text that displays the User's name
-                        Text("Welcome back, \n\(NameOfUser)!")
-                            .colourGradient()
+                        NavigationLink{
+                            SettingsView(ImageCache: $ImageCache)
+                        } label: {
+                            Text("Welcome back, \n\(NameOfUser)!")
+                                .colourGradient()
+                        }
                         Spacer()
                     }
                     .padding(.bottom)
@@ -74,17 +80,45 @@ struct MainView: View {
                     }
                     .labelsHidden()
                     .pickerStyle(.segmented)
-                    Spacer()
-                    Image(systemName: "arrow.up.arrow.down")
-                    Picker("Sort by", selection: $sortOption) {
-                        Text("Name").tag(0)
-                        Text("Time").tag(1)
-                        Text("Price").tag(2)
+                    .fixedSize()
+                    Menu {
+                        Button {
+                            sortOption = 0
+                        } label: {
+                            if sortOption == 0 {
+                                Image(systemName: "checkmark")
+                                Text("Name")
+                            } else {
+                                Text("Name")
+                            }
+                            
+                        }
+                        Button {
+                            sortOption = 1
+                        } label: {
+                            if sortOption == 1 {
+                                Image(systemName: "checkmark")
+                                Text("Time")
+                            } else {
+                                Text("Time")
+                            }
+                        }
+                        Button {
+                            sortOption = 2
+                        } label: {
+                            if sortOption == 2 {
+                                Image(systemName: "checkmark")
+                                Text("Price")
+                            } else {
+                                Text("Price")
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "arrow.up.arrow.down")
                     }
-                    .labelsHidden()
-                    
+                    Spacer()
                     NavigationLink{
-                        ItemSearchView(ImageCache: $ImageCache, lists: $lists, listNumber: $listNumber)
+                        AddToList(lists: $lists, listNumber: $listNumber)
                     } label: {
                         Image(systemName: "plus")
                             .imageScale(.large)
@@ -93,7 +127,11 @@ struct MainView: View {
                 
                 if lists.count == 0 {
                     Text("An error occurred, please restart the app")
-                    
+                } else if listitems.count == 0 {
+                    Spacer()
+                    Text("Welcome to the app! \n Hop over to the Explore page to add items.")
+                        .multilineTextAlignment(.center)
+                    Spacer()
                 } else {
                     ScrollView(showsIndicators: false) {
                         if ViewSelection == 0 {
@@ -101,9 +139,9 @@ struct MainView: View {
                                 ForEach(listitems) { item in
                                     NavigationLink{
                                         if let key = item.ImageKey {
-                                            ItemDetailsView(list: $lists[listNumber], listItem: item, ImageRender: ImageCache[key], QueryID: UserID)
+                                            ItemDetailsView(list: $lists[listNumber], listItem: item, ImageRender: ImageCache[key])
                                         } else {
-                                            ItemDetailsView(list: $lists[listNumber], listItem: item, QueryID: UserID)
+                                            ItemDetailsView(list: $lists[listNumber], listItem: item)
                                         }
                                     } label: {
                                         DisplayCards(listItem: item, ImageCache: $ImageCache)
@@ -114,9 +152,9 @@ struct MainView: View {
                             ForEach(listitems) { item in
                                 NavigationLink{
                                     if let key = item.ImageKey {
-                                        ItemDetailsView(list: $lists[listNumber], listItem: item, ImageRender: ImageCache[key], QueryID: UserID)
+                                        ItemDetailsView(list: $lists[listNumber], listItem: item, ImageRender: ImageCache[key])
                                     } else {
-                                        ItemDetailsView(list: $lists[listNumber], listItem: item, QueryID: UserID)
+                                        ItemDetailsView(list: $lists[listNumber], listItem: item)
                                     }
                                 } label: {
                                     HorizontalDisplayCards(listItem: item, ImageCache: $ImageCache)
@@ -130,15 +168,11 @@ struct MainView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal)
             .onAppear{
-                fetchUserInfo()
                 getListItem()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 7.5) {
                     withAnimation{
                         DisplayWelcome = false
                     }
-                }
-                if lists.count == 0 {
-                    dataStore.createFirstList(userID: UserID, name: NameOfUser)
                 }
             }
         }
@@ -159,13 +193,8 @@ struct MainView: View {
     }
     
     
-    func fetchUserInfo() {        
-        // Gets user Lists
-        lists = dataStore.fetchLists(userID: UserID)
-    }
-    
     func getListItem() {
-        listitems = dataStore.allItemsQuery()
+        listitems = dataStore.fetchListItems(listid: lists[listNumber].id)
     }
 }
 

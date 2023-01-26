@@ -56,9 +56,9 @@ struct ListView: View {
                             ForEach(listitems) {
                                 Item in NavigationLink{
                                     if let key = Item.ImageKey {
-                                        ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
+                                        ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key])
                                     } else {
-                                        ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userProfile.id)
+                                        ItemDetailsView(list: $lists[listNumber], listItem: Item)
                                     }
                                 } label: {
                                     HStack{
@@ -90,9 +90,9 @@ struct ListView: View {
                             ForEach(listitems) {
                                 Item in NavigationLink{
                                     if let key = Item.ImageKey {
-                                        ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key], QueryID: userProfile.id)
+                                        ItemDetailsView(list: $lists[listNumber], listItem: Item, ImageRender: ImageCache[key])
                                     } else {
-                                        ItemDetailsView(list: $lists[listNumber], listItem: Item, QueryID: userProfile.id)
+                                        ItemDetailsView(list: $lists[listNumber], listItem: Item)
                                     }
                                 } label: {
                                     HStack{

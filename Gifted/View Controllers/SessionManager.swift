@@ -165,6 +165,17 @@ final class SessionManager: ObservableObject {
         }
     }
     
+    func deleteUser() {
+        Amplify.Auth.deleteUser() {
+            switch $0 {
+            case .success():
+                print("Account Deleted")
+            case .failure(let error):
+                print("Could not delete account - \(error.localizedDescription)")
+            }
+        }
+    }
+    
     func backendStopandReset() {
         Amplify.DataStore.clear { result in
             switch result {

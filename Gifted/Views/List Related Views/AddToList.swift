@@ -31,19 +31,18 @@ struct AddToList: View{
     
     var body: some View{
         
-        VStack(alignment: .leading) {
+        VStack(alignment: .center) {
             Spacer()
             TextField("Name", text: $name).pretty()
             TextField("Link", text: $link).pretty()
                 .keyboardType(.URL)
             TextField("Price", text: $price).pretty()
                 .keyboardType(.decimalPad) // enforces number input for prices
-            Text("Select an image for this Item:")
             ZStack(alignment: .center){
                 if (image == nil) {
                     Rectangle()
                         .fill(.secondary)
-                    Text("Tap to Select an image").listtext()
+                    Text("Tap to Select an image").itemText()
                 } else {
                     image?
                         .resizable()

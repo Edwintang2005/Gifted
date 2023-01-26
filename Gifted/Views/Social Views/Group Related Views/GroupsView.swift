@@ -51,7 +51,7 @@ struct GroupsView: View {
                             Group in NavigationLink{
                                 GroupDetailsView(GroupPassed: Group)
                             } label: {
-                                Text(Group.Name)
+                                GroupDisplayCards(group: Group, ImageCache: $ImageCache)
                             }
                         }
                         .onDelete(perform: deleteGroup)
