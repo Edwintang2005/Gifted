@@ -54,7 +54,7 @@ struct GroupsView: View {
                     Text("It's quite empty in here... \n Add or join your first group!")
                     Spacer()
                 } else {
-                    List {
+                    ScrollView {
                         ForEach(Groups) {
                             Group in NavigationLink{
                                 GroupDetailsView(GroupPassed: Group)
@@ -62,7 +62,6 @@ struct GroupsView: View {
                                 GroupDisplayCards(group: Group, ImageCache: $ImageCache)
                             }
                         }
-                        .onDelete(perform: deleteGroup)
                     }
                 }
             }
