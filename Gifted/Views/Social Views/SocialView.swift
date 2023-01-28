@@ -12,31 +12,42 @@ enum tabPage {
     case Groups
 }
 
+enum popupState {
+    case None
+    case addFriend
+    case joinGroup
+    case createGroup
+}
+
 struct SocialView: View {
     
     @Binding var ImageCache: [String: UIImage]
     
     @State private var selectedTab: tabPage = .Friends
-    @State private var selection = 0
+    @State private var selection = tabPage.Friends
+    @State var displayPopup = popupState.None
     
     var body: some View {
         NavigationView{
-            VStack(alignment: .leading) {
-                Text("Social")
-                    .colourGradient()
+            VStack {
+                VStack(alignment: .leading) {
+                    Text("Social")
+                        .colourGradient()
+                        .padding(.horizontal)
+                    Picker("", selection: $selection) {
+                        Text("Friends")
+                            .tag(tabPage.Friends)
+                        Text("Groups")
+                            .tag(tabPage.Groups)
+                    }
+                    .pickerStyle(.segmented)
                     .padding(.horizontal)
-                Picker("", selection: $selection) {
-                    Text("Friends")
-                        .tag(0)
-                    Text("Groups")
-                        .tag(1)
                 }
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
-                if selection == 0 {
-                    FriendsView(ImageCache: $ImageCache)
+                .disabled(displayPopup != popupState.None)
+                if selection == .Friends {
+                    FriendsView(ImageCache: $ImageCache, displayPopup: $displayPopup)
                 } else {
-                    GroupsView(ImageCache: $ImageCache)
+                    GroupsView(ImageCache: $ImageCache, displayPopup: $displayPopup)
                 }
             }
         }

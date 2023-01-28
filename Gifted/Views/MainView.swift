@@ -13,6 +13,7 @@ struct MainView: View {
     
     @ObservedObject var dataStore = DataStore()
     @EnvironmentObject var sessionManager: SessionManager
+    @State var NameOfUser = UserDefaults.standard.string(forKey: "NameOfUser") ?? ""
     
     @Binding var ImageCache: [String: UIImage]
     @Binding var lists: [UserList]
@@ -26,7 +27,7 @@ struct MainView: View {
     
     // Variable for User credentials for use throughout the app
     let UserID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
-    let NameOfUser = UserDefaults.standard.string(forKey: "NameOfUser") ?? ""
+    
     
     private let adaptiveColumns = [
         GridItem(.flexible()),

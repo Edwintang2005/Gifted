@@ -23,41 +23,46 @@ struct FriendsView: View {
     
     @State var Friends = [UserProfile]()
     @State var FriendsLength = Int()
-    
+    @Binding var displayPopup: popupState
     
     var body: some View {
-        VStack {
-            HStack {
-                Text("CONTACTS").boldText()
-                    .padding(.horizontal)
-                Spacer()
-                NavigationLink {
-                    AddToFriends()
-                } label: {
-                    Image(systemName:"person.badge.plus")
-                        .scaledToFit()
-                        .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
-                    
+        ZStack {
+            VStack {
+                HStack {
+                    Text("CONTACTS").boldText()
+                        .padding(.horizontal)
+                    Spacer()
+                    Button {
+                        displayPopup = popupState.addFriend
+                    } label: {
+                        Image(systemName:"person.badge.plus")
+                            .imageScale(.large)
+                    }
+                }
+                .padding(.all)
+                
+                if FriendsLength == 0 {
+                    Spacer()
+                    Text("Hopefully it's not normally like this... \n Add some friends!")
+                        .multilineTextAlignment(.center)
+                    Spacer()
+                } else {
+                    List {
+                        ForEach(Friends) {
+                            Friend in NavigationLink{
+                                ListView(QueryID: Friend.id)
+                            } label: {
+                                FriendDisplayCards(friend: Friend, ImageCache: $ImageCache)
+                            }
+                        }
+                        .onDelete(perform: deleteFriend)
+                    }
                 }
             }
-            .padding(.all)
+            .disabled(displayPopup == .addFriend)
             
-            if FriendsLength == 0 {
-                Spacer()
-                Text("Hopefully it's not normally like this... \n Add some friends!")
-                    .multilineTextAlignment(.center)
-                Spacer()
-            } else {
-                List {
-                    ForEach(Friends) {
-                        Friend in NavigationLink{
-                            ListView(QueryID: Friend.id)
-                        } label: {
-                            FriendDisplayCards(friend: Friend, ImageCache: $ImageCache)
-                        }
-                    }
-                    .onDelete(perform: deleteFriend)
-                }
+            if displayPopup == .addFriend {
+                AddToFriends(displayPopup: $displayPopup)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

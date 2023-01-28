@@ -15,13 +15,13 @@ struct GroupsView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     @Binding var ImageCache: [String: UIImage]
+    @Binding var displayPopup: popupState
     
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
     @State var Groups = [Group]()
     @State var GroupsLength = Int()
-    @State var showFloatingMenu1 = false
-    @State var showFloatingMenu2 = false
+    @State var showCreateGroup = false
     
     
     var body: some View {
@@ -31,12 +31,20 @@ struct GroupsView: View {
                     Text("GROUPS").boldText()
                         .padding(.horizontal)
                     Spacer()
-                    NavigationLink {
-                        AddToGroups()
+                    Menu {
+                        Button {
+                            displayPopup = .joinGroup
+                        } label: {
+                            Text("Join a Group")
+                        }
+                        Button {
+                            displayPopup = .createGroup
+                        } label: {
+                            Text("Make a Group")
+                        }
                     } label: {
                         Image(systemName:"plus.rectangle")
-                            .scaledToFit()
-                            .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
+                            .imageScale(.large)
                     }
                 }
                 .padding(.all)
@@ -58,49 +66,12 @@ struct GroupsView: View {
                     }
                 }
             }
+            .disabled(displayPopup != .None)
             VStack{
-                Spacer()
-                if showFloatingMenu2 == false {
-                    
-                } else {
-                    VStack(alignment: .trailing) {
-                        NavigationLink{
-                            AddToGroups()
-                        } label: {
-                            
-                            HStack{
-                                Spacer()
-                                Text("Join a Group")
-                                    .padding(.all)
-                            }
-                        }
-                    }
-                }
-                if showFloatingMenu1 == false {
-                    
-                } else {
-                    VStack(alignment: .trailing) {
-                        NavigationLink{
-                            CreateNewGroup()
-                        } label: {
-                            HStack{
-                                Spacer()
-                                Text("Create a Group")
-                                    .padding(.all)
-                            }
-                        }
-                    }
-                }
-                HStack{
-                    Spacer()
-                    Button{
-                        showFloatingMenu1.toggle()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                            self.showFloatingMenu2.toggle()
-                        })
-                    } label: {
-                        Image(systemName: "plus.circle.fill").floaty()
-                    }
+                if displayPopup == .joinGroup {
+                    AddToGroups(displayPopup: $displayPopup)
+                } else if displayPopup == .createGroup {
+                    CreateNewGroup(displayPopup: $displayPopup)
                 }
             }
         }
@@ -108,8 +79,6 @@ struct GroupsView: View {
         .onAppear{
             getGroups()
             GroupsLength = Groups.count
-            showFloatingMenu1 = false
-            showFloatingMenu2 = false
         }
     }
     
@@ -124,9 +93,9 @@ struct GroupsView: View {
         updatedList.remove(atOffsets: indexSet)
         
         guard let item =
-            Set(updatedList)
+                Set(updatedList)
             .symmetricDifference(Groups).first else
-            {return}
+        {return}
         
         dataStore.changeGroups(action: .removeFrom, userID: userID, change: item)
         

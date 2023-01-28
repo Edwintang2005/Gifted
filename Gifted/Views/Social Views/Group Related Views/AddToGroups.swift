@@ -10,56 +10,73 @@ import SwiftUI
 
 //Page trigged by add button in Groups
 struct AddToGroups: View{
-
-    @Environment(\.presentationMode) var presentationMode
+    
+    @ObservedObject var dataStore = DataStore()
+    @Binding var displayPopup: popupState
+    
+    let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
+    
+    let cardWidth = UIScreen.main.bounds.size.width * 9/10
+    let cardHeight = UIScreen.main.bounds.size.height * 3/8
+    let cornerRadius = 10.0
     
     @State var groupID = String()
     @State var groupName = String()
-    @State var GroupList = [Group]()
+    @State var validGroup = true
     
-    @State private var searchedText = ""
-    
-    var groupListFiltered: [Group] {
-        if searchedText.isEmpty {
-            return GroupList
-        } else {
-            return GroupList.filter { $0.Name.contains(searchedText)}
-        }
-    }
-    
-    var body: some View{
+    var body: some View {
         VStack {
-            List {
-                ForEach(groupListFiltered) {
-                    group in NavigationLink{
-                        GroupDetailsView(GroupPassed: group)
-                    } label: {
-                        Text("\(group.Name) # \(group.ShortID)")
-                    }
+            HStack {
+                Spacer()
+                Button {
+                    displayPopup = .None
+                } label: {
+                    Image(systemName: "x.circle")
+                        .imageScale(.large)
                 }
             }
-        }
-        .onAppear{
-            getGroups()
-        }
-        .searchable(text: $searchedText)
-        .navigationTitle("Find a Group")
-    }
-    
-    func getGroups() {
-        Amplify.DataStore.query(Group.self) {result in
-            switch result {
-            case .success(let Group):
-                self.GroupList = Group
-            case .failure(let error):
-                print(error)
+            .padding(.top)
+            VStack {
+                Text("Join group")
+                    .boldText()
+                TextField("Group Name", text: $groupName)
+                    .pretty()
+                TextField("Group ID", text: $groupID)
+                    .pretty()
+                Text("That Group Name and ID doesn't exist")
+                    .foregroundColor(validGroup ? .clear: .red)
+                Button{
+                    saveFriend()
+                } label: {
+                    Text("Join")
+                }.pretty()
             }
+            .padding(.bottom)
+        }
+        .background(.background)
+        .padding(.all)
+        .frame(width: cardWidth, height: cardHeight)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .shadow(radius: cornerRadius)
+    }
+        
+    
+    func saveFriend() {
+        let NameandShortID = groupName + groupID
+        print(NameandShortID)
+        // Fetching ID of Friend and adding to friend list
+        let group = dataStore.fetchGroup(NameAndShortID: NameandShortID)
+        if group.Name != "" {
+            dataStore.changeGroups(action: .addTo, userID: userID, change: group)
+            displayPopup = .None
+        } else {
+            validGroup = false
         }
     }
 }
 
-struct AddToGroups_Previews: PreviewProvider {
-    static var previews: some View {
-        AddToGroups()
-    }
-}
+//struct AddToGroups_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddToGroups()
+//    }
+//}

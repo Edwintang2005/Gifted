@@ -12,31 +12,49 @@ import SwiftUI
 struct AddToFriends: View{
     
     @ObservedObject var dataStore = DataStore()
-    @Environment(\.presentationMode) var presentationMode
+    @Binding var displayPopup: popupState
     
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
+    
+    let cardWidth = UIScreen.main.bounds.size.width * 9/10
+    let cardHeight = UIScreen.main.bounds.size.height * 1/4
+    let cornerRadius = 10.0
     
     @State var username = String()
     @State var validUsername = true
     
     var body: some View {
         VStack {
-            Spacer()
-            TextField("Friend's Username", text: $username)
-                .pretty()
-            Text("Noone with that username exists")
-                .verif()
-                .foregroundColor(validUsername ? .clear: .red)
-            Spacer()
-            Button{
-                saveFriend()
-            } label: {
-                Text("Save")
-            }.pretty()
-            Spacer()
+            HStack {
+                Spacer()
+                Button {
+                    displayPopup = .None
+                } label: {
+                    Image(systemName: "x.circle")
+                        .imageScale(.large)
+                }
+            }
+            .padding(.top)
+            VStack {
+                Text("Add Friend")
+                    .boldText()
+                TextField("Friend's Username", text: $username)
+                    .pretty()
+                Text("This username doesn't exist")
+                    .foregroundColor(validUsername ? .clear: .red)
+                Button{
+                    saveFriend()
+                } label: {
+                    Text("Add")
+                }.pretty()
+            }
+            .padding(.bottom)
         }
-        .navigationTitle("Add a Friend!")
-        .padding(.horizontal)
+        .background(.background)
+        .padding(.all)
+        .frame(width: cardWidth, height: cardHeight)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .shadow(radius: cornerRadius)
     }
         
     
@@ -46,7 +64,7 @@ struct AddToFriends: View{
         let friend = dataStore.verifUser(username: username)
         if friend.Username != "NULL" {
             dataStore.changeFriends(action: .addTo, userID: userID, change: friend)
-            presentationMode.wrappedValue.dismiss()
+            displayPopup = .None
         } else {
             validUsername = false
         }

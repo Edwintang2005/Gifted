@@ -378,6 +378,21 @@ final class DataStore: ObservableObject {
         return returnValue
     }
     
+    func fetchGroup(NameAndShortID: String) -> Group {
+        var returnValue = Group(Name: String(), ShortID: String(), NameAndShortID: String())
+        Amplify.DataStore.query(Group.self, where: Group.keys.NameAndShortID == NameAndShortID) {
+            switch $0 {
+            case .success(let groups):
+                if let nonOptional = groups.first {
+                    returnValue = nonOptional
+                }
+            case .failure(let error):
+                print("Could not get group - \(error.localizedDescription)")
+            }
+        }
+        return returnValue
+    }
+    
     func refreshGroup(groupID: String) -> Group {
         var returnValue = Group(Name: String(), ShortID: String(), NameAndShortID: String())
         Amplify.DataStore.query(Group.self, byId: groupID) {

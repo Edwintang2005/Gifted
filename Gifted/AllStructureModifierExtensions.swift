@@ -240,6 +240,13 @@ extension VStack {
 //    }
 //}
 
+// Extension to AppStorage for reset
+extension UserDefaults {
+    func resetDefaults() {
+        let dictionary = self.dictionaryRepresentation()
+        dictionary.keys.forEach({self.removeObject(forKey: $0)})
+    }
+}
 
 // Code for Labelled Divider
 struct LabelledDivider: View {

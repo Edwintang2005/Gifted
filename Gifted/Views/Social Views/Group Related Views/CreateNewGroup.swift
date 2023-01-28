@@ -16,6 +16,8 @@ struct CreateNewGroup: View{
     
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
+    @Binding var displayPopup: popupState
+    
     @State var Name = String()
     
     @State var showingImagePicker = false
@@ -89,8 +91,8 @@ struct CreateNewGroup: View{
 }
 
 
-struct CreateNewGroup_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateNewGroup()
-    }
-}
+//struct CreateNewGroup_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CreateNewGroup()
+//    }
+//}

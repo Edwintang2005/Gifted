@@ -150,6 +150,17 @@ final class SessionManager: ObservableObject {
         }
     }
     
+    func changePassword(oldPassword: String, newPassword: String) {
+        Amplify.Auth.update(oldPassword: oldPassword, to: newPassword){
+            switch $0 {
+            case .success():
+                print("Successfully changed password")
+            case .failure(let error):
+                print("Could not change password - \(error.localizedDescription)")
+            }
+        }
+    }
+    
     // Function that allows users to signout and clears any cache data on user device
     func signOut() {
         _ = Amplify.Auth.signOut { [weak self] result in
@@ -185,5 +196,8 @@ final class SessionManager: ObservableObject {
                 print("Error clearing DataStore: \(error)")
             }
         }
+        // UserDefaults clear
+        UserDefaults.standard.resetDefaults()
+        
     }
 }
