@@ -67,6 +67,7 @@ struct GroupsView: View {
                 }
             }
             .disabled(displayPopup != .None)
+            .opacity(displayPopup == .None ? 1: 0.5)
             VStack{
                 if displayPopup == .joinGroup {
                     AddToGroups(displayPopup: $displayPopup)

@@ -318,13 +318,17 @@ final class DataStore: ObservableObject {
         switch action {
         case .addTo:
             var user = fetchUser(userID: userID)
-            user.Friends.append(change.id)
-            Amplify.DataStore.save(user) {
-                switch $0 {
-                case .success:
-                    print("Added Friend to Profile!")
-                case .failure(let error):
-                    print("Could not add friend - \(error.localizedDescription)")
+            if user.Friends.contains(change.id) {
+                return
+            } else {
+                user.Friends.append(change.id)
+                Amplify.DataStore.save(user) {
+                    switch $0 {
+                    case .success:
+                        print("Added Friend to Profile!")
+                    case .failure(let error):
+                        print("Could not add friend - \(error.localizedDescription)")
+                    }
                 }
             }
         case .removeFrom:
@@ -435,23 +439,27 @@ final class DataStore: ObservableObject {
         switch action {
         case .addTo:
             var user = fetchUser(userID: userID)
-            var newGroup = change
-            newGroup.Members.append(userID)
-            user.Groups.append(change.id)
-            Amplify.DataStore.save(newGroup) {
-                switch $0 {
-                case .success:
-                    print("Member added to Group")
-                    Amplify.DataStore.save(user) {
-                        switch $0 {
-                        case .success:
-                            print("Group added to user")
-                        case .failure(let error):
-                            print("Could not add group to user - \(error.localizedDescription)")
+            if user.Groups.contains(change.id) {
+                return
+            } else {
+                var newGroup = change
+                newGroup.Members.append(userID)
+                user.Groups.append(change.id)
+                Amplify.DataStore.save(newGroup) {
+                    switch $0 {
+                    case .success:
+                        print("Member added to Group")
+                        Amplify.DataStore.save(user) {
+                            switch $0 {
+                            case .success:
+                                print("Group added to user")
+                            case .failure(let error):
+                                print("Could not add group to user - \(error.localizedDescription)")
+                            }
                         }
+                    case .failure(let error):
+                        print("Could not add member to Group - \(error.localizedDescription)")
                     }
-                case .failure(let error):
-                    print("Could not add member to Group - \(error.localizedDescription)")
                 }
             }
         case .removeFrom:

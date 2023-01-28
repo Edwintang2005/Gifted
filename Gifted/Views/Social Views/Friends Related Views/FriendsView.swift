@@ -17,13 +17,15 @@ struct FriendsView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     @Binding var ImageCache: [String: UIImage]
+    @Binding var displayPopup: popupState
     
     let username = UserDefaults.standard.string(forKey: "Username") ?? "NullUser"
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
     @State var Friends = [UserProfile]()
     @State var FriendsLength = Int()
-    @Binding var displayPopup: popupState
+    @State var displayedProfile = UserProfile(Username: String(), Name: String())
+    
     
     var body: some View {
         ZStack {
@@ -47,22 +49,27 @@ struct FriendsView: View {
                         .multilineTextAlignment(.center)
                     Spacer()
                 } else {
-                    List {
+                    ScrollView {
                         ForEach(Friends) {
-                            Friend in NavigationLink{
-                                ListView(QueryID: Friend.id)
+                            Friend in Button{
+                                displayedProfile = Friend
+                                displayPopup = .friendInfo
                             } label: {
                                 FriendDisplayCards(friend: Friend, ImageCache: $ImageCache)
                             }
                         }
-                        .onDelete(perform: deleteFriend)
                     }
                 }
             }
-            .disabled(displayPopup == .addFriend)
-            
+            .disabled(displayPopup != .None)
+            .opacity(displayPopup == .None ? 1: 0.5)
             if displayPopup == .addFriend {
                 AddToFriends(displayPopup: $displayPopup)
+            } else if displayPopup == .friendInfo {
+                VStack {
+                    Spacer()
+                    FriendsDetailsView(displayPopup: $displayPopup, ImageCache: $ImageCache, friend: $displayedProfile)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -74,22 +81,6 @@ struct FriendsView: View {
     
     func getFriends() {
         Friends = dataStore.fetchFriends(userID: userID)
-    }
-    
-    func deleteFriend(indexSet: IndexSet) {
-        print("Deleted friend at \(indexSet)")
-        
-        var updatedList = Friends
-        updatedList.remove(atOffsets: indexSet)
-
-        guard let item =
-                Set(updatedList)
-            .symmetricDifference(Friends).first else
-        {return}
-        
-        // Function to remove friend from list
-        dataStore.changeFriends(action: .removeFrom, userID: userID, change: item)
-        getFriends()
     }
 }
 

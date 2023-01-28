@@ -53,11 +53,10 @@ struct AddToGroups: View{
             }
             .padding(.bottom)
         }
-        .background(.background)
+        .background(Color(.sRGB, red: 237/255, green: 240/255, blue: 241/255))
         .padding(.all)
         .frame(width: cardWidth, height: cardHeight)
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-        .shadow(radius: cornerRadius)
     }
         
     

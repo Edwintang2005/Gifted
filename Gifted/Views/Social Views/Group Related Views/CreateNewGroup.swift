@@ -12,7 +12,6 @@ import Amplify
 struct CreateNewGroup: View{
     
     @ObservedObject var dataStore = DataStore()
-    @Environment(\.presentationMode) var presentationMode
     
     let userID = UserDefaults.standard.string(forKey: "UserID") ?? "NullUser"
     
@@ -26,6 +25,17 @@ struct CreateNewGroup: View{
     
     var body: some View{
         VStack {
+            HStack {
+                Spacer()
+                Button {
+                    displayPopup = .None
+                } label: {
+                    Image(systemName: "x.circle")
+                        .imageScale(.large)
+                }
+            }
+            .padding(.top)
+            Text("Create a Group!").title()
             Spacer()
             Text("Please Enter a Name for this group. \n To invite your friends, just give them the Name and ID of the group!").pretty()
             Spacer()
@@ -54,8 +64,8 @@ struct CreateNewGroup: View{
                 Text("Create")
             }.pretty()
         }
-        .navigationTitle("Create a Group!")
         .padding(.horizontal)
+        .background(Color(.sRGB, red: 237/255, green: 240/255, blue: 241/255))
         .onChange(of: inputImage) { _ in loadImage() }
         .sheet(isPresented: $showingImagePicker) {
             ImagePicker(image: $inputImage)
@@ -66,6 +76,7 @@ struct CreateNewGroup: View{
         print(Name)
         let createdGroup = dataStore.createGroup(Groupname: Name, userID: userID)
         dataStore.changeGroups(action: .addTo, userID: userID, change: createdGroup)
+        displayPopup = .None
     }
     
     func StoreImage(_ image: UIImage?) {

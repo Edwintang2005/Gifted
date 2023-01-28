@@ -32,6 +32,7 @@
 		E835DE5029651F3E00FD36C4 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E835DE4E29651F3E00FD36C4 /* MainInterface.storyboard */; };
 		E835DE5429651F3E00FD36C4 /* Gifted-ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E835DE4A29651F3E00FD36C4 /* Gifted-ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E84B6DD4295584460030DD6B /* ItemSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84B6DD3295584460030DD6B /* ItemSearchView.swift */; };
+		E86D65F62984DF2C004F58E4 /* FriendsDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86D65F52984DF2C004F58E4 /* FriendsDetailsView.swift */; };
 		E87BE3E4293B5C2A007DC233 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87BE3E3293B5C2A007DC233 /* SessionManager.swift */; };
 		E894FF9A293C165200095DD2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FF99293C165200095DD2 /* SignUpView.swift */; };
 		E894FF9C293C16FA00095DD2 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */; };
@@ -112,6 +113,7 @@
 		E835DE4F29651F3E00FD36C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E835DE5129651F3E00FD36C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E84B6DD3295584460030DD6B /* ItemSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSearchView.swift; sourceTree = "<group>"; };
+		E86D65F52984DF2C004F58E4 /* FriendsDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsDetailsView.swift; sourceTree = "<group>"; };
 		E87BE3E3293B5C2A007DC233 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		E894FF99293C165200095DD2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			children = (
 				E812D0FD2966E6170033BB23 /* AddToFriends.swift */,
 				E8F91B58293AF264003E23B5 /* FriendsView.swift */,
+				E86D65F52984DF2C004F58E4 /* FriendsDetailsView.swift */,
 			);
 			path = "Friends Related Views";
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 				E8F91B57293AF234003E23B5 /* LoginView.swift in Sources */,
 				E81197B3295F945100B90D1C /* DataStoreFunctions.swift in Sources */,
 				E81197CE29601B2900B90D1C /* DisplayCards.swift in Sources */,
+				E86D65F62984DF2C004F58E4 /* FriendsDetailsView.swift in Sources */,
 				E812D0FE2966E6170033BB23 /* AddToFriends.swift in Sources */,
 				E835DE2F2963F58B00FD36C4 /* Reservations.swift in Sources */,
 				E8F1602829455FF100FDD251 /* GroupDetailsView.swift in Sources */,

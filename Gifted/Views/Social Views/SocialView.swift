@@ -15,6 +15,7 @@ enum tabPage {
 enum popupState {
     case None
     case addFriend
+    case friendInfo
     case joinGroup
     case createGroup
 }
@@ -44,6 +45,7 @@ struct SocialView: View {
                     .padding(.horizontal)
                 }
                 .disabled(displayPopup != popupState.None)
+                .opacity(displayPopup == .None ? 1: 0.5)
                 if selection == .Friends {
                     FriendsView(ImageCache: $ImageCache, displayPopup: $displayPopup)
                 } else {
