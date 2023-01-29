@@ -29,13 +29,13 @@ struct FriendsDetailsView: View {
                 displayPopup = .None
             } label: {
                 Text("View Wishlist")
-            }.pretty()
+            }.long()
             Button {
                 deleteFriend()
                 displayPopup = .None
             } label: {
                 Text("Remove Friend")
-            }.pretty()
+            }.long()
         }
         .background(Color(.sRGB, red: 237/255, green: 240/255, blue: 241/255))
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))

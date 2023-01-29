@@ -150,6 +150,17 @@ final class SessionManager: ObservableObject {
         }
     }
     
+    func changeName(newName: String) {
+        Amplify.Auth.update(userAttribute: AuthUserAttribute(.name, value: newName)) {
+            switch $0 {
+            case .success:
+                print("Name Successfully updated")
+            case .failure(let error):
+                print("Couldn't update name - \(error.localizedDescription)")
+            }
+        }
+    }
+    
     func changePassword(oldPassword: String, newPassword: String) {
         Amplify.Auth.update(oldPassword: oldPassword, to: newPassword){
             switch $0 {

@@ -66,8 +66,11 @@ struct MainView: View {
                         NavigationLink{
                             SettingsView(ImageCache: $ImageCache)
                         } label: {
-                            Image(systemName: "person.circle")
-                                .imageScale(.large)
+                            profilePicture(size: .small)
+                                .overlay(alignment: .bottomTrailing) {
+                                    Image(systemName: "chevron.down.circle.fill")
+                                        .imageScale(.small)
+                                }
                         }
                     }
                 }

@@ -38,6 +38,9 @@
 		E894FF9C293C16FA00095DD2 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */; };
 		E894FFB1293C75DD00095DD2 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FFB0293C75DD00095DD2 /* ListView.swift */; };
 		E8957C592940095C00058AC2 /* AllStructureModifierExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */; };
+		E8AA1E8529870C1E00555B45 /* ChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA1E8429870C1E00555B45 /* ChangeNameView.swift */; };
+		E8AA1E8729870C3000555B45 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA1E8629870C3000555B45 /* ChangePasswordView.swift */; };
+		E8AA1E8929870C4600555B45 /* DeleteProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA1E8829870C4600555B45 /* DeleteProfileView.swift */; };
 		E8B238E7294C83FB0045136B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B238E6294C83FB0045136B /* MenuViewController.swift */; };
 		E8BC30C129679CEA000D35AD /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BC30C029679CEA000D35AD /* SocialView.swift */; };
 		E8CF112D29597F5F0055422F /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E8CF112C29597F5F0055422F /* AWSAPIPlugin */; };
@@ -119,6 +122,9 @@
 		E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		E894FFB0293C75DD00095DD2 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllStructureModifierExtensions.swift; sourceTree = "<group>"; };
+		E8AA1E8429870C1E00555B45 /* ChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameView.swift; sourceTree = "<group>"; };
+		E8AA1E8629870C3000555B45 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		E8AA1E8829870C4600555B45 /* DeleteProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProfileView.swift; sourceTree = "<group>"; };
 		E8B238E6294C83FB0045136B /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = "Gifted/View Controllers/MenuViewController.swift"; sourceTree = SOURCE_ROOT; };
 		E8BC30C029679CEA000D35AD /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
 		E8F1602729455FF100FDD251 /* GroupDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsView.swift; sourceTree = "<group>"; };
@@ -233,7 +239,7 @@
 				E8161AB1297FA45400E94D04 /* DisplayCards */,
 				E812D1042966E6CD0033BB23 /* List Related Views */,
 				E8BC30BF29679CAF000D35AD /* Social Views */,
-				E8161AB6297FFADC00E94D04 /* SettingsView.swift */,
+				E8AA1E8329870BE000555B45 /* Settings Views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -266,6 +272,17 @@
 				E835DE5129651F3E00FD36C4 /* Info.plist */,
 			);
 			path = "Gifted-ShareExtension";
+			sourceTree = "<group>";
+		};
+		E8AA1E8329870BE000555B45 /* Settings Views */ = {
+			isa = PBXGroup;
+			children = (
+				E8161AB6297FFADC00E94D04 /* SettingsView.swift */,
+				E8AA1E8829870C4600555B45 /* DeleteProfileView.swift */,
+				E8AA1E8429870C1E00555B45 /* ChangeNameView.swift */,
+				E8AA1E8629870C3000555B45 /* ChangePasswordView.swift */,
+			);
+			path = "Settings Views";
 			sourceTree = "<group>";
 		};
 		E8BC30BF29679CAF000D35AD /* Social Views */ = {
@@ -448,6 +465,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8161AB5297FA89000E94D04 /* GroupDisplayCards.swift in Sources */,
+				E8AA1E8929870C4600555B45 /* DeleteProfileView.swift in Sources */,
 				E835DE2E2963F58B00FD36C4 /* Reservations+Schema.swift in Sources */,
 				E835DE292963F58B00FD36C4 /* AmplifyModels.swift in Sources */,
 				E8161AB3297FA83500E94D04 /* FriendDisplayCards.swift in Sources */,
@@ -462,9 +480,11 @@
 				E835DE302963F58B00FD36C4 /* Group.swift in Sources */,
 				E835DE312963F58B00FD36C4 /* Group+Schema.swift in Sources */,
 				E835DE2A2963F58B00FD36C4 /* UserList+Schema.swift in Sources */,
+				E8AA1E8529870C1E00555B45 /* ChangeNameView.swift in Sources */,
 				E812D1022966E6970033BB23 /* CreateNewGroup.swift in Sources */,
 				E8BC30C129679CEA000D35AD /* SocialView.swift in Sources */,
 				E8F91B49293AF173003E23B5 /* ContentView.swift in Sources */,
+				E8AA1E8729870C3000555B45 /* ChangePasswordView.swift in Sources */,
 				E8957C592940095C00058AC2 /* AllStructureModifierExtensions.swift in Sources */,
 				E894FF9A293C165200095DD2 /* SignUpView.swift in Sources */,
 				E8FC8934293CB62400645630 /* GroupsView.swift in Sources */,

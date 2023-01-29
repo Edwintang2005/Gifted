@@ -95,6 +95,20 @@ final class DataStore: ObservableObject {
         }
     }
     
+    func changeName(userID: String, newName: String) {
+        var user = fetchUser(userID: userID)
+        user.Name = newName
+        Amplify.DataStore.save(user) {
+            switch $0 {
+            case .success:
+                print("Updated Name")
+            case .failure(let error):
+                print("Couldn't update name - \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    
     // List related Modifications
     func allItemsQuery() -> [ListItem] {
         var returnValue = [ListItem]()

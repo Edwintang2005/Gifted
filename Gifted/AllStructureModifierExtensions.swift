@@ -138,6 +138,16 @@ extension Button {
             .padding(.all)
     }
     
+    func long() -> some View {
+        self.font(.headline)
+            .padding(.all)
+            .frame(width: UIScreen.main.bounds.size.width * 17/20, height: UIScreen.main.bounds.size.height * 1/25)
+            .foregroundColor(Color(.sRGB, red: 158/255, green: 159/255, blue: 161/255))
+            .border(Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255), width: 1)
+            .cornerRadius(10)
+            .padding(.all)
+    }
+    
     func floaty() -> some View {
         self.font(.system(size:60))
             .foregroundColor(Color(.sRGB, red: 76/255, green: 159/255, blue: 148/255))
@@ -271,6 +281,34 @@ struct LabelledDivider: View {
 
     var line: some View {
         VStack { Divider().background(color) }.padding(horizontalPadding)
+    }
+}
+
+enum ImageType {
+    case big
+    case small
+}
+
+struct profilePicture: View {
+    
+    let LargeSize = UIScreen.main.bounds.size.width * 3/10
+    let smallSize = UIScreen.main.bounds.size.height * 7/100
+    
+    @State var image: UIImage?
+    let size: ImageType
+    
+    var body: some View {
+        if size == .big {
+            Image(systemName: "person.crop.circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: LargeSize, height: LargeSize)
+        } else {
+            Image(systemName: "person.crop.circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: smallSize, height: smallSize)
+        }
     }
 }
 
