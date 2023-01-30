@@ -40,8 +40,9 @@ struct AddToList: View{
                 .keyboardType(.decimalPad) // enforces number input for prices
             ZStack(alignment: .center){
                 if (image == nil) {
-                    Rectangle()
-                        .fill(.secondary)
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .fill(.white)
+                        .border(Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255), width: 1)
                     Text("Tap to Select an image").itemText()
                 } else {
                     image?

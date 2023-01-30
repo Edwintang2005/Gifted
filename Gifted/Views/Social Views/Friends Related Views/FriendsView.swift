@@ -70,10 +70,16 @@ struct FriendsView: View {
                     Spacer()
                     FriendsDetailsView(displayPopup: $displayPopup, ImageCache: $ImageCache, friend: $displayedProfile)
                 }
+            } else if displayPopup == .friendWishlist {
+                FriendListView(displayPopup: $displayPopup, friend: $displayedProfile, ImageCache: $ImageCache)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear{
+            getFriends()
+            FriendsLength = Friends.count
+        }
+        .onChange(of: displayPopup) { _ in
             getFriends()
             FriendsLength = Friends.count
         }

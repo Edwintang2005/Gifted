@@ -43,8 +43,16 @@ struct GroupsView: View {
                             Text("Make a Group")
                         }
                     } label: {
-                        Image(systemName:"plus.rectangle")
+                        Image(systemName: "person.3")
                             .imageScale(.large)
+                            .overlay(alignment:.bottomLeading){
+                                Image(systemName: "plus.circle.fill")
+                                    .imageScale(.small)
+                                    .offset(
+                                        x: CGFloat(-7),
+                                        y: CGFloat(5)
+                                    )
+                            }
                     }
                 }
                 .padding(.all)
@@ -77,6 +85,10 @@ struct GroupsView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear{
+            getGroups()
+            GroupsLength = Groups.count
+        }
+        .onChange(of: displayPopup) { _ in
             getGroups()
             GroupsLength = Groups.count
         }

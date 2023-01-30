@@ -45,7 +45,7 @@ struct GroupDetailsView: View {
                 } label: {
                     Text("Leave this Group")
                 }
-                .pretty()
+                .long()
             } else {
                 Button {
                     joinGroup()
@@ -54,7 +54,7 @@ struct GroupDetailsView: View {
                 } label: {
                     Text("Join this Group")
                 }
-                .pretty()
+                .long()
             }
         }
         .onAppear{

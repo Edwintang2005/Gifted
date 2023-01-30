@@ -37,15 +37,14 @@ struct CreateNewGroup: View{
             .padding(.top)
             Text("Create a Group!").title()
             Spacer()
-            Text("Please Enter a Name for this group. \n To invite your friends, just give them the Name and ID of the group!").pretty()
-            Spacer()
             TextField("Group Name", text: $Name).pretty()
             Spacer()
             Text("Select an image for this Item:")
             ZStack(alignment: .center){
                 if (image == nil) {
-                    Rectangle()
-                        .fill(.secondary)
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .fill(.white)
+                        .border(Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255), width: 1)
                     Text("Tap to Select an image").listtext()
                 } else {
                     image?
@@ -74,7 +73,19 @@ struct CreateNewGroup: View{
     
     func saveGroup() {
         print(Name)
-        let createdGroup = dataStore.createGroup(Groupname: Name, userID: userID)
+        
+        var ShortID = UUID().uuidString
+        let small = ShortID.prefix(8)
+        ShortID = String(small)
+        let Members = [String]()
+        let groupObj = Group(id: UUID().uuidString,
+                             Name: Name,
+                             ShortID: ShortID,
+                             NameAndShortID: Name+ShortID,
+                             Members: Members,
+                             ImageKey: UserDefaults.standard.string(forKey: "ImageKey"))
+        
+        let createdGroup = dataStore.createGroup(GroupObj: groupObj, userID: userID)
         dataStore.changeGroups(action: .addTo, userID: userID, change: createdGroup)
         displayPopup = .None
     }

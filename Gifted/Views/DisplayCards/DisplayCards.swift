@@ -23,8 +23,8 @@ struct DisplayCards: View {
             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                 .cardBackgroundandShadow(cornerRadius: cornerRadius)
                 .frame(width: cardWidth, height: cardHeight)
-            if let key = listItem.ImageKey, let render = ImageCache[key] {
-                VStack(alignment: .center) {
+            VStack(alignment: .center) {
+                if let key = listItem.ImageKey, let render = ImageCache[key] {
                     Image(uiImage: render)
                         .resizable()
                         .padding([.top,.leading, .trailing])
@@ -32,17 +32,24 @@ struct DisplayCards: View {
                         .frame(width: cardWidth, height: cardHeight*5/6)
                         .clipShape(
                             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                    cardDetails
-                        .frame(width: cardWidth, height: cardHeight*1/6)
-                        .background(Color.white)
-                        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                } else {
+                    Image("ImageNotFound")
+                        .resizable()
+                        .padding([.top,.leading, .trailing])
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: cardWidth, height: cardHeight*5/6)
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 }
-                .padding(.all)
-                .frame(width: cardWidth, height: cardHeight)
-            } else {
-                Text(listItem.Name)
-                    .padding(.all)
+                
+                cardDetails
+                    .frame(width: cardWidth, height: cardHeight*1/6)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
             }
+            .padding(.all)
+            .frame(width: cardWidth, height: cardHeight)
+            
         }
         .padding(.top)
         .onAppear{
@@ -100,9 +107,9 @@ struct HorizontalDisplayCards: View {
             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                 .cardBackgroundandShadow(cornerRadius: cornerRadius)
                 .frame(width: cardWidth, height: cardHeight)
-            if let key = listItem.ImageKey, let render = ImageCache[key] {
-                HStack{
-                    // Small Icon Image Rendering
+            HStack{
+                // Small Icon Image Rendering
+                if let key = listItem.ImageKey, let render = ImageCache[key] {
                     Image(uiImage: render)
                         .resizable()
                         .padding(.all)
@@ -110,16 +117,20 @@ struct HorizontalDisplayCards: View {
                         .frame(width: cardHeight, height: cardHeight)
                         .clipShape(
                             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                    cardDetails
-                    .padding(.horizontal)
-                    Spacer()
+                } else {
+                    Image("ImageNotFound")
+                        .resizable()
+                        .padding(.all)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: cardHeight, height: cardHeight)
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 }
-                .frame(width: cardWidth, height: cardHeight)
-            } else {
                 cardDetails
-                    .padding(.all)
+                .padding(.horizontal)
+                Spacer()
             }
-            
+            .frame(width: cardWidth, height: cardHeight)
         }
         .padding(.top)
         .onAppear{

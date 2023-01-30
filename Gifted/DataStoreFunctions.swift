@@ -186,13 +186,17 @@ final class DataStore: ObservableObject {
         switch action {
         case .addTo:
             var tempList = list
-            tempList.ListItems.append(change.id)
-            Amplify.DataStore.save(tempList) {
-                switch $0{
-                case .success:
-                    print("Added Item to List")
-                case .failure(let error):
-                    print("Could not add item - \(error.localizedDescription)")
+            if tempList.ListItems.contains(change.id) {
+                return
+            } else {
+                tempList.ListItems.append(change.id)
+                Amplify.DataStore.save(tempList) {
+                    switch $0{
+                    case .success:
+                        print("Added Item to List")
+                    case .failure(let error):
+                        print("Could not add item - \(error.localizedDescription)")
+                    }
                 }
             }
         case .removeFrom:
@@ -426,18 +430,7 @@ final class DataStore: ObservableObject {
         return returnValue
     }
     
-    func createGroup(Groupname: String, userID: String) -> Group {
-        var ShortID = UUID().uuidString
-        let small = ShortID.prefix(8)
-        ShortID = String(small)
-        let GroupNameandID = Groupname + ShortID
-        let Members = [String]()
-        let GroupObj = Group(id: UUID().uuidString,
-                          Name: Groupname,
-                          ShortID: ShortID,
-                          NameAndShortID: GroupNameandID,
-                          Members: Members,
-                          ImageKey: UserDefaults.standard.string(forKey: "ImageKey"))
+    func createGroup(GroupObj: Group, userID: String) -> Group {
         Amplify.DataStore.save(GroupObj) {
             switch $0 {
             case .success:

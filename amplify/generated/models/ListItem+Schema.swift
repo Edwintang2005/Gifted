@@ -33,7 +33,7 @@ extension ListItem {
     model.fields(
       .field(listItem.id, is: .required, ofType: .string),
       .field(listItem.Name, is: .required, ofType: .string),
-      .field(listItem.Price, is: .optional, ofType: .string),
+      .field(listItem.Price, is: .required, ofType: .string),
       .field(listItem.ImageKey, is: .optional, ofType: .string),
       .field(listItem.Link, is: .optional, ofType: .string),
       .field(listItem.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),

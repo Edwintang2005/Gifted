@@ -16,6 +16,7 @@ enum popupState {
     case None
     case addFriend
     case friendInfo
+    case friendWishlist
     case joinGroup
     case createGroup
 }

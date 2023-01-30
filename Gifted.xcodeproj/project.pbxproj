@@ -38,6 +38,7 @@
 		E894FF9C293C16FA00095DD2 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */; };
 		E894FFB1293C75DD00095DD2 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E894FFB0293C75DD00095DD2 /* ListView.swift */; };
 		E8957C592940095C00058AC2 /* AllStructureModifierExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */; };
+		E8A3FEFC2987C68900429532 /* FriendListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A3FEFB2987C68900429532 /* FriendListView.swift */; };
 		E8AA1E8529870C1E00555B45 /* ChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA1E8429870C1E00555B45 /* ChangeNameView.swift */; };
 		E8AA1E8729870C3000555B45 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA1E8629870C3000555B45 /* ChangePasswordView.swift */; };
 		E8AA1E8929870C4600555B45 /* DeleteProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA1E8829870C4600555B45 /* DeleteProfileView.swift */; };
@@ -122,6 +123,7 @@
 		E894FF9B293C16FA00095DD2 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		E894FFB0293C75DD00095DD2 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		E8957C582940095C00058AC2 /* AllStructureModifierExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllStructureModifierExtensions.swift; sourceTree = "<group>"; };
+		E8A3FEFB2987C68900429532 /* FriendListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListView.swift; sourceTree = "<group>"; };
 		E8AA1E8429870C1E00555B45 /* ChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameView.swift; sourceTree = "<group>"; };
 		E8AA1E8629870C3000555B45 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		E8AA1E8829870C4600555B45 /* DeleteProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProfileView.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				E812D0FD2966E6170033BB23 /* AddToFriends.swift */,
 				E8F91B58293AF264003E23B5 /* FriendsView.swift */,
 				E86D65F52984DF2C004F58E4 /* FriendsDetailsView.swift */,
+				E8A3FEFB2987C68900429532 /* FriendListView.swift */,
 			);
 			path = "Friends Related Views";
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				E8161AB5297FA89000E94D04 /* GroupDisplayCards.swift in Sources */,
 				E8AA1E8929870C4600555B45 /* DeleteProfileView.swift in Sources */,
 				E835DE2E2963F58B00FD36C4 /* Reservations+Schema.swift in Sources */,
+				E8A3FEFC2987C68900429532 /* FriendListView.swift in Sources */,
 				E835DE292963F58B00FD36C4 /* AmplifyModels.swift in Sources */,
 				E8161AB3297FA83500E94D04 /* FriendDisplayCards.swift in Sources */,
 				E8F91B59293AF264003E23B5 /* FriendsView.swift in Sources */,
@@ -547,7 +551,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Hatchling.Gifted.Gifted-ShareExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Hatchlings.Gifted.Gifted-ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -574,7 +578,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Hatchling.Gifted.Gifted-ShareExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Hatchlings.Gifted.Gifted-ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -713,7 +717,6 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gifted/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -724,7 +727,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Hatchling.Gifted;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Hatchlings.Gifted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -746,7 +749,6 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gifted/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -757,7 +759,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Hatchling.Gifted;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Hatchlings.Gifted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

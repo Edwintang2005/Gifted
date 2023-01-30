@@ -26,7 +26,7 @@ struct FriendsDetailsView: View {
         VStack {
             FriendDisplayInfo(friend: friend, ImageCache: $ImageCache)
             Button {
-                displayPopup = .None
+                displayPopup = .friendWishlist
             } label: {
                 Text("View Wishlist")
             }.long()

@@ -5,7 +5,7 @@ import Foundation
 public struct ListItem: Model {
   public let id: String
   public var Name: String
-  public var Price: String?
+  public var Price: String
   public var ImageKey: String?
   public var Link: String?
   public var createdAt: Temporal.DateTime?
@@ -13,7 +13,7 @@ public struct ListItem: Model {
   
   public init(id: String = UUID().uuidString,
       Name: String,
-      Price: String? = nil,
+      Price: String,
       ImageKey: String? = nil,
       Link: String? = nil) {
     self.init(id: id,
@@ -26,7 +26,7 @@ public struct ListItem: Model {
   }
   internal init(id: String = UUID().uuidString,
       Name: String,
-      Price: String? = nil,
+      Price: String,
       ImageKey: String? = nil,
       Link: String? = nil,
       createdAt: Temporal.DateTime? = nil,

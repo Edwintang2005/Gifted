@@ -83,7 +83,7 @@ struct ContentView: View {
                     }
                 }
             }
-            
+            print(NameOfUser)
             if let user = Amplify.Auth.getCurrentUser() {
                 Username = user.username
                 UserID = user.userId

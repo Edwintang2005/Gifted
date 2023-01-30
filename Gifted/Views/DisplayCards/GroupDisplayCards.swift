@@ -25,12 +25,13 @@ struct GroupDisplayCards: View {
             if let key = group.ImageKey, let render = ImageCache[key] {
                 Image(uiImage: render)
                     .resizable()
-                    .padding(.all)
-                    .aspectRatio(contentMode: .fill)
                     .frame(width: cardWidth, height: cardHeight)
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                    .opacity(0.5)
             }
             cardDetails
-            .padding(.horizontal)
+            .padding(.all)
         }
         .onAppear{
             getImage(Imagekey: group.ImageKey)

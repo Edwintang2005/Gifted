@@ -31,21 +31,8 @@ struct ItemSearchView: View {
     }
     
     var body: some View {
-        NavigationView{
+        NavigationView {
             VStack(alignment: .center) {
-                HStack{
-                    Text("Explore")
-                        .colourGradient()
-                        .padding(.horizontal)
-                    Spacer()
-                    NavigationLink{
-                        AddToList(lists: $lists, listNumber: $listNumber)
-                    } label: {
-                        Image(systemName: "plus")
-                            .imageScale(.large)
-                    }
-                    .padding(.all)
-                }
                 ScrollView(showsIndicators: false) {
                     ForEach(listitemsFiltered) {
                         Item in NavigationLink{

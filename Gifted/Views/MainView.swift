@@ -73,6 +73,7 @@ struct MainView: View {
                                 }
                         }
                     }
+                    .padding(.top)
                 }
                 
                 HStack {
@@ -88,6 +89,9 @@ struct MainView: View {
                     Menu {
                         Button {
                             sortOption = 0
+                            listitems.sort{
+                                $0.Name < $1.Name
+                            }
                         } label: {
                             if sortOption == 0 {
                                 Image(systemName: "checkmark")
@@ -99,16 +103,20 @@ struct MainView: View {
                         }
                         Button {
                             sortOption = 1
+                            
                         } label: {
                             if sortOption == 1 {
                                 Image(systemName: "checkmark")
-                                Text("Time")
+                                Text("Date Added")
                             } else {
-                                Text("Time")
+                                Text("Date Added")
                             }
                         }
                         Button {
                             sortOption = 2
+                            listitems.sort{
+                                $0.Price < $1.Price
+                            }
                         } label: {
                             if sortOption == 2 {
                                 Image(systemName: "checkmark")
@@ -199,6 +207,9 @@ struct MainView: View {
     
     func getListItem() {
         listitems = dataStore.fetchListItems(listid: lists[listNumber].id)
+        listitems.sort{
+            $0.Name < $1.Name
+        }
     }
 }
 

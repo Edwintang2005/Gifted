@@ -38,7 +38,7 @@ extension Text{
         
     }
     func itemText() -> some View{
-        self.font(.system(size: 17, weight: .medium, design: .default))
+        self.font(.system(size: 15, weight: .medium, design: .default))
             .foregroundColor(Color(.sRGB, red: 36/255, green: 74/255, blue: 71/255))
             .multilineTextAlignment(.leading)
     }
@@ -216,7 +216,9 @@ extension Image{
 extension RoundedRectangle {
     func cardBackgroundandShadow(cornerRadius: Double) -> some View {
         self.foregroundColor(.white)
-            .shadow(color: Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255), radius: cornerRadius)
+            .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .stroke(Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255), lineWidth: 1)
+            )
     }
 }
 

@@ -9,6 +9,7 @@ import Amplify
 import SwiftUI
 
 //Page trigged by add button in Friends
+
 struct AddToFriends: View{
     
     @ObservedObject var dataStore = DataStore()

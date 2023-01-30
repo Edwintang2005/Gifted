@@ -1,3 +1,11 @@
+type ListItem @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Name: String!
+  Price: String!
+  ImageKey: String
+  Link: String
+}
+
 type UserProfile @model @auth(rules: [{allow: public}]) {
   id: ID!
   Username: String!
@@ -14,14 +22,6 @@ type UserList @model @auth(rules: [{allow: public}]) {
   Name: String!
   ListItems: [String!]!
   ImageKey: String
-}
-
-type ListItem @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  Name: String!
-  Price: String
-  ImageKey: String
-  Link: String
 }
 
 type Group @model @auth(rules: [{allow: public}]) {
