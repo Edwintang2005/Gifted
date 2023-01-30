@@ -31,11 +31,11 @@ final class DataStore: ObservableObject {
             switch $0 {
             case .success:
                 print("User Record Created!")
-                self.createFirstList(userID: userID, name: "\(nameofUser)'s List")
             case .failure(let error):
                 print("Error creating record - \(error.localizedDescription)")
             }
         }
+        createFirstList(userID: userID, name: nameofUser)
     }
     
     func fetchUser(userID: String) -> UserProfile {

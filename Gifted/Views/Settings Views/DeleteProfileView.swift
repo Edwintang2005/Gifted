@@ -54,6 +54,7 @@ struct DeleteProfileView: View {
     func deleteProfile() {
         dataStore.deleteUser(userID: userID)
         sessionManager.deleteUser()
+        sessionManager.signOut()
     }
 }
 
