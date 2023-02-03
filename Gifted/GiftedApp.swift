@@ -24,6 +24,14 @@ struct GiftedApp: App {
     init() {
         configureAmplify()
         sessionManager.getCurrentAuthUser()
+        Amplify.DataStore.start(){
+            switch $0{
+            case .success:
+                print("Began DataStore Sync")
+            case .failure(let error):
+                print("Could not begin DataStore Sync - \(error.localizedDescription)")
+            }
+        }
     }
     
     // Main logic/ UI controlboard

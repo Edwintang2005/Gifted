@@ -256,7 +256,8 @@ extension VStack {
 extension UserDefaults {
     func resetDefaults() {
         let dictionary = self.dictionaryRepresentation()
-        dictionary.keys.forEach({self.removeObject(forKey: $0)})
+        let dictKeys = dictionary.keys.filter{ $0 != "AppOpening"}
+        dictKeys.forEach({self.removeObject(forKey: $0)})
     }
 }
 
@@ -301,15 +302,29 @@ struct profilePicture: View {
     
     var body: some View {
         if size == .big {
-            Image(systemName: "person.crop.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: LargeSize, height: LargeSize)
+            if let profileImage = image {
+                Image(uiImage: profileImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: LargeSize, height: LargeSize)
+            } else {
+                Image(systemName: "person.crop.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: LargeSize, height: LargeSize)
+            }
         } else {
-            Image(systemName: "person.crop.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: smallSize, height: smallSize)
+            if let profileImage = image {
+                Image(uiImage: profileImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: smallSize, height: smallSize)
+            } else {
+                Image(systemName: "person.crop.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: smallSize, height: smallSize)
+            }
         }
     }
 }

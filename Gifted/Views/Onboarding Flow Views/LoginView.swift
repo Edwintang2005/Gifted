@@ -15,74 +15,94 @@ struct LoginView: View {
     @State var username = ""
     @State var password = ""
     
+    let firstLaunch = UserDefaults.standard.bool(forKey: "AppOpening")
+    
     var body: some View {
-        Spacer()
         VStack {
-            // Username signin functionality
+            Spacer()
             VStack {
-                VStack(alignment: .center){
-                    Text("Welcome back!").title()
-                    Text("Enter your details").boldText()
+                // Username signin functionality
+                VStack {
+                    if firstLaunch == false {
+                        VStack(alignment: .center){
+                            Text("Welcome!").title()
+                            Text("Enter your details").boldText()
+                        }
+                    } else {
+                        VStack(alignment: .center){
+                            Text("Welcome back!").title()
+                            Text("Enter your details").boldText()
+                        }
+                    }
+                    TextField("Username", text: $username).pretty()
+                    SecureField("Password", text: $password).pretty()
+                    Button {
+                        sessionManager.login(
+                            username: username,
+                            password: password
+                        )
+                        print("logged in")
+                    } label: {
+                        Text("Login")
+                            .padding(.horizontal)
+                            .frame(maxWidth: .infinity)
+                    }.pretty()
                 }
-                TextField("Username", text: $username).pretty()
-                SecureField("Password", text: $password).pretty()
-                Button {
-                    sessionManager.login(
-                        username: username,
-                        password: password
-                    )
-                    print("logged in")
-                } label: {
-                    Text("Login")
-                        .padding(.horizontal)
-                        .frame(maxWidth: .infinity)
-                }.pretty()
+                .padding(.all)
+                
+                
+                // The Big line with an or in the middle, for appearances
+                // LabelledDivider(label: "OR")
+                
+                
+                // vertical stack created for easier button placement
+                VStack {
+    //                HStack{
+    //                    // Button for Gmail Signin
+    //                    Button{ action:do {
+    //                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
+    //                    }
+    //                    } label: {
+    //                        HStack{
+    //                            Image(systemName: "envelope.fill")
+    //                                .imageScale(.medium)
+    //                            Text(" Gmail")
+    //                        }
+    //                        .frame(maxWidth: .infinity)
+    //                        .padding(.horizontal)
+    //                    }.google()
+    //                    // Button for Facebook signin
+    //                    Button {
+    //                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
+    //                    } label: {
+    //                        HStack{
+    //                            Image(systemName: "f.cursive")
+    //                                .imageScale(.medium)
+    //                            Text(" Facebook")
+    //                        }
+    //                        .frame(maxWidth: .infinity)
+    //                        .padding(.horizontal)
+    //                    }.facebook()
+    //                }
+                    Text("Don't have an account?")
+                    Button("Sign up", action: sessionManager.showSignUp)
+                        .tint(Color(.sRGB, red: 37/255, green: 75/255, blue: 72/255))
+                }
+                .padding(.all)
             }
-            .padding(.all)
-            
-            
-            // The Big line with an or in the middle, for appearances
-            // LabelledDivider(label: "OR")
-            
-            
-            // vertical stack created for easier button placement
-            VStack {
-//                HStack{
-//                    // Button for Gmail Signin
-//                    Button{ action:do {
-//                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
-//                    }
-//                    } label: {
-//                        HStack{
-//                            Image(systemName: "envelope.fill")
-//                                .imageScale(.medium)
-//                            Text(" Gmail")
-//                        }
-//                        .frame(maxWidth: .infinity)
-//                        .padding(.horizontal)
-//                    }.google()
-//                    // Button for Facebook signin
-//                    Button {
-//                        sessionManager.showUnavailable() // Dud function, replace with actual functionality later
-//                    } label: {
-//                        HStack{
-//                            Image(systemName: "f.cursive")
-//                                .imageScale(.medium)
-//                            Text(" Facebook")
-//                        }
-//                        .frame(maxWidth: .infinity)
-//                        .padding(.horizontal)
-//                    }.facebook()
-//                }
-                Text("Don't have an account?")
-                Button("Sign up", action: sessionManager.showSignUp)
-                    .tint(Color(.sRGB, red: 37/255, green: 75/255, blue: 72/255))
-            }
-            .padding(.all)
+            .loadingFrame()
+            Spacer()
+            signoff()
         }
-        .loadingFrame()
-        Spacer()
-        signoff()
+        .onAppear{
+            checkFirstLaunch()
+        }
+    }
+    
+    func checkFirstLaunch() {
+        if firstLaunch == false {
+            UserDefaults.standard.set(true, forKey: "AppOpening")
+        }
     }
 }
 

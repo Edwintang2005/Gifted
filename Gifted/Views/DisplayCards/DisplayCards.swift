@@ -27,9 +27,11 @@ struct DisplayCards: View {
                 if let key = listItem.ImageKey, let render = ImageCache[key] {
                     Image(uiImage: render)
                         .resizable()
-                        .padding([.top,.leading, .trailing])
+                        .padding([.leading, .trailing])
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: cardWidth, height: cardHeight*5/6)
+                        .frame(width: cardWidth, height: cardWidth)
+                        .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                            .stroke(Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255), lineWidth: 1))
                         .clipShape(
                             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 } else {
@@ -37,36 +39,43 @@ struct DisplayCards: View {
                         .resizable()
                         .padding([.top,.leading, .trailing])
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: cardWidth, height: cardHeight*5/6)
+                        .frame(width: cardWidth, height: cardWidth)
+                        .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                            .stroke(Color(.sRGB, red: 217/255, green: 217/255, blue: 217/255), lineWidth: 1))
                         .clipShape(
                             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 }
-                
+                Spacer()
                 cardDetails
                     .frame(width: cardWidth, height: cardHeight*1/6)
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                    .padding(.all)
             }
-            .padding(.all)
+            .padding(.horizontal)
             .frame(width: cardWidth, height: cardHeight)
             
         }
-        .padding(.top)
         .onAppear{
             getImage(Imagekey: listItem.ImageKey)
         }
     }
     
     var cardDetails: some View{
-        VStack(alignment: .leading) {
-            Text(listItem.Name)
-                .itemText()
-                .fixedSize(horizontal: false, vertical: true)
-                .lineLimit(1)
-            if let price = listItem.Price {
-                Text("$\(price)")
+        HStack {
+            VStack(alignment: .leading) {
+                Text(listItem.Name)
                     .itemText()
+                    .padding(.top)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(1)
+                if let price = listItem.Price {
+                    Text("$\(price)")
+                        .itemText()
+                        .padding(.bottom)
+                }
             }
+            Spacer()
         }
     }
     
@@ -95,7 +104,7 @@ struct DisplayCards: View {
 
 struct HorizontalDisplayCards: View {
     let cardWidth = UIScreen.main.bounds.size.width * 18/20
-    let cardHeight = UIScreen.main.bounds.size.height * 3/20
+    let cardHeight = UIScreen.main.bounds.size.height * 1/5
     let cornerRadius = 7.0
     
     @ObservedObject var dataStore = DataStore()
