@@ -73,15 +73,17 @@ struct AddToList: View{
     
     // Function that updates list items to the cloud
     func saveListItem() {
-        print(name)
-        let item = ListItem(id: UUID().uuidString,
-                            Name: name,
-                            Price: price,
-                            ImageKey: UserDefaults.standard.string(forKey: "ImageKey"),
-                            Link: link)
-        let completion = dataStore.createListItem(item: item, list: lists[listNumber])
-        if completion {
-            presentationMode.wrappedValue.dismiss()
+        if verifCompletion() {
+            print(name)
+            let item = ListItem(id: UUID().uuidString,
+                                Name: name,
+                                Price: price,
+                                ImageKey: UserDefaults.standard.string(forKey: "ImageKey"),
+                                Link: link)
+            let completion = dataStore.createListItem(item: item, list: lists[listNumber])
+            if completion {
+                presentationMode.wrappedValue.dismiss()
+            }
         }
     }
     
@@ -111,6 +113,14 @@ struct AddToList: View{
     func loadImage() {
         guard let inputImage = inputImage else { return }
         image = Image(uiImage: inputImage)
+    }
+    
+    func verifCompletion() -> Bool {
+        if name != "" && price != "" {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
