@@ -24,7 +24,7 @@ struct FriendsView: View {
     
     @State var Friends = [UserProfile]()
     @State var FriendsLength = Int()
-    @State var displayedProfile = UserProfile(Username: String(), Name: String())
+    @Binding var displayedProfile : UserProfile
     
     
     var body: some View {
@@ -60,18 +60,6 @@ struct FriendsView: View {
                         }
                     }
                 }
-            }
-            .disabled(displayPopup != .None)
-            .opacity(displayPopup == .None ? 1: 0.5)
-            if displayPopup == .addFriend {
-                AddToFriends(displayPopup: $displayPopup)
-            } else if displayPopup == .friendInfo {
-                VStack {
-                    Spacer()
-                    FriendsDetailsView(displayPopup: $displayPopup, ImageCache: $ImageCache, friend: $displayedProfile)
-                }
-            } else if displayPopup == .friendWishlist {
-                FriendListView(displayPopup: $displayPopup, friend: $displayedProfile, ImageCache: $ImageCache)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

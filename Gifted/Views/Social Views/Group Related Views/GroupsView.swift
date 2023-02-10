@@ -49,7 +49,7 @@ struct GroupsView: View {
                                 Image(systemName: "plus.circle.fill")
                                     .imageScale(.small)
                                     .offset(
-                                        x: CGFloat(-7),
+                                        x: CGFloat(-6),
                                         y: CGFloat(5)
                                     )
                             }
@@ -71,15 +71,6 @@ struct GroupsView: View {
                             }
                         }
                     }
-                }
-            }
-            .disabled(displayPopup != .None)
-            .opacity(displayPopup == .None ? 1: 0.5)
-            VStack{
-                if displayPopup == .joinGroup {
-                    AddToGroups(displayPopup: $displayPopup)
-                } else if displayPopup == .createGroup {
-                    CreateNewGroup(displayPopup: $displayPopup)
                 }
             }
         }
