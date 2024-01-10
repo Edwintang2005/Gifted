@@ -12,3 +12,10 @@ they would like, users can either snap a photo for quick add or import website l
 
 # Testing and building
 Although the Amplify services are now offline, breaking the authentication services and social services of the app, the app still functions individually as an offline app if login features are bypassed. To test, feel free to download and build onto a device using Xcode. 
+
+
+# Credits
+Credits given to:
+- Roger Yao for Code contributions and UI/UX design assistance
+- Michelle Zhang for UI/UX insight
+- Saf Basha and the wonderful team at Project Academy for insights and advice
